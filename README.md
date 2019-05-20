@@ -14,8 +14,8 @@ Ejemplo de implementación de [Identity Server 4](http://docs.identityserver.io/
 
 ## Pantallas
 
-![Identity](screenshot/SmartStore-Identity.jpg)
+![Identity](screenshot/SmartStore-Identity.png)
 
-![Web](screenshot/SmartStore-Web.jpg)
+![Web](screenshot/SmartStore-Web.png)
 
-![Console](screenshot/SmartStore-Console.jpg)
+![Console](screenshot/SmartStore-Console.png)

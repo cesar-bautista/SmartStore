@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using SmartStore.App.Abstractions;
+using SmartStore.App.ViewModels.Base;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace SmartStore.App
 {
@@ -10,7 +11,13 @@ namespace SmartStore.App
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            InitNavigation();
+        }
+
+        private Task InitNavigation()
+        {
+            var navigationService = LocatorViewModel.Resolve<INavigationService>();
+            return navigationService.InitializeAsync();
         }
 
         protected override void OnStart()

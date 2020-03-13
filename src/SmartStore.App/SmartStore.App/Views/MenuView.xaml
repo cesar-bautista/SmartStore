@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SmartStore.App.Views.MenuView"
+             xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             xmlns:templates="clr-namespace:SmartStore.App.Views.Templates;assembly=SmartStore.App"
+             BackgroundColor="{StaticResource ToolbarColor}"
+             Title="Menu">
+    <ContentPage.Icon>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <On Platform="iOS" Value="netcar_logo"/>
+            <On Platform="UWP, WinRT, WinPhone" Value="Assets/netcar-logo.png"/>
+        </OnPlatform>
+    </ContentPage.Icon>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="{StaticResource BackgroundColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFit">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="iOS, Android" Value="netcar_user.png" />
+                            <On Platform="UWP, WinRT, WinPhone" Value="Assets/netcar-user.png" />
+                        </OnPlatform>
+                    </Image.Source>
+                </Image>
+                <StackLayout Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Label Text="César Bautista" TextColor="{StaticResource WhiteColor}" FontSize="18" />
+                    <Label Text="Profile" TextColor="{StaticResource WhiteColor}" FontSize="14" />
+                    <Image WidthRequest="40" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                        <Image.Source>
+                            <OnPlatform x:TypeArguments="ImageSource">
+                                <On Platform="iOS, Android" Value="netcar_exit.png" />
+                                <On Platform="UWP, WinRT, WinPhone" Value="Assets/netcar-exit.png" />
+                            </OnPlatform>
+                        </Image.Source>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SignOutCommand}" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+            </Grid>
+            <StackLayout Grid.Row="1" Spacing="15">
+                <ListView    
+                    BackgroundColor="{StaticResource MenuBackgroundColor}"
+                    CachingStrategy="RecycleElement"
+                    SeparatorVisibility="None"
+                    ItemsSource="{Binding MenuItems}"  
+                    behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <templates:MenuItemTemplate />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

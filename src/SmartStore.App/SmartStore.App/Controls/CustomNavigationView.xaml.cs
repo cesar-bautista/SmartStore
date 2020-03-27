@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartStore.App.Views
+namespace SmartStore.App.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CustomNavigationView : NavigationPage

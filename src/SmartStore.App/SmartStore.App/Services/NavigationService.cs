@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
+using SmartStore.App.Controls;
 using SmartStore.App.ViewModels;
 using SmartStore.App.ViewModels.Base;
 using SmartStore.App.Views;

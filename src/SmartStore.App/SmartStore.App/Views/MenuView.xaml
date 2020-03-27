@@ -32,17 +32,16 @@
                        BackgroundColor="{StaticResource DarkBackgroundColor}"
                        BorderColor="{StaticResource BlackColor}"
                        IsClippedToBounds="True">
-                    <Image Aspect="AspectFill" Source="https://img.icons8.com/color/96/000000/user.png" />
-                </Frame>
-                <StackLayout Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
-                    <Label Text="César Bautista" TextColor="{StaticResource WhiteColor}" FontSize="18" />
-                    <Label Text="Profile" TextColor="{StaticResource WhiteColor}" FontSize="14" />
-                    <Image WidthRequest="40" HorizontalOptions="End" VerticalOptions="End"
-                           Source="https://img.icons8.com/color/64/000000/shutdown--v1.png">
+                    <Image Aspect="AspectFill"
+                           Source="https://img.icons8.com/color/96/000000/circled-user-male-skin-type-5.png">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SignOutCommand}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding SignOutCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
+                </Frame>
+                <StackLayout Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                    <Label Text="User Name" TextColor="{StaticResource WhiteColor}" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Store Name" TextColor="{StaticResource WhiteColor}" FontSize="14" FontAttributes="Italic" />
                 </StackLayout>
             </Grid>
             <StackLayout Grid.Row="1" Spacing="15">
@@ -55,8 +54,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid
-                                    Margin="0, 0, 12, 0">
+                                <Grid Margin="0, 0, 12, 0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
@@ -64,11 +62,22 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="48" />
                                     </Grid.RowDefinitions>
+
+                                    <Image Grid.Column="0"
+                                           HeightRequest="32"
+                                           Margin="15, 0, 0, 0"
+                                           Source="{Binding ImageUrl}"
+                                           VerticalOptions="CenterAndExpand"
+                                           WidthRequest="32"/>
+
                                     <Label 	
                                         Grid.Column="1"   
                                         Grid.Row="0"
+                                        Margin="0"
+                                        Padding="0"
                                         Text="{Binding Title}"
-                                        Style="{StaticResource MenuTitleStyle}"/>
+                                        VerticalOptions="CenterAndExpand"
+                                        Style="{StaticResource MenuTitleStyle}" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

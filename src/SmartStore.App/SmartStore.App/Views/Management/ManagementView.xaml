@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ManagementView"
              BackgroundColor="{StaticResource BackgroundColor}"
@@ -11,6 +12,7 @@
     <ContentPage.Content>
         <Grid ColumnSpacing="0"
               RowSpacing="0">
+
             <ListView ItemsSource="{Binding Managements}"
                       behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding OnManagementItemSelected}"
                       HasUnevenRows="True"
@@ -66,20 +68,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <!-- INDICATOR -->
-            <ActivityIndicator Color="{StaticResource AccentColor}"
-                               IsVisible="{Binding IsBusy}"
-                               IsRunning="{Binding IsBusy}"
-                               IsEnabled="{Binding IsBusy}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center">
-                <ActivityIndicator.WidthRequest>
-                    <OnPlatform x:TypeArguments="x:Double">
-                        <On Platform="iOS, Android" Value="100" />
-                        <On Platform="UWP, WinRT, WinPhone" Value="400" />
-                    </OnPlatform>
-                </ActivityIndicator.WidthRequest>
-            </ActivityIndicator>
+
+            <controls:ActivityIndicatorView Grid.Row="0"
+                                            IsRunning="{ Binding IsBusy }" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

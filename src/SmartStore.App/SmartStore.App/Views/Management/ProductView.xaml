@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ProductView"
              Title="Products">
@@ -46,21 +47,6 @@
                         WidthRequest="100"
                         Command="{ Binding OnAddProduct }" />
             </Grid>
-            
-            <!-- INDICATOR -->
-            <ActivityIndicator Color="{StaticResource AccentColor}"
-                               IsVisible="{Binding IsBusy}"
-                               IsRunning="{Binding IsBusy}"
-                               IsEnabled="{Binding IsBusy}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center">
-                <ActivityIndicator.WidthRequest>
-                    <OnPlatform x:TypeArguments="x:Double">
-                        <On Platform="iOS, Android" Value="100" />
-                        <On Platform="UWP, WinRT, WinPhone" Value="400" />
-                    </OnPlatform>
-                </ActivityIndicator.WidthRequest>
-            </ActivityIndicator>
 
             <CollectionView x:Name="CollectionView1"
                             ItemsSource="{Binding Products}"
@@ -110,6 +96,8 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <controls:ActivityIndicatorView IsRunning="{ Binding IsBusy }" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

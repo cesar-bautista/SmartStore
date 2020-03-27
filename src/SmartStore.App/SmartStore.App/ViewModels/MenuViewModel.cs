@@ -46,7 +46,14 @@ namespace SmartStore.App.ViewModels
         {
             if (item.IsEnabled)
             {
-                await _navigationService.NavigateToAsync(item.ViewModelType, null);
+                if (item.ViewModelType != null)
+                {
+                    await _navigationService.NavigateToAsync(item.ViewModelType, null);
+                }
+                else
+                {
+                    await SignOutAsync();
+                }
             }
         }
 
@@ -54,7 +61,7 @@ namespace SmartStore.App.ViewModels
         {
             IsBusy = true;
 
-            await Task.Delay(1000);
+            await Task.Delay(500);
 
             _settingsService.AuthAccessToken = string.Empty;
 

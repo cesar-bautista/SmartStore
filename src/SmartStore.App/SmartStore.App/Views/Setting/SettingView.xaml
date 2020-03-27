@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Setting.SettingView"
              BackgroundColor="{StaticResource BackgroundColor}"
@@ -13,6 +14,8 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
                 TextColor="{StaticResource WhiteColor}" />
+
+            <controls:ActivityIndicatorView IsRunning="{ Binding IsBusy }" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -22,50 +22,56 @@ namespace SmartStore.App.Services
                 new MenuItemModel
                 {
                     Title = "Terminal",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/office/80/000000/pos-terminal.png",
                     ViewModelType = typeof(TerminalViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Orders",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/purchase-order.png",
                     ViewModelType = typeof(OrderViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Inventory",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/product.png",
                     ViewModelType = typeof(InventoryViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Managements",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/product-documents.png",
                     ViewModelType = typeof(ManagementViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Reports",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/business-report.png",
                     ViewModelType = typeof(ReportViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Settings",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/automatic.png",
                     ViewModelType = typeof(SettingViewModel),
                     IsEnabled = true
                 },
                 new MenuItemModel
                 {
                     Title = "Help",
-                    ImageUrl = string.Empty,
+                    ImageUrl = "https://img.icons8.com/color/96/000000/questions.png",
                     IsEnabled = false
+                },
+                new MenuItemModel
+                {
+                    Title = "Logout",
+                    ImageUrl = "https://img.icons8.com/office/80/000000/export.png",
+                    IsEnabled = true
                 }
             };
         }

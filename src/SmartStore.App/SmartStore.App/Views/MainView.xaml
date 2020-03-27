@@ -9,23 +9,11 @@
                   MasterBehavior="Popover"
                   Title="SmartStore">
 
-    <!--<MasterDetailPage.ToolbarItems>
-        <ToolbarItem
-            Text="Search">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="Android, iOS" Value="netcar_search"/>
-                    <On Platform="UWP" Value="Assets/netcar-search.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-    </MasterDetailPage.ToolbarItems>-->
     <MasterDetailPage.Master>
         <views:MenuView BindingContext="{Binding MenuViewModel}"/>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <ContentPage 
-            BackgroundColor="Transparent" />
+        <ContentPage BackgroundColor="Transparent" />
     </MasterDetailPage.Detail>
 
 </MasterDetailPage>

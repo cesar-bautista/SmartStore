@@ -4,8 +4,8 @@ using SmartStore.App.Models;
 
 namespace SmartStore.App.Abstractions
 {
-    public interface IMenuService
+    public interface IProductService
     {
-        Task<ObservableCollection<MenuItemModel>> GetListAsync();
+        Task<ObservableCollection<ProductItemModel>> GetListAsync();
     }
 }

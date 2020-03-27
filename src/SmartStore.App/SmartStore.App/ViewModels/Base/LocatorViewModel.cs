@@ -1,75 +1,58 @@
 ﻿using System;
+using System.Linq;
 using Autofac;
-using SmartStore.App.Abstractions;
-using SmartStore.App.Services;
 
 namespace SmartStore.App.ViewModels.Base
 {
-    public class LocatorViewModel
+    public sealed class LocatorViewModel
     {
-        private static readonly IContainer Container;
+        private readonly IContainer _container;
         private static readonly Lazy<LocatorViewModel> Lazy = new Lazy<LocatorViewModel>(() => new LocatorViewModel());
 
         public static LocatorViewModel Instance => Lazy.Value;
 
-        static LocatorViewModel()
+        public LocatorViewModel()
         {
             var builder = new ContainerBuilder();
 
             // View models, Autofac will register concrete classes as multi-instance.
-            Register<SplashViewModel>(builder);
-            Register<MainViewModel>(builder);
-            Register<MenuViewModel>(builder);
-            Register<LoginViewModel>(builder);
-            Register<HomeViewModel>(builder);
+            builder.RegisterAssemblyTypes(this.GetType().Assembly)
+                .Where(t => 
+                    t.Name.EndsWith("ViewModel") &&
+                    t.Name != "LocatorViewModel" &&
+                    t.Name != "BaseViewModel")
+                .AsSelf();
 
             // Services, Autofac will register interface.
-            Register<IMenuService, MenuService>(builder);
+            var services = new[] { "DialogService", "SettingsService", "NavigationService", "RequestService" }; 
+            builder.RegisterAssemblyTypes(this.GetType().Assembly)
+                .Where(t => 
+                    t.Name.EndsWith("Service") &&
+                    !services.Any(e => t.Name.Equals(e)))
+                .AsImplementedInterfaces()
+                .PropertiesAutowired();
 
             // Services, Singleton
-            RegisterSingleton<IDialogService, DialogService>(builder);
-            RegisterSingleton<ISettingsService, SettingsService>(builder);
-            RegisterSingleton<INavigationService, NavigationService>(builder);
-            RegisterSingleton<IRequestService, RequestService>(builder);
-
-            Container?.Dispose();
-
-            Container = builder.Build();
-        }
-
-        private static void Register<T>(ContainerBuilder builder)
-        {
-            builder
-                .RegisterType<T>()
-                .AsSelf();
-        }
-
-        private static void Register<TInterface, T>(ContainerBuilder builder)
-            where TInterface : class where T : class, TInterface
-        {
-            builder
-                .RegisterType<T>()
-                .As<TInterface>();
-        }
-
-        private static void RegisterSingleton<TInterface, T>(ContainerBuilder builder)
-            where TInterface : class where T : class, TInterface
-        {
-            builder
-                .RegisterType<T>()
-                .As<TInterface>()
+            builder.RegisterAssemblyTypes(this.GetType().Assembly)
+                .Where(t => services.Any(e => t.Name.Equals(e)))
+                .AsImplementedInterfaces()
+                .PropertiesAutowired()
                 .SingleInstance();
+
+            _container?.Dispose();
+
+            _container = builder.Build();
         }
 
-        public static T Resolve<T>()
+        public T Resolve<T>()
             where T : class
         {
-            return Container.Resolve<T>();
+            return _container.Resolve<T>();
         }
 
         public object Resolve(Type type)
         {
-            return Container.Resolve(type);
+            return _container.Resolve(type);
         }
     }
 }

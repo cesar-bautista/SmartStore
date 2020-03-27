@@ -6,7 +6,7 @@ using SmartStore.App.ViewModels.Base;
 
 namespace SmartStore.App.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public sealed class LoginViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
         private readonly INavigationService _navigationService;
@@ -52,10 +52,10 @@ namespace SmartStore.App.ViewModels
 
         #region Commands
 
-        public ICommand LoginCommand => new Command(async () => await LoginAction());
-        public ICommand CancelLoginCommand => new Command(async () => await CancelLoginAction());
-        public ICommand ForgotPasswordCommand => new Command(async () => await ForgotPasswordAction());
-        public ICommand NewAccountCommand => new Command(async () => await NewAccountAction());
+        public ICommand OnLoginCommand => new Command(async () => await OnLoginAction());
+        public ICommand OnCancelLoginCommand => new Command(async () => await OnCancelLoginAction());
+        public ICommand OnForgotPasswordCommand => new Command(async () => await OnForgotPasswordAction());
+        public ICommand OnNewAccountCommand => new Command(async () => await OnNewAccountAction());
 
         #endregion
 
@@ -65,18 +65,6 @@ namespace SmartStore.App.ViewModels
             _navigationService = navigationService;
             _dialogService = dialogService;
         }
-
-        //public override async Task InitializeAsync(object navigationData)
-        //{
-        //using (_dialogService.ShowLoadingAsync("Loading"))
-        //{
-        //    await Task.Delay(5000);
-        //}
-
-        //_settingsService.AuthAccessToken = "TOKEN";
-        //await _navigationService.NavigateToAsync<MainViewModel>();
-        //}
-
         #region Methods
 
         private bool CanLoginAction()
@@ -84,35 +72,33 @@ namespace SmartStore.App.ViewModels
             return !string.IsNullOrWhiteSpace(this.Email) && !string.IsNullOrWhiteSpace(this.Password);
         }
 
-        private async Task LoginAction()
+        private async Task OnLoginAction()
         {
             IsBusy = true;
-
-            //await _dialogService.ShowAlertAsync("Login action!!!", "Hi", "Accept");
 
             //Show the Cancel button after X seconds
             await Task.Delay(3000).ContinueWith((t) => IsShowCancel = true);
 
             //Simulate an API call to show busy / progress indicator
-            await Task.Delay(5000).ContinueWith((t) => IsBusy = false);
+            await Task.Delay(3000).ContinueWith((t) => IsBusy = false);
 
             _settingsService.AuthAccessToken = "TOKEN";
             await _navigationService.NavigateToAsync<MainViewModel>();
         }
 
-        private async Task CancelLoginAction()
+        private async Task OnCancelLoginAction()
         {
             //TODO - perform cancellation logic
             IsBusy = false;
             IsShowCancel = false;
         }
 
-        private async Task ForgotPasswordAction()
+        private async Task OnForgotPasswordAction()
         {
             await _dialogService.ShowAlertAsync("Forgot password action!!!", "Hi", "Accept");
         }
 
-        private async Task NewAccountAction()
+        private async Task OnNewAccountAction()
         {
             await _dialogService.ShowAlertAsync("New account action!!!", "Hi", "Accept");
         }

@@ -4,22 +4,15 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SmartStore.App.Views.HomeView"
+             x:Class="SmartStore.App.Views.Management.SupplierView"
              BackgroundColor="{StaticResource BackgroundColor}"
-             Title="Home">
+             Title="Suppliers">
     <ContentPage.Content>
         <StackLayout>
-            <Image
-                Aspect="AspectFit"
+            <Label Text="Welcome to Suppliers"
+                VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand">
-                <Image.Source>
-                    <OnPlatform x:TypeArguments="ImageSource">
-                        <On Platform="Android, iOS" Value="netcar_logo"/>
-                        <On Platform="UWP, WinRT, WinPhone" Value="Assets/netcar-logo.png"/>
-                    </OnPlatform>
-                </Image.Source>
-            </Image>
+                TextColor="{StaticResource WhiteColor}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

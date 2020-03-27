@@ -7,9 +7,9 @@
                   x:Class="SmartStore.App.Views.MainView"
                   xmlns:views="clr-namespace:SmartStore.App.Views;assembly=SmartStore.App"
                   MasterBehavior="Popover"
-                  Title = "SmartStore">
+                  Title="SmartStore">
 
-    <MasterDetailPage.ToolbarItems>
+    <!--<MasterDetailPage.ToolbarItems>
         <ToolbarItem
             Text="Search">
             <ToolbarItem.Icon>
@@ -19,7 +19,7 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-    </MasterDetailPage.ToolbarItems>
+    </MasterDetailPage.ToolbarItems>-->
     <MasterDetailPage.Master>
         <views:MenuView BindingContext="{Binding MenuViewModel}"/>
     </MasterDetailPage.Master>

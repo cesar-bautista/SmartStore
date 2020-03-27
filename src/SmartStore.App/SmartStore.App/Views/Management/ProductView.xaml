@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             mc:Ignorable="d"
+             x:Class="SmartStore.App.Views.Management.ProductView"
+             Title="Products">
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid Margin="0"
+                  Padding="0"
+                  ColumnSpacing="3"
+                  RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <SearchBar Grid.Column="0"
+                           Placeholder="Search..."
+                           Margin="0"
+                           Text="{Binding Filter, Mode=TwoWay}"
+                           SearchCommand="{Binding OnSearchCommand}">
+                </SearchBar>
+                <Button Grid.Column="1"
+                        Text="Barcode"
+                        BackgroundColor="{StaticResource BlackColor}"
+                        TextColor="{StaticResource WhiteColor}"
+                        Margin="0"
+                        Padding="0, 7"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="100"
+                        Command="{ Binding OnBarcode }" />
+                <Button Grid.Column="2"
+                        Text="Add"
+                        BackgroundColor="{StaticResource BlackColor}"
+                        TextColor="{StaticResource WhiteColor}"
+                        Margin="0"
+                        Padding="0, 7"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="100"
+                        Command="{ Binding OnAddProduct }" />
+            </Grid>
+            
+            <!-- INDICATOR -->
+            <ActivityIndicator Color="{StaticResource AccentColor}"
+                               IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               IsEnabled="{Binding IsBusy}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                        <On Platform="UWP, WinRT, WinPhone" Value="400" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+            <CollectionView x:Name="CollectionView1"
+                            ItemsSource="{Binding Products}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            EmptyView="No items match your filter."
+                            Margin="10, 3">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" Margin="5, 10">
+                            <Frame BorderColor="LightGray"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   Padding="5">
+                                <Grid Padding="5" ColumnSpacing="0" RowSpacing="0" Margin="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="130"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Image Grid.Row="0"
+                                           Source="https://img.icons8.com/office/30/000000/hearts.png"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="End">
+                                        <Image.Behaviors>
+                                            <behaviors:ViewTappedButtonBehavior
+                                                Command="{Binding OnProductItemSelected}"
+                                                AnimationType="Scale"/>
+                                        </Image.Behaviors>
+                                        <!--<Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OnProductItemSelected, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1" />
+                                        </Image.GestureRecognizers>-->
+                                    </Image>
+
+                                    <Image Grid.Row="1" Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                    <Label Grid.Row="2" Text="{Binding Title}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                                    <Label Grid.Row="3" Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="#F9F9F9" />
+
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

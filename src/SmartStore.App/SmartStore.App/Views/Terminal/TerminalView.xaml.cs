@@ -1,12 +1,12 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartStore.App.Views
+namespace SmartStore.App.Views.Terminal
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomeView : ContentPage
+    public partial class TerminalView : ContentPage
     {
-        public HomeView()
+        public TerminalView()
         {
             InitializeComponent();
         }

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace SmartStore.App.ViewModels
 {
-    public class MenuViewModel : BaseViewModel
+    public sealed class MenuViewModel : BaseViewModel
     {
         private ObservableCollection<MenuItemModel> _menuItems;
 
@@ -27,10 +27,7 @@ namespace SmartStore.App.ViewModels
 
         public ObservableCollection<MenuItemModel> MenuItems
         {
-            get
-            {
-                return _menuItems;
-            }
+            get => _menuItems;
             set
             {
                 _menuItems = value;
@@ -40,11 +37,9 @@ namespace SmartStore.App.ViewModels
 
         public ICommand ItemSelectedCommand => new Command<MenuItemModel>(SelectMenuItem);
 
-        public override Task InitializeAsync(object navigationData)
+        public override async Task InitializeAsync(object navigationData)
         {
-            MenuItems = _menuService.GetMenuAsync();
-
-            return base.InitializeAsync(navigationData);
+            MenuItems = await _menuService.GetListAsync();
         }
 
         private async void SelectMenuItem(MenuItemModel item)

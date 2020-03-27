@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
 using SmartStore.App.ViewModels;
@@ -139,10 +141,24 @@ namespace SmartStore.App.Services
 
         private void CreatePageViewModelMappings()
         {
-            Mappings.Add(typeof(SplashViewModel), typeof(SplashView));
-            Mappings.Add(typeof(LoginViewModel), typeof(LoginView));
-            Mappings.Add(typeof(MainViewModel), typeof(MainView));
-            Mappings.Add(typeof(HomeViewModel), typeof(HomeView));
+            var viewsModels = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(a => a.IsClass && a.Namespace != null && a.Name.EndsWith("ViewModel"))
+                .ToList();
+
+            var views = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(a => a.IsClass && a.Namespace != null && a.Name.EndsWith("View"))
+                .ToList();
+
+            foreach (var view in views)
+            {
+                var vm = viewsModels.FirstOrDefault(v => v.Name.Equals($"{view.Name}Model"));
+                if (vm != null)
+                {
+                    Mappings.Add(vm, view);
+                }
+            }
         }
     }
 }

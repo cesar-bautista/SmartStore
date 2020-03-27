@@ -16,7 +16,7 @@ namespace SmartStore.App
 
         private Task InitNavigation()
         {
-            var navigationService = LocatorViewModel.Resolve<INavigationService>();
+            var navigationService = LocatorViewModel.Instance.Resolve<INavigationService>();
             return navigationService.InitializeAsync();
         }
 

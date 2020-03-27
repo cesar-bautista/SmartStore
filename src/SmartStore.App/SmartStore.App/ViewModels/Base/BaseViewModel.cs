@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace SmartStore.App.ViewModels.Base
 {
-    public class BaseViewModel : BindableObject
+    public abstract class BaseViewModel : BindableObject
     {
         private bool _isBusy;
 

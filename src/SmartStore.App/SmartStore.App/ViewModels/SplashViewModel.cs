@@ -4,7 +4,7 @@ using SmartStore.App.ViewModels.Base;
 
 namespace SmartStore.App.ViewModels
 {
-    public class SplashViewModel : BaseViewModel
+    public sealed class SplashViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly ISettingsService _settingsService;

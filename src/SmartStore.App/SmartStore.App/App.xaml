@@ -17,5 +17,12 @@
         <Color x:Key="DarkBackgroundColor">#151C25</Color>
         <Color x:Key="MenuBackgroundColor">#44545C</Color>
         <Color x:Key="SplashBackgroundColor">#151C25</Color>
+
+        <Style x:Key="MenuTitleStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Margin" Value="12, 0" />
+        </Style>
     </Application.Resources>
 </Application>

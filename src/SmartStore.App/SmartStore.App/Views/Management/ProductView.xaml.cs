@@ -1,12 +1,12 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartStore.App.Views.Templates
+namespace SmartStore.App.Views.Management
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuItemTemplate : ContentView
+    public partial class ProductView : ContentPage
     {
-        public MenuItemTemplate()
+        public ProductView()
         {
             InitializeComponent();
         }

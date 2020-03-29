@@ -42,8 +42,9 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnProductItemSelected => new Command<ProductItemModel>(ProductItemSelected);
-        public ICommand OnSearchCommand => new Command(async () => { await SearchAsync(); });
+        public ICommand OnSelected => new Command<ProductItemModel>(OnSelectedAction);
+        public ICommand OnFavorited => new Command<ProductItemModel>(OnFavoritedAction);
+        public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
         #endregion
 
         #region Constructors
@@ -57,36 +58,47 @@ namespace SmartStore.App.ViewModels.Management
         {
             IsBusy = true;
 
-            Products = await _productService.GetListAsync();
+            var list = await _productService.GetListAsync();
+            Products = list.ToObservableCollection();
 
             IsBusy = false;
         }
         #endregion
 
-        private async void ProductItemSelected(object obj)
+        #region Actions
+        private async void OnSelectedAction(object obj)
         {
-            if (obj is ProductItemModel product)
+            if (obj is ProductItemModel item)
             {
 
             }
         }
 
-        private async Task SearchAsync()
+        private async void OnFavoritedAction(object obj)
+        {
+            if (obj is ProductItemModel item)
+            {
+
+            }
+        }
+
+        private async Task OnSearchAction()
         {
             IsBusy = true;
+            var list = await _productService.GetListAsync();
             if (string.IsNullOrEmpty(this.Filter))
             {
-                Products = await _productService.GetListAsync();
+                Products = list.ToObservableCollection();
             }
             else
             {
-                var allProducts = await _productService.GetListAsync();
-                var products = allProducts.Where(p =>
-                        p.Title.ToLowerInvariant().Contains(Filter.ToLowerInvariant()) ||
+                var products = list.Where(p =>
+                        p.Name.ToLowerInvariant().Contains(Filter.ToLowerInvariant()) ||
                         p.Price.ToString(CultureInfo.InvariantCulture).ToLowerInvariant().Contains(Filter.ToLowerInvariant()));
                 Products = products.ToObservableCollection();
             }
             IsBusy = false;
-        }
+        } 
+        #endregion
     }
 }

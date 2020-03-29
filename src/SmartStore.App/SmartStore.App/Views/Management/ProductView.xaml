@@ -10,8 +10,18 @@
              Title="Products">
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{StaticResource BackgroundColor}">
-            <Grid Margin="0"
+        <Grid BackgroundColor="{StaticResource BackgroundColor}"
+              Margin="0"
+              Padding="0"
+              ColumnSpacing="0"
+              RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Margin="0"
                   Padding="0"
                   ColumnSpacing="3"
                   RowSpacing="0">
@@ -24,7 +34,7 @@
                            Placeholder="Search..."
                            Margin="0"
                            Text="{Binding Filter, Mode=TwoWay}"
-                           SearchCommand="{Binding OnSearchCommand}">
+                           SearchCommand="{Binding OnSearch}">
                 </SearchBar>
                 <Button Grid.Column="1"
                         Text="Barcode"
@@ -45,18 +55,27 @@
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="CenterAndExpand"
                         WidthRequest="100"
-                        Command="{ Binding OnAddProduct }" />
+                        Command="{ Binding OnAdd }" />
             </Grid>
 
             <CollectionView x:Name="CollectionView1"
+                            Grid.Row="1"
                             ItemsSource="{Binding Products}"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
-                            EmptyView="No items match your filter."
                             Margin="10, 3">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2"/>
                 </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No items match your filter."
+                           TextColor="{StaticResource WhiteColor}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+                    <!--EmptyView="No items match your filter."-->
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10" Margin="5, 10">
@@ -78,16 +97,16 @@
                                            HorizontalOptions="End">
                                         <Image.Behaviors>
                                             <behaviors:ViewTappedButtonBehavior
-                                                Command="{Binding OnProductItemSelected}"
+                                                Command="{Binding OnFavorited}"
                                                 AnimationType="Scale"/>
                                         </Image.Behaviors>
                                         <!--<Image.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding BindingContext.OnProductItemSelected, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1" />
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OnFavorited, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1" />
                                         </Image.GestureRecognizers>-->
                                     </Image>
 
                                     <Image Grid.Row="1" Source="{Binding ImageUrl}" Aspect="Fill"/>
-                                    <Label Grid.Row="2" Text="{Binding Title}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                                    <Label Grid.Row="2" Text="{Binding Name}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
                                     <Label Grid.Row="3" Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="#F9F9F9" />
 
                                 </Grid>
@@ -97,7 +116,9 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <controls:ActivityIndicatorView IsRunning="{ Binding IsBusy }" />
-        </StackLayout>
+            <controls:ActivityIndicatorView Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            IsRunning="{ Binding IsBusy }" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

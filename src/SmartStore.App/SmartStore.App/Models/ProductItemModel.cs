@@ -3,10 +3,17 @@
     public class ProductItemModel
     {
         public int Id { get; set; }
-        public bool IsLike { get; set; }
-        public string ImageUrl { get; set; }
-        public string Title { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double Cost { get; set; }
         public double Price { get; set; }
-        public string Favorite { get; set; } = "favorite.png";
+        public int Stock { get; set; }
+        public int MinStock { get; set; }
+        public string ImageUrl { get; set; }
+        public bool IsFavorite { get; set; }
+        public int UnitId { get; set; }
+        public int CategoryId { get; set; }
+        public int SupplierId { get; set; }
     }
 }

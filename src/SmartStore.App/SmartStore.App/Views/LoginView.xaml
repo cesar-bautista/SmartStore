@@ -65,6 +65,7 @@
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="CenterAndExpand"
                             Margin="15,10"
+                            WidthRequest="150"
                             Command="{ Binding OnLoginCommand }" />
                 </StackLayout>
 

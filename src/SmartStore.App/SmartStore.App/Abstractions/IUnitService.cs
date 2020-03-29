@@ -4,8 +4,8 @@ using SmartStore.App.Models;
 
 namespace SmartStore.App.Abstractions
 {
-    public interface IMenuService
+    public interface IUnitService
     {
-        Task<IEnumerable<MenuItemModel>> GetListAsync();
+        Task<IEnumerable<UnitItemModel>> GetListAsync();
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions;
+using SmartStore.App.Extensions;
 using SmartStore.App.Models;
 using SmartStore.App.ViewModels.Base;
 using Xamarin.Forms;
@@ -39,7 +40,8 @@ namespace SmartStore.App.ViewModels
 
         public override async Task InitializeAsync(object navigationData)
         {
-            MenuItems = await _menuService.GetListAsync();
+            var list = await _menuService.GetListAsync();
+            MenuItems = list.ToObservableCollection();
         }
 
         private async void SelectMenuItem(MenuItemModel item)

@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
 using SmartStore.App.Models;
@@ -13,11 +13,11 @@ namespace SmartStore.App.Services
 {
     public class MenuService : IMenuService
     {
-        public async Task<ObservableCollection<MenuItemModel>> GetListAsync()
+        public async Task<IEnumerable<MenuItemModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            return new ObservableCollection<MenuItemModel>
+            return new List<MenuItemModel>
             {
                 new MenuItemModel
                 {

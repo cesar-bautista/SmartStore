@@ -14,7 +14,7 @@
               RowSpacing="0">
 
             <ListView ItemsSource="{Binding Managements}"
-                      behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding OnManagementItemSelected}"
+                      behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding OnSelected}"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
                       VerticalOptions="CenterAndExpand"

@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
 using SmartStore.App.Models;
@@ -7,11 +7,11 @@ namespace SmartStore.App.Services
 {
     public class ManagementService : IManagementService
     {
-        public async Task<ObservableCollection<ManagementItemModel>> GetListAsync()
+        public async Task<IEnumerable<ManagementItemModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            return new ObservableCollection<ManagementItemModel>
+            return new List<ManagementItemModel>
             {
                 new ManagementItemModel
                 {

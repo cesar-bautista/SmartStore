@@ -15,7 +15,6 @@ namespace SmartStore.App.ViewModels.Management
         #region Attributes
         private ObservableCollection<CustomerItemModel> _customer;
         private string _filter;
-        private readonly INavigationService _navigationService;
         private readonly ICustomerService _customerService;
         #endregion
 
@@ -45,9 +44,8 @@ namespace SmartStore.App.ViewModels.Management
         #endregion
 
         #region Constructors
-        public CustomerViewModel(INavigationService navigationService, ICustomerService customerService)
+        public CustomerViewModel(ICustomerService customerService)
         {
-            _navigationService = navigationService;
             _customerService = customerService;
         }
 

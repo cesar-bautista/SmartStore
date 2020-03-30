@@ -21,6 +21,7 @@ namespace SmartStore.App.ViewModels.Base
                     t.Name.EndsWith("ViewModel") &&
                     t.Name != "LocatorViewModel" &&
                     t.Name != "BaseViewModel")
+                .PropertiesAutowired()
                 .AsSelf();
 
             // Services, Autofac will register interface.

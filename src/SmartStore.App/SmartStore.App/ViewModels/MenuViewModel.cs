@@ -12,18 +12,16 @@ namespace SmartStore.App.ViewModels
     public sealed class MenuViewModel : BaseViewModel
     {
         private ObservableCollection<MenuItemModel> _menuItems;
-
         private readonly ISettingsService _settingsService;
         private readonly IMenuService _menuService;
-        private readonly INavigationService _navigationService;
+
         public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
+        public ICommand ItemSelectedCommand => new Command<MenuItemModel>(SelectMenuItem);
 
-
-        public MenuViewModel(ISettingsService settingsService, IMenuService menuService, INavigationService navigationService)
+        public MenuViewModel(ISettingsService settingsService, IMenuService menuService)
         {
             _settingsService = settingsService;
             _menuService = menuService;
-            _navigationService = navigationService;
         }
 
         public ObservableCollection<MenuItemModel> MenuItems
@@ -36,8 +34,6 @@ namespace SmartStore.App.ViewModels
             }
         }
 
-        public ICommand ItemSelectedCommand => new Command<MenuItemModel>(SelectMenuItem);
-
         public override async Task InitializeAsync(object navigationData)
         {
             var list = await _menuService.GetListAsync();
@@ -46,16 +42,14 @@ namespace SmartStore.App.ViewModels
 
         private async void SelectMenuItem(MenuItemModel item)
         {
-            if (item.IsEnabled)
+            if (!item.IsEnabled) return;
+            if (item.ViewModelType != null)
             {
-                if (item.ViewModelType != null)
-                {
-                    await _navigationService.NavigateToAsync(item.ViewModelType, null);
-                }
-                else
-                {
-                    await SignOutAsync();
-                }
+                await NavigationService.NavigateToAsync(item.ViewModelType, null);
+            }
+            else
+            {
+                await SignOutAsync();
             }
         }
 
@@ -63,11 +57,10 @@ namespace SmartStore.App.ViewModels
         {
             IsBusy = true;
 
-            await Task.Delay(500);
-
             _settingsService.AuthAccessToken = string.Empty;
 
-            await _navigationService.NavigateToAsync<LoginViewModel>();
+            await NavigationService.NavigateToAsync<LoginViewModel>();
+            await NavigationService.RemoveLastFromBackStackAsync();
 
             IsBusy = false;
         }

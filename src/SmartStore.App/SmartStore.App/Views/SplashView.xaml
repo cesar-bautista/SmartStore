@@ -10,17 +10,10 @@
     <ContentPage.Content>
         <Grid
             BackgroundColor="{StaticResource SplashBackgroundColor}">
-            <Image
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-                <Image.Source>
-                    <OnPlatform x:TypeArguments="ImageSource">
-                        <On Platform="Android, iOS" Value="netcar_logo"/>
-                        <On Platform="UWP, WinRT, WinPhone" Value="Assets/netcar-logo.png"/>
-                    </OnPlatform>
-                </Image.Source>
-            </Image>
+            <Image Aspect="AspectFit"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Source="https://img.icons8.com/color/96/000000/online-store.png" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

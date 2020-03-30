@@ -15,7 +15,6 @@ namespace SmartStore.App.ViewModels.Management
         #region Attributes
         private ObservableCollection<SupplierItemModel> _suppliers;
         private string _filter;
-        private readonly INavigationService _navigationService;
         private readonly ISupplierService _supplierService;
         #endregion
 
@@ -45,9 +44,8 @@ namespace SmartStore.App.ViewModels.Management
         #endregion
 
         #region Constructors
-        public SupplierViewModel(INavigationService navigationService, ISupplierService supplierService)
+        public SupplierViewModel(ISupplierService supplierService)
         {
-            _navigationService = navigationService;
             _supplierService = supplierService;
         }
 

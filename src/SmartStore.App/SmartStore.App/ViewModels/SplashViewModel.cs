@@ -6,21 +6,19 @@ namespace SmartStore.App.ViewModels
 {
     public sealed class SplashViewModel : BaseViewModel
     {
-        private readonly INavigationService _navigationService;
         private readonly ISettingsService _settingsService;
 
-        public SplashViewModel(INavigationService navigationService, ISettingsService settingsService)
+        public SplashViewModel(ISettingsService settingsService)
         {
-            _navigationService = navigationService;
             _settingsService = settingsService;
         }
 
         public override async Task InitializeAsync(object navigationData)
         {
             if (string.IsNullOrWhiteSpace(_settingsService.AuthAccessToken))
-                await _navigationService.NavigateToAsync<LoginViewModel>();
+                await NavigationService.NavigateToAsync<LoginViewModel>();
             else
-                await _navigationService.NavigateToAsync<MainViewModel>();
+                await NavigationService.NavigateToAsync<MainViewModel>();
         }
     }
 }

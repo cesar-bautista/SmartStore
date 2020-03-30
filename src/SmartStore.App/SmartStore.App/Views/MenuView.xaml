@@ -76,8 +76,7 @@
                                         Margin="0"
                                         Padding="0"
                                         Text="{Binding Title}"
-                                        VerticalOptions="CenterAndExpand"
-                                        Style="{StaticResource MenuTitleStyle}" />
+                                        VerticalOptions="CenterAndExpand" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

@@ -6,6 +6,8 @@
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Terminal.TerminalView"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              BackgroundColor="{StaticResource BackgroundColor}"
              Title="Terminal">
     <ContentPage.Content>
@@ -85,7 +87,12 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <Image Grid.Row="0" Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                    <ff:CachedImage Aspect="AspectFit"
+                                                    Grid.Row="0"
+                                                    HeightRequest= "200"
+                                                    HorizontalOptions="Center"
+                                                    Source = "{Binding ImageUrl}"
+                                                    VerticalOptions="Center" />
                                     <Label Grid.Row="1" Text="{Binding Name}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
                                     <Label Grid.Row="2" Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="#F9F9F9" />
                                 </Grid>
@@ -139,6 +146,11 @@
                        Text=">"
                        WidthRequest="30" />
                 </Grid>
+                <Frame.Behaviors>
+                    <behaviors:ViewTappedButtonBehavior
+                        Command="{Binding OnPay}"
+                        AnimationType="Scale"/>
+                </Frame.Behaviors>
             </Frame>
             
             <controls:ActivityIndicatorView Grid.Row="0"

@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.LoginView"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              BackgroundColor="{StaticResource BackgroundColor}"
              Title="Login">
 
@@ -24,11 +25,12 @@
                      BackgroundColor="{StaticResource BlackColor}"
                      Opacity="0.3"/>
 
-            <Image  Grid.Row="0"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="CenterAndExpand"
-                    HeightRequest="150"
-                    Source="https://img.icons8.com/color/96/000000/online-store.png" />
+            <ff:CachedImage Aspect="AspectFit"
+                            Grid.Row="0"
+                            HeightRequest= "150"
+                            HorizontalOptions="CenterAndExpand"
+                            Source = "https://img.icons8.com/color/96/000000/online-store.png"
+                            VerticalOptions="CenterAndExpand" />
 
             <Label Grid.Row="1"
                    Text="Login"

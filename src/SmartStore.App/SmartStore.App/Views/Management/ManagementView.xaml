@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ManagementView"
              BackgroundColor="{StaticResource BackgroundColor}"
@@ -35,17 +36,12 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Grid.Column="0"
-                                           Aspect="AspectFit"
-                                           WidthRequest="80"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center">
-                                        <Image.Source>
-                                            <UriImageSource Uri="{Binding ImageUrl}"
-                                                            CacheValidity="3"
-                                                            CachingEnabled="true"/>
-                                        </Image.Source>
-                                    </Image>
+                                    <ff:CachedImage Aspect="AspectFit"
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    Source = "{Binding ImageUrl}"
+                                                    VerticalOptions="Center" 
+                                                    WidthRequest="80" />
 
                                     <StackLayout Grid.Column="1"
                                                  VerticalOptions="Center">

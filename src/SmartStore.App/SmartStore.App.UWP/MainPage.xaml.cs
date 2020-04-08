@@ -5,7 +5,7 @@
         public MainPage()
         {
             this.InitializeComponent();
-
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             LoadApplication(new SmartStore.App.App());
         }
     }

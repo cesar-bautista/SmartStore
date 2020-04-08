@@ -5,6 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.MenuView"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              BackgroundColor="{StaticResource ToolbarColor}"
              Title=" ">
@@ -20,25 +22,17 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Frame Grid.Column="0" 
-                       CornerRadius="50"
-                       HasShadow="True"
-                       Margin="0"
-                       Padding="0"
-                       WidthRequest="100"
-                       HeightRequest="100"
-                       HorizontalOptions="CenterAndExpand" 
-                       VerticalOptions="CenterAndExpand"
-                       BackgroundColor="{StaticResource DarkBackgroundColor}"
-                       BorderColor="{StaticResource BlackColor}"
-                       IsClippedToBounds="True">
-                    <Image Aspect="AspectFill"
-                           Source="https://img.icons8.com/color/96/000000/circled-user-male-skin-type-5.png">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SignOutCommand}" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </Frame>
+                <ff:CachedImage Aspect="AspectFit"
+                                Grid.Column="0" 
+                                Source = "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png">
+                    <ff:CachedImage.Transformations>
+                        <fftrans:CircleTransformation />
+                    </ff:CachedImage.Transformations>
+                    <ff:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SignOutCommand}" />
+                    </ff:CachedImage.GestureRecognizers>
+                </ff:CachedImage>
+
                 <StackLayout Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
                     <Label Text="User Name" TextColor="{StaticResource WhiteColor}" FontSize="16" FontAttributes="Bold" />
                     <Label Text="Store Name" TextColor="{StaticResource WhiteColor}" FontSize="14" FontAttributes="Italic" />
@@ -63,12 +57,12 @@
                                         <RowDefinition Height="48" />
                                     </Grid.RowDefinitions>
 
-                                    <Image Grid.Column="0"
-                                           HeightRequest="32"
-                                           Margin="15, 0, 0, 0"
-                                           Source="{Binding ImageUrl}"
-                                           VerticalOptions="CenterAndExpand"
-                                           WidthRequest="32"/>
+                                    <ff:CachedImage Grid.Column="0"
+                                                    HeightRequest="32"
+                                                    Margin="15, 0, 0, 0"
+                                                    Source="{Binding ImageUrl}"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="32"/>
 
                                     <Label 	
                                         Grid.Column="1"   

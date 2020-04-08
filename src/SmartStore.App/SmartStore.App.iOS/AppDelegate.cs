@@ -20,6 +20,7 @@ namespace SmartStore.App.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ProductView"
              Title="Products">
@@ -91,21 +92,28 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <Image Grid.Row="0"
-                                           Source="https://img.icons8.com/office/30/000000/hearts.png"
-                                           Aspect="AspectFit"
-                                           HorizontalOptions="End">
-                                        <Image.Behaviors>
+                                    <ff:CachedImage Aspect="AspectFit"
+                                                    Grid.Row="0"
+                                                    HorizontalOptions="End"
+                                                    Source = "https://img.icons8.com/office/30/000000/hearts.png"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="50" >
+                                        <ff:CachedImage.Behaviors>
                                             <behaviors:ViewTappedButtonBehavior
                                                 Command="{Binding OnFavorited}"
                                                 AnimationType="Scale"/>
-                                        </Image.Behaviors>
-                                        <!--<Image.GestureRecognizers>
+                                        </ff:CachedImage.Behaviors>
+                                        <!--<ff:CachedImage.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BindingContext.OnFavorited, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1" />
-                                        </Image.GestureRecognizers>-->
-                                    </Image>
+                                        </ff:CachedImage.GestureRecognizers>-->
+                                    </ff:CachedImage>
 
-                                    <Image Grid.Row="1" Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                    <ff:CachedImage Aspect="AspectFit"
+                                                    Grid.Row="1"
+                                                    HeightRequest="200"
+                                                    HorizontalOptions="Center"
+                                                    Source = "{Binding ImageUrl}"
+                                                    VerticalOptions="Center" />
                                     <Label Grid.Row="2" Text="{Binding Name}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
                                     <Label Grid.Row="3" Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="#F9F9F9" />
 

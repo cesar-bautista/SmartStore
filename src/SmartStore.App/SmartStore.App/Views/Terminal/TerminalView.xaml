@@ -8,14 +8,33 @@
              x:Class="SmartStore.App.Views.Terminal.TerminalView"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              BackgroundColor="{StaticResource BackgroundColor}"
              Title="Terminal">
+
+    <ContentPage.Resources>
+        <xamanimation:HeartAnimation
+            x:Key="StoryBoard"
+            Target="{x:Reference StoryBoardBox}"
+            Duration="1000"/>
+
+        <xamanimation:StoryBoard
+            x:Key="FloatingButtonsEnter"
+            Target="{x:Reference StoryBoardBox}">
+            <xamanimation:TranslateToAnimation Duration="100" TranslateY="100" />
+            <xamanimation:TranslateToAnimation Duration="800" Easing="SpringIn" />
+        </xamanimation:StoryBoard>
+    </ContentPage.Resources>
+    
+    <ContentPage.Triggers>
+        <EventTrigger Event="Appearing">
+            <xamanimation:BeginAnimation Animation="{StaticResource FloatingButtonsEnter}" />
+        </EventTrigger>
+    </ContentPage.Triggers>
+
     <ContentPage.Content>
-        <Grid BackgroundColor="{StaticResource BackgroundColor}"
-              Margin="0"
-              Padding="0"
-              ColumnSpacing="0"
-              RowSpacing="0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
@@ -23,10 +42,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0"
-                  Margin="0"
-                  Padding="0"
-                  ColumnSpacing="3"
-                  RowSpacing="0">
+                  ColumnSpacing="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="100" />
@@ -39,120 +55,119 @@
                 </SearchBar>
                 <Button Grid.Column="1"
                         Text="Barcode"
-                        BackgroundColor="{StaticResource BlackColor}"
-                        TextColor="{StaticResource WhiteColor}"
-                        Margin="0"
-                        Padding="0, 7"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="CenterAndExpand"
-                        WidthRequest="100"
                         Command="{ Binding OnBarcode }" />
             </Grid>
 
-            <CollectionView x:Name="CollectionView1"
-                            Grid.Row="1"
-                            ItemsSource="{Binding Products}"
-                            SelectionMode="Single"
-                            SelectionChangedCommand="{Binding OnSelected}"
+            <ScrollView Grid.Row="1"
+                        Margin="0"
+                        Padding="0">
+                <FlexLayout Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Center"
+                            AlignItems="Center"
+                            AlignContent="Center"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
-                            Margin="10, 3">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.EmptyView>
-                    <Label Text="No items match your filter."
-                           TextColor="{StaticResource WhiteColor}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center" />
-                </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Padding="10" Margin="5, 10">
-                            <Frame BorderColor="{StaticResource WhiteColor}"
-                                   CornerRadius="15"
-                                   HasShadow="True"
-                                   Padding="5">
-                                <!--<Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}"
-                                                          NumberOfTapsRequired="1"/>
-                                </Frame.GestureRecognizers>-->
+                            Margin="0"
+                            Padding="0"
+                            BindableLayout.ItemsSource="{Binding Products}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10"
+                                         Margin="5"
+                                         HorizontalOptions="Center"
+                                         Orientation="Horizontal"
+                                         VerticalOptions="Center">
+                                <pancakeView:PancakeView BorderColor="{StaticResource WhiteColor}"
+                                                         BorderThickness="1"
+                                                         CornerRadius="15, 0, 0, 15"
+                                                         Elevation="8"
+                                                         HasShadow="True"
+                                                         Padding="0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="130"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
 
-                                <Grid Padding="5" ColumnSpacing="0" RowSpacing="0" Margin="2">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="130"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <ff:CachedImage Aspect="AspectFit"
+                                        <ff:CachedImage Aspect="AspectFit"
                                                     Grid.Row="0"
                                                     HeightRequest= "200"
                                                     HorizontalOptions="Center"
                                                     Source = "{Binding ImageUrl}"
                                                     VerticalOptions="Center" />
-                                    <Label Grid.Row="1" Text="{Binding Name}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
-                                    <Label Grid.Row="2" Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="#F9F9F9" />
-                                </Grid>
 
-                                <!--<StackLayout>
-                                    <Grid HeightRequest="210" HorizontalOptions="Fill">
-                                        <Image Source="{Binding ImageUrl}" Aspect="Fill" />
-
-                                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="#E0E0E0" Opacity=".6" Padding="10,5,10,5">
-                                            <Label TextColor="Black" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" 
-                                                   Text="If you have feedback / comments or want to report a problem please contact us"/>
+                                        <StackLayout Grid.Row="1"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     VerticalOptions="FillAndExpand"
+                                                     BackgroundColor="{StaticResource BlackColor}"
+                                                     Opacity=".7"
+                                                     Padding="5">
+                                            <Label Text="{Binding Name}" TextColor="#14B7F8" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                                            <Label Text="{Binding Price, StringFormat='${0:N}'}" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontAttributes="Bold"/>
                                         </StackLayout>
                                     </Grid>
-                                </StackLayout>-->
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                </pancakeView:PancakeView>
+                                <!--<Button Text="Animation">
+                                    <Button.Triggers>
+                                        <EventTrigger Event="Clicked">
+                                            <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>-->
+                                <StackLayout.Triggers>
+                                    <EventTrigger Event="Focused">
+                                        <xamanimation:BeginAnimation
+                                            Animation="{StaticResource StoryBoard}" />
+                                    </EventTrigger>
+                                </StackLayout.Triggers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                    <FlexLayout.Behaviors>
+                        <behaviors:ItemTappedBehaviorFlexLayout
+                            Command="{Binding OnSelected}" />
+                    </FlexLayout.Behaviors>
+                </FlexLayout>
+                <!--<ScrollView.Triggers>
+                    <EventTrigger Event="Scrolled">
+                        <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                    </EventTrigger>
+                </ScrollView.Triggers>-->
+            </ScrollView>
 
-            <Frame Grid.Row="2"
-                   BorderColor="{StaticResource WhiteColor}"
-                   CornerRadius="5"
-                   HasShadow="True"
-                   Padding="0"
-                   Margin="10, 5">
+            <pancakeView:PancakeView CornerRadius="20,20,0,0"
+                                     BackgroundColor="{StaticResource DarkBackgroundColor}"
+                                     Grid.Row="2"
+                                     Elevation="8"
+                                     HasShadow="True"
+                                     Padding="0,0,0,0"
+                                     x:Name="StoryBoardBox">
                 <Grid HorizontalOptions="FillAndExpand"
                       VerticalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="70" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0"
-                       VerticalTextAlignment="Center"
-                       HorizontalOptions="CenterAndExpand" 
-                       Text="2"
-                       WidthRequest="30" />
-                    <Label Grid.Column="1"
-                       VerticalTextAlignment="Center"
-                       HorizontalOptions="Center" 
-                       Text="|" />
-                    <Label Grid.Column="2"
-                       VerticalTextAlignment="Center"
-                       HorizontalOptions="CenterAndExpand" 
-                       Text="Charge $29.00" />
-                    <Label Grid.Column="3"
-                       VerticalTextAlignment="Center"
-                       HorizontalOptions="CenterAndExpand" 
-                       Text=">"
-                       WidthRequest="30" />
+                    <Button BackgroundColor="{StaticResource DangerColor}"
+                            Command="{ Binding OnDiscard }"
+                            CornerRadius="5"
+                            Grid.Column="0"
+                            HorizontalOptions="CenterAndExpand" 
+                            Margin="10,0"
+                            Text="Discard"
+                            VerticalOptions="CenterAndExpand" />
+                    <Button BackgroundColor="{StaticResource SuccessColor}"
+                            Command="{ Binding OnCheckout }"
+                            CornerRadius="5"
+                            Grid.Column="1"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="10,0"
+                            Text="{Binding CheckoutText}"
+                            VerticalOptions="CenterAndExpand" />
                 </Grid>
-                <Frame.Behaviors>
-                    <behaviors:ViewTappedButtonBehavior
-                        Command="{Binding OnPay}"
-                        AnimationType="Scale"/>
-                </Frame.Behaviors>
-            </Frame>
-            
+            </pancakeView:PancakeView>
+
             <controls:ActivityIndicatorView Grid.Row="0"
                                             Grid.RowSpan="3"
                                             IsRunning="{ Binding IsBusy }" />

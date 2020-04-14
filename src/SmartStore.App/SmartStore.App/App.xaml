@@ -13,6 +13,8 @@
 
         <!-- THEME COLORS -->
         <Color x:Key="AccentColor">#F5C210</Color>
+        <Color x:Key="DangerColor">#8B0000</Color>
+        <Color x:Key="SuccessColor">#006400</Color>
         <Color x:Key="ToolbarColor">#151C25</Color>
         <Color x:Key="BackgroundColor">#1E2634</Color>
         <Color x:Key="DarkBackgroundColor">#151C25</Color>
@@ -26,8 +28,26 @@
             <Setter Property="Margin" Value="12, 0" />
         </Style>
 
+        <Style TargetType="Grid">
+            <!--<Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />-->
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="ColumnSpacing" Value="0" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource BlackColor}" />
+            <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0, 7" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="WidthRequest" Value="100" />
+        </Style>
+
         <Style TargetType="ff:CachedImage">
-            <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+            <!--<Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />-->
             <Setter Property="CacheDuration" Value="30" />
             <Setter Property="DownsampleToViewSize" Value="True" />
             <Setter Property="ErrorPlaceholder" Value="Error" />

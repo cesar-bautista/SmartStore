@@ -98,11 +98,6 @@
                                                     Source = "https://img.icons8.com/office/30/000000/hearts.png"
                                                     VerticalOptions="Center"
                                                     WidthRequest="50" >
-                                        <ff:CachedImage.Behaviors>
-                                            <behaviors:ViewTappedButtonBehavior
-                                                Command="{Binding OnFavorited}"
-                                                AnimationType="Scale"/>
-                                        </ff:CachedImage.Behaviors>
                                         <!--<ff:CachedImage.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BindingContext.OnFavorited, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1" />
                                         </ff:CachedImage.GestureRecognizers>-->

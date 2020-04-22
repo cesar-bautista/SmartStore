@@ -16,6 +16,7 @@ namespace SmartStore.App.Droid
             base.OnCreate(savedInstanceState);
             Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

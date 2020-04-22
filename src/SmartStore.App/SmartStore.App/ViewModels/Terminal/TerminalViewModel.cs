@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +10,9 @@ using SmartStore.App.Extensions;
 using SmartStore.App.Models;
 using SmartStore.App.ViewModels.Base;
 using Xamarin.Forms;
+using ZXing;
+using ZXing.Mobile;
+using ZXing.Net.Mobile.Forms;
 
 namespace SmartStore.App.ViewModels.Terminal
 {
@@ -57,6 +62,8 @@ namespace SmartStore.App.ViewModels.Terminal
 
         public ICommand OnSearch { get; }
 
+        public ICommand OnBarcode { get; }
+
         public ICommand OnDiscard { get; }
 
         public ICommand OnCheckout { get; }
@@ -80,6 +87,7 @@ namespace SmartStore.App.ViewModels.Terminal
             _productService = productService;
             OnSelected = new Command<ProductItemModel>(OnSelectedAction);
             OnSearch = new Command(async () => { await OnSearchAction(); });
+            OnBarcode = new Command(OnBarcodeAction);
             OnDiscard = new Command(OnDiscardAction, CanExcecuteAction);
             OnCheckout = new Command(async () => { await OnCheckoutAction(); }, CanExcecuteAction);
         }
@@ -149,6 +157,40 @@ namespace SmartStore.App.ViewModels.Terminal
                 Products = products.ToObservableCollection();
             }
             IsBusy = false;
+        }
+
+        private void OnBarcodeAction()
+        {
+            var options = new MobileBarcodeScanningOptions
+            {
+                PossibleFormats = new List<BarcodeFormat>
+                {
+                    BarcodeFormat.QR_CODE,
+                    BarcodeFormat.CODE_128,
+                    BarcodeFormat.EAN_13
+                }
+            };
+
+            var page = new ZXingScannerPage(options) { Title = "Scanner" };
+            var closeItem = new ToolbarItem { Text = "Close" };
+            closeItem.Clicked += (sender, args) =>
+            {
+                page.IsScanning = false;
+                Device.BeginInvokeOnMainThread(() => { Application.Current.MainPage.Navigation.PopModalAsync(); });
+            };
+
+            page.ToolbarItems.Add(closeItem);
+            page.OnScanResult += (result) =>
+            {
+                page.IsScanning = false;
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Application.Current.MainPage.Navigation.PopModalAsync();
+                    Filter = string.IsNullOrEmpty(result.Text) ? "No valid code has been scanned" : result.Text;
+                });
+            };
+            Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.CadetBlue }, true);
         }
         #endregion
 

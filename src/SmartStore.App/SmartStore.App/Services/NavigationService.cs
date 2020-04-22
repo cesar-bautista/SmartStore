@@ -30,22 +30,12 @@ namespace SmartStore.App.Services
             return NavigateToAsync<SplashViewModel>();
         }
 
-        public Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
-        {
-            return InternalNavigateToAsync(typeof(TViewModel), null);
-        }
-
-        public Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
+        public Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel
         {
             return InternalNavigateToAsync(typeof(TViewModel), parameter);
         }
 
-        public Task NavigateToAsync(Type viewModelType)
-        {
-            return InternalNavigateToAsync(viewModelType, null);
-        }
-
-        public Task NavigateToAsync(Type viewModelType, object parameter)
+        public Task NavigateToAsync(Type viewModelType, object parameter = null)
         {
             return InternalNavigateToAsync(viewModelType, parameter);
         }

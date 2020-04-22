@@ -33,7 +33,7 @@
                             VerticalOptions="CenterAndExpand" />
 
             <Label Grid.Row="1"
-                   Text="Login"
+                   Text="SmartStore"
                    FontSize="Large"
                    TextColor="{StaticResource WhiteColor}"
                    HorizontalOptions="Center"

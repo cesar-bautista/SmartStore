@@ -118,6 +118,7 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             IsBusy = true;
             await DialogService.ShowAlertAsync("Saved","SmartStore", "Accept");
+            await NavigationService.NavigateToAsync<TerminalViewModel>(ShoppingCart);
             IsBusy = false;
         }
 
@@ -125,6 +126,7 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             IsBusy = true;
             await DialogService.ShowAlertAsync("Pay", "SmartStore", "Accept");
+            await NavigationService.NavigateToAsync<TerminalViewModel>(ShoppingCart);
             IsBusy = false;
         }
 

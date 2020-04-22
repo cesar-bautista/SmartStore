@@ -64,7 +64,7 @@ namespace SmartStore.App.ViewModels.Management
         #endregion
 
         #region Actions
-        private async void OnSelectedAction(object obj)
+        private void OnSelectedAction(object obj)
         {
             if (obj is ProductItemModel item)
             {
@@ -72,7 +72,7 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        private async void OnFavoritedAction(object obj)
+        private void OnFavoritedAction(object obj)
         {
             if (obj is ProductItemModel item)
             {

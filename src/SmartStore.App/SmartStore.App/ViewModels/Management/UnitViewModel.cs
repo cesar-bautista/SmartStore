@@ -61,7 +61,7 @@ namespace SmartStore.App.ViewModels.Management
         #endregion
 
         #region Actions
-        private async void OnSelectedAction(object obj)
+        private void OnSelectedAction(object obj)
         {
             if (obj is UnitItemModel item)
             {

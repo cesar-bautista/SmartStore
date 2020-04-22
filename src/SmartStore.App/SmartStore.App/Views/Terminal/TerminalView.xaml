@@ -55,6 +55,8 @@
                 </SearchBar>
                 <Button Grid.Column="1"
                         Text="Barcode"
+                        Margin="0"
+                        Padding="7"
                         Command="{ Binding OnBarcode }" />
             </Grid>
 

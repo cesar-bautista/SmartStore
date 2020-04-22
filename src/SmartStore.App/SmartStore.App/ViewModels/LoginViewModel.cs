@@ -91,6 +91,7 @@ namespace SmartStore.App.ViewModels
         private async Task OnCancelLoginAction()
         {
             //TODO - perform cancellation logic
+            await Task.Delay(3);
             IsBusy = false;
             IsShowCancel = false;
         }

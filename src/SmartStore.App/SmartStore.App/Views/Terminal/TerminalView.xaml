@@ -151,20 +151,12 @@
                     </Grid.ColumnDefinitions>
                     <Button BackgroundColor="{StaticResource DangerColor}"
                             Command="{ Binding OnDiscard }"
-                            CornerRadius="5"
                             Grid.Column="0"
-                            HorizontalOptions="CenterAndExpand" 
-                            Margin="10,0"
-                            Text="Discard"
-                            VerticalOptions="CenterAndExpand" />
+                            Text="Discard" />
                     <Button BackgroundColor="{StaticResource SuccessColor}"
                             Command="{ Binding OnCheckout }"
-                            CornerRadius="5"
                             Grid.Column="1"
-                            HorizontalOptions="FillAndExpand"
-                            Margin="10,0"
-                            Text="{Binding CheckoutText}"
-                            VerticalOptions="CenterAndExpand" />
+                            Text="{Binding CheckoutText}" />
                 </Grid>
             </pancakeView:PancakeView>
 

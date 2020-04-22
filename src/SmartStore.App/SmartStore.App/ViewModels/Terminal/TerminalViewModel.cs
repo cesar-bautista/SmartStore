@@ -16,7 +16,7 @@ namespace SmartStore.App.ViewModels.Terminal
         #region Attributes
         private readonly IProductService _productService;
         private ObservableCollection<ProductItemModel> _products;
-        private ObservableCollection<ProductItemModel> _shoppingCart;
+        private ObservableCollection<CheckoutItemModel> _shoppingCart;
         private string _filter;
         private string _commandText;
         #endregion
@@ -32,7 +32,7 @@ namespace SmartStore.App.ViewModels.Terminal
             }
         }
 
-        public ObservableCollection<ProductItemModel> ShoppingCart
+        public ObservableCollection<CheckoutItemModel> ShoppingCart
         {
             get => _shoppingCart;
             set
@@ -56,7 +56,7 @@ namespace SmartStore.App.ViewModels.Terminal
         public ICommand OnSelected { get; }
 
         public ICommand OnSearch { get; }
-        
+
         public ICommand OnDiscard { get; }
 
         public ICommand OnCheckout { get; }
@@ -66,8 +66,10 @@ namespace SmartStore.App.ViewModels.Terminal
             get => _commandText;
             set
             {
-                _commandText = $"{ShoppingCart.Count} Items = ${ShoppingCart.Sum(s => s.Price):0.##}";
+                _commandText = $"{ShoppingCart.Sum(s => s.Quantity)} Items = ${ShoppingCart.Sum(s => s.Price):0.##}";
                 OnPropertyChanged();
+                ((Command)OnDiscard).ChangeCanExecute();
+                ((Command)OnCheckout).ChangeCanExecute();
             }
         }
         #endregion
@@ -78,8 +80,8 @@ namespace SmartStore.App.ViewModels.Terminal
             _productService = productService;
             OnSelected = new Command<ProductItemModel>(OnSelectedAction);
             OnSearch = new Command(async () => { await OnSearchAction(); });
-            OnDiscard = new Command(OnDiscardAction);
-            OnCheckout = new Command(OnCheckoutAction);
+            OnDiscard = new Command(OnDiscardAction, CanExcecuteAction);
+            OnCheckout = new Command(async () => { await OnCheckoutAction(); }, CanExcecuteAction);
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -88,7 +90,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
             var list = await _productService.GetListAsync();
             Products = list.ToObservableCollection();
-            ShoppingCart = new ObservableCollection<ProductItemModel>();
+            ShoppingCart = new ObservableCollection<CheckoutItemModel>();
             CheckoutText = string.Empty;
 
             IsBusy = false;
@@ -96,11 +98,26 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Actions
+        private bool CanExcecuteAction()
+        {
+            return ShoppingCart != null &&
+                   ShoppingCart.Any() &&
+                   !IsBusy;
+        }
+
         private void OnSelectedAction(object obj)
         {
             if (obj is ProductItemModel item)
             {
-                ShoppingCart.Add(item);
+                var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
+                if (element != null)
+                    element.Quantity++;
+                else
+                {
+                    element = ToModelMap(item);
+                    ShoppingCart.Add(element);
+                }
+
                 CheckoutText = string.Empty;
             }
         }
@@ -111,8 +128,9 @@ namespace SmartStore.App.ViewModels.Terminal
             CheckoutText = string.Empty;
         }
 
-        private void OnCheckoutAction()
+        private async Task OnCheckoutAction()
         {
+            await NavigationService.NavigateToAsync<CheckoutViewModel>(ShoppingCart);
         }
 
         private async Task OnSearchAction()
@@ -131,6 +149,24 @@ namespace SmartStore.App.ViewModels.Terminal
                 Products = products.ToObservableCollection();
             }
             IsBusy = false;
+        }
+        #endregion
+
+        #region Methods
+        public static CheckoutItemModel ToModelMap(ProductItemModel item)
+        {
+            return new CheckoutItemModel
+            {
+                Id = item.Id,
+                Code = item.Code,
+                Name = item.Name,
+                Description = item.Description,
+                Cost = item.Cost,
+                Price = item.Price,
+                Stock = item.Stock,
+                Quantity = 1,
+                ImageUrl = item.ImageUrl
+            };
         }
         #endregion
     }

@@ -10,6 +10,7 @@
         <!-- GENERAL COLORS -->
         <Color x:Key="WhiteColor">#FFFFFF</Color>
         <Color x:Key="BlackColor">#000000</Color>
+        <Color x:Key="PlaceholderColor">#44545C</Color>
 
         <!-- THEME COLORS -->
         <Color x:Key="AccentColor">#F5C210</Color>
@@ -24,8 +25,25 @@
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-            <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="Margin" Value="12, 0" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+            <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="Margin" Value="5, 5" />
+            <Setter Property="VerticalOptions" Value="Center" /> 
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="5, 5" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+            <Setter Property="TitleColor" Value="{StaticResource WhiteColor}" />
         </Style>
 
         <Style TargetType="Grid">
@@ -39,11 +57,12 @@
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource BlackColor}" />
             <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-            <Setter Property="Margin" Value="0" />
+            <Setter Property="Margin" Value="5, 5" />
             <Setter Property="Padding" Value="0, 7" />
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             <Setter Property="VerticalOptions" Value="CenterAndExpand" />
             <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="CornerRadius" Value="5" />
         </Style>
 
         <Style TargetType="ff:CachedImage">
@@ -51,7 +70,7 @@
             <Setter Property="CacheDuration" Value="30" />
             <Setter Property="DownsampleToViewSize" Value="True" />
             <Setter Property="ErrorPlaceholder" Value="Error" />
-            <Setter Property="LoadingPlaceholder" Value="Logo" />
+            <Setter Property="LoadingPlaceholder" Value="Loading" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="RetryDelay" Value="450" />
             <Setter Property="RetryCount" Value="5" />

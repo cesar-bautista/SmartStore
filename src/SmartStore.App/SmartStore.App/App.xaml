@@ -31,10 +31,34 @@
 
         <Style TargetType="Entry">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+            <Setter Property="TextColor">
+                <Setter.Value>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="Android" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="UWP" Value="{StaticResource BlackColor}"/>
+                    </OnPlatform>
+                </Setter.Value>
+            </Setter>
             <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
             <Setter Property="Margin" Value="5, 5" />
             <Setter Property="VerticalOptions" Value="Center" /> 
+        </Style>
+
+        <Style TargetType="SearchBar">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor">
+                <Setter.Value>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="Android" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="UWP" Value="{StaticResource BlackColor}"/>
+                    </OnPlatform>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="Margin" Value="5, 5" />
+            <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
         <Style TargetType="Picker">

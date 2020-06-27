@@ -12,6 +12,13 @@ namespace SmartStore.App.Services
         {
             await Task.Delay(1000);
 
+            var images = new []
+            {
+                "https://cdn.pixabay.com/photo/2019/06/12/07/12/popcorn-4268489_960_720.jpg",
+                "https://cdn.pixabay.com/photo/2014/09/12/18/20/coca-cola-443123_960_720.png",
+                "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg"
+            };
+
             var list = new List<ProductItemModel>();
             var random = new Random();
             for (var i = 1; i < 11; i++)
@@ -19,7 +26,7 @@ namespace SmartStore.App.Services
                 list.Add(new ProductItemModel
                 {
                     Id = i,
-                    ImageUrl = "https://cdn.shopify.com/s/files/1/1104/4168/products/Allbirds_W_Wool_Runner_Kotare_GREY_ANGLE_0f3bfe63-ac7d-4106-9acf-d26f8414ac53_600x600.png",
+                    ImageUrl = images[random.Next(0, images.Length)],
                     Price = random.NextDouble() * (100 - i) + i,
                     Name = $"Product {i}",
                     Description = $"Product {i}",

@@ -12,7 +12,6 @@ namespace SmartStore.App.ViewModels
         private readonly ISettingsService _settingsService;
         private string _email;
         private string _password;
-        private bool _isShowCancel;
         #endregion
 
         #region Properties
@@ -36,19 +35,8 @@ namespace SmartStore.App.ViewModels
                 ((Command)OnLoginCommand).ChangeCanExecute();
             }
         }
-        public bool IsShowCancel
-        {
-            get => _isShowCancel;
-            set
-            {
-                _isShowCancel = value;
-                Task.Run(() => OnPropertyChanged());
-
-            }
-        }
-
+        
         public ICommand OnLoginCommand { get; }
-        public ICommand OnCancelLoginCommand { get; }
         public ICommand OnForgotPasswordCommand { get; }
         public ICommand OnNewAccountCommand { get; }
         #endregion
@@ -59,7 +47,6 @@ namespace SmartStore.App.ViewModels
             _settingsService = settingsService;
 
             OnLoginCommand = new Command(async () => await OnLoginAction(), CanLoginAction);
-            OnCancelLoginCommand = new Command(async () => await OnCancelLoginAction());
             OnForgotPasswordCommand = new Command(async () => await OnForgotPasswordAction());
             OnNewAccountCommand = new Command(async () => await OnNewAccountAction());
         }
@@ -78,9 +65,6 @@ namespace SmartStore.App.ViewModels
         {
             IsBusy = true;
 
-            //Show the Cancel button after X seconds
-            await Task.Delay(2000).ContinueWith((t) => IsShowCancel = true);
-
             //Simulate an API call to show busy / progress indicator
             await Task.Delay(1000).ContinueWith((t) => IsBusy = false);
 
@@ -88,22 +72,14 @@ namespace SmartStore.App.ViewModels
             await NavigationService.NavigateToAsync<MainViewModel>();
         }
 
-        private async Task OnCancelLoginAction()
-        {
-            //TODO - perform cancellation logic
-            await Task.Delay(3);
-            IsBusy = false;
-            IsShowCancel = false;
-        }
-
         private async Task OnForgotPasswordAction()
         {
-            await DialogService.ShowAlertAsync("Forgot password action!!!", "Hi", "Accept");
+            await DialogService.ShowAlertAsync("Forgot password action!!!");
         }
 
         private async Task OnNewAccountAction()
         {
-            await DialogService.ShowAlertAsync("New account action!!!", "Hi", "Accept");
+            await DialogService.ShowAlertAsync("New account action!!!");
         }
 
         #endregion

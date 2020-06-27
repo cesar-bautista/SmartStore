@@ -15,6 +15,7 @@ namespace SmartStore.App.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly IMenuService _menuService;
 
+        public ICommand OnProfileCommand => new Command(async () => await OnProfileActionAsync());
         public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
         public ICommand ItemSelectedCommand => new Command<MenuItemModel>(SelectMenuItem);
 
@@ -63,6 +64,11 @@ namespace SmartStore.App.ViewModels
             await NavigationService.RemoveLastFromBackStackAsync();
 
             IsBusy = false;
+        }
+
+        private async Task OnProfileActionAsync()
+        {
+            await DialogService.ShowAlertAsync("Profile!");
         }
     }
 }

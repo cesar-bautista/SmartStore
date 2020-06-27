@@ -5,7 +5,7 @@ namespace SmartStore.App.Abstractions
 {
     public interface IDialogService
     {
-        Task ShowAlertAsync(string message, string title, string buttonLabel);
+        Task ShowAlertAsync(string message, string title = "SmartStore", string buttonLabel = "Accept");
 
         IProgressDialog ShowLoadingAsync(string message);
     }

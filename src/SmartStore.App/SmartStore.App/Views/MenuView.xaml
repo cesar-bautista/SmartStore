@@ -24,18 +24,19 @@
                 </Grid.ColumnDefinitions>
                 <ff:CachedImage Aspect="AspectFit"
                                 Grid.Column="0" 
-                                Source = "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png">
+                                Source = "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png"
+                                Margin="10">
                     <ff:CachedImage.Transformations>
                         <fftrans:CircleTransformation />
                     </ff:CachedImage.Transformations>
                     <ff:CachedImage.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SignOutCommand}" />
+                        <TapGestureRecognizer Command="{Binding OnProfileCommand}" />
                     </ff:CachedImage.GestureRecognizers>
                 </ff:CachedImage>
 
                 <StackLayout Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
-                    <Label Text="User Name" TextColor="{StaticResource WhiteColor}" FontSize="16" FontAttributes="Bold" />
-                    <Label Text="Store Name" TextColor="{StaticResource WhiteColor}" FontSize="14" FontAttributes="Italic" />
+                    <Label Text="User Name" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Store Name" FontSize="14" FontAttributes="Italic" />
                 </StackLayout>
             </Grid>
             <StackLayout Grid.Row="1" Spacing="15">

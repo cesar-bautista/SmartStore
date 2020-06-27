@@ -117,16 +117,16 @@ namespace SmartStore.App.ViewModels.Terminal
         private async Task OnSaveAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Saved","SmartStore", "Accept");
-            await NavigationService.NavigateToAsync<TerminalViewModel>(ShoppingCart);
+            await DialogService.ShowAlertAsync("Saved");
+            await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
             IsBusy = false;
         }
 
         private async Task OnPayAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Pay", "SmartStore", "Accept");
-            await NavigationService.NavigateToAsync<TerminalViewModel>(ShoppingCart);
+            await DialogService.ShowAlertAsync("Pay");
+            await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
             IsBusy = false;
         }
 

@@ -92,7 +92,7 @@ namespace SmartStore.App.Services
             return await Task.Run(() => JsonConvert.DeserializeObject<TResult>(responseData, _serializerSettings));
         }
 
-        private HttpClient CreateHttpClient()
+        private static HttpClient CreateHttpClient()
         {
             var httpClient = new HttpClient();
 
@@ -101,7 +101,7 @@ namespace SmartStore.App.Services
             return httpClient;
         }
 
-        private async Task HandleResponse(HttpResponseMessage response)
+        private static async Task HandleResponse(HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)
             {

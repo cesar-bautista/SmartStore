@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using SmartStore.App.Abstractions;
 using SmartStore.App.ViewModels.Base;
 using SmartStore.App.ViewModels.Terminal;
 
@@ -7,13 +6,10 @@ namespace SmartStore.App.ViewModels
 {
     public sealed class MainViewModel : BaseViewModel
     {
-        private readonly INavigationService _navigationService;
-
         private MenuViewModel _menuViewModel;
 
-        public MainViewModel(INavigationService navigationService, MenuViewModel menuViewModel)
+        public MainViewModel(MenuViewModel menuViewModel)
         {
-            _navigationService = navigationService;
             _menuViewModel = menuViewModel;
         }
 
@@ -36,7 +32,7 @@ namespace SmartStore.App.ViewModels
             return Task.WhenAll
             (
                 _menuViewModel.InitializeAsync(navigationData),
-                _navigationService.NavigateToAsync<TerminalViewModel>()
+                NavigationService.NavigateToAsync<TerminalViewModel>()
             );
         }
     }

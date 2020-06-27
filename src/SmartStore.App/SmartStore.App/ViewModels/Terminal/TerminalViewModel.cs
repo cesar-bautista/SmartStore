@@ -119,7 +119,10 @@ namespace SmartStore.App.ViewModels.Terminal
             {
                 var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
                 if (element != null)
+                {
                     element.Quantity++;
+                    element.Price = item.Price * element.Quantity;
+                }
                 else
                 {
                     element = ToModelMap(item);
@@ -190,7 +193,7 @@ namespace SmartStore.App.ViewModels.Terminal
                     Filter = string.IsNullOrEmpty(result.Text) ? "No valid code has been scanned" : result.Text;
                 });
             };
-            Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.CadetBlue }, true);
+            Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.FromRgb(30, 38, 52) }, true);
         }
         #endregion
 

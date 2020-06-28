@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace SmartStore.App.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ActivityIndicatorView : Grid
+    public partial class CustomActivityIndicator : Grid
     {
-        public ActivityIndicatorView()
+        public CustomActivityIndicator()
         {
             InitializeComponent();
         }
@@ -15,7 +15,7 @@ namespace SmartStore.App.Controls
             BindableProperty.Create(
                 nameof(IsRunning), 
                 typeof(bool), 
-                typeof(ActivityIndicatorView),
+                typeof(CustomActivityIndicator),
                 null);
         public bool IsRunning
         {

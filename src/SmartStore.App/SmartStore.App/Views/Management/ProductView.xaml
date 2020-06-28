@@ -8,14 +8,11 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ProductView"
+             BackgroundColor="{StaticResource BackgroundColor}"
              Title="Products">
 
     <ContentPage.Content>
-        <Grid BackgroundColor="{StaticResource BackgroundColor}"
-              Margin="0"
-              Padding="0"
-              ColumnSpacing="0"
-              RowSpacing="0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
@@ -119,7 +116,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <controls:ActivityIndicatorView Grid.Row="0"
+            <controls:CustomActivityIndicator Grid.Row="0"
                                             Grid.RowSpan="2"
                                             IsRunning="{ Binding IsBusy }" />
         </Grid>

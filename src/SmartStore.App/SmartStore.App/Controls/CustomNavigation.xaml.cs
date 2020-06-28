@@ -4,14 +4,14 @@ using Xamarin.Forms.Xaml;
 namespace SmartStore.App.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CustomNavigationView : NavigationPage
+    public partial class CustomNavigation : NavigationPage
     {
-        public CustomNavigationView() : base()
+        public CustomNavigation() : base()
         {
             InitializeComponent();
         }
 
-        public CustomNavigationView(Page root) : base(root)
+        public CustomNavigation(Page root) : base(root)
         {
             InitializeComponent();
         }

@@ -11,9 +11,7 @@
              BackgroundColor="{StaticResource BackgroundColor}"
              Title="Managements">
     <ContentPage.Content>
-        <Grid ColumnSpacing="0"
-              RowSpacing="0">
-
+        <Grid>
             <ListView ItemsSource="{Binding Managements}"
                       behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding OnSelected}"
                       HasUnevenRows="True"
@@ -65,7 +63,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <controls:ActivityIndicatorView Grid.Row="0"
+            <controls:CustomActivityIndicator Grid.Row="0"
                                             IsRunning="{ Binding IsBusy }" />
         </Grid>
     </ContentPage.Content>

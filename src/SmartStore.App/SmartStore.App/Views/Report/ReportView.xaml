@@ -15,7 +15,7 @@
                 HorizontalOptions="CenterAndExpand"
                 TextColor="{StaticResource WhiteColor}" />
 
-            <controls:ActivityIndicatorView IsRunning="{ Binding IsBusy }" />
+            <controls:CustomActivityIndicator IsRunning="{ Binding IsBusy }" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

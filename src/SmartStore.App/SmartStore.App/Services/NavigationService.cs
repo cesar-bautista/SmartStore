@@ -69,7 +69,7 @@ namespace SmartStore.App.Services
 
             if (page is SplashView || page is LoginView)
             {
-                CurrentApplication.MainPage = new CustomNavigationView(page);
+                CurrentApplication.MainPage = new CustomNavigation(page);
             }
             else if (page is MainView)
             {
@@ -77,13 +77,13 @@ namespace SmartStore.App.Services
             }
             else if (CurrentApplication.MainPage is MainView mainPage)
             {
-                if (mainPage.Detail is CustomNavigationView navigationPage)
+                if (mainPage.Detail is CustomNavigation navigationPage)
                 {
                     await navigationPage.PushAsync(page);
                 }
                 else
                 {
-                    navigationPage = new CustomNavigationView(page);
+                    navigationPage = new CustomNavigation(page);
                     mainPage.Detail = navigationPage;
                 }
 
@@ -91,13 +91,13 @@ namespace SmartStore.App.Services
             }
             else
             {
-                if (CurrentApplication.MainPage is CustomNavigationView navigationPage)
+                if (CurrentApplication.MainPage is CustomNavigation navigationPage)
                 {
                     await navigationPage.PushAsync(page);
                 }
                 else
                 {
-                    CurrentApplication.MainPage = new CustomNavigationView(page);
+                    CurrentApplication.MainPage = new CustomNavigation(page);
                 }
             }
 

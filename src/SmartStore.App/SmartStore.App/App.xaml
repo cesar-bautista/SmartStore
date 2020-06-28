@@ -10,7 +10,7 @@
         <!-- GENERAL COLORS -->
         <Color x:Key="WhiteColor">#FFFFFF</Color>
         <Color x:Key="BlackColor">#000000</Color>
-        <Color x:Key="PlaceholderColor">#44545C</Color>
+        <Color x:Key="PlaceholderColor">#5D98B8</Color>
 
         <!-- THEME COLORS -->
         <Color x:Key="AccentColor">#F5C210</Color>
@@ -24,7 +24,7 @@
 
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="TextColor" Value="{StaticResource PlaceholderColor}" />
             <Setter Property="Margin" Value="12, 0" />
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
@@ -34,9 +34,8 @@
             <Setter Property="TextColor">
                 <Setter.Value>
                     <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="Android" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="UWP" Value="{StaticResource BlackColor}"/>
+                        <On Platform="iOS, Android" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource BlackColor}"/>
                     </OnPlatform>
                 </Setter.Value>
             </Setter>
@@ -50,9 +49,8 @@
             <Setter Property="TextColor">
                 <Setter.Value>
                     <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="Android" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="UWP" Value="{StaticResource BlackColor}"/>
+                        <On Platform="iOS, Android" Value="{StaticResource WhiteColor}"/>
+                        <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource BlackColor}"/>
                     </OnPlatform>
                 </Setter.Value>
             </Setter>

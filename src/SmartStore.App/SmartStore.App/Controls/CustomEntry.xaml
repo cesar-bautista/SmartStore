@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SmartStore.App.Controls.CustomEntry"
+             x:Name="Entry"
+             Margin="10, 10"
+             Padding="0">
+    <ContentView.Content>
+        <Grid>
+            <Entry x:Name="EntryField" 
+                   Completed="Handle_Completed"
+                   Text="{Binding Text, Source={x:Reference Entry}}" 
+                   ReturnType="{Binding ReturnType, Source={x:Reference Entry}}"
+                   IsPassword="{Binding IsPassword, Source={x:Reference Entry}}"
+                   Keyboard="{Binding Keyboard, Source={x:Reference Entry}}"
+                   Unfocused="Handle_Unfocused" 
+                   Focused="Handle_Focused">
+            </Entry>
+            <Label x:Name="LabelTitle" 
+                   Text="{Binding Title, Source={x:Reference Entry}}" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Handle_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

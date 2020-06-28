@@ -8,7 +8,7 @@ namespace SmartStore.App.Services
 {
     public class ProductService : IProductService
     {
-        public async Task<IEnumerable<ProductItemModel>> GetListAsync()
+        public async Task<IEnumerable<ProductModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
@@ -19,11 +19,11 @@ namespace SmartStore.App.Services
                 "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg"
             };
 
-            var list = new List<ProductItemModel>();
+            var list = new List<ProductModel>();
             var random = new Random();
             for (var i = 1; i < 11; i++)
             {
-                list.Add(new ProductItemModel
+                list.Add(new ProductModel
                 {
                     Id = i,
                     ImageUrl = images[random.Next(0, images.Length)],

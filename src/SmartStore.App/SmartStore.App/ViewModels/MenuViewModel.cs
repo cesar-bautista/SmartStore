@@ -11,13 +11,13 @@ namespace SmartStore.App.ViewModels
 {
     public sealed class MenuViewModel : BaseViewModel
     {
-        private ObservableCollection<MenuItemModel> _menuItems;
+        private ObservableCollection<MenuModel> _menuItems;
         private readonly ISettingsService _settingsService;
         private readonly IMenuService _menuService;
 
         public ICommand OnProfileCommand => new Command(async () => await OnProfileActionAsync());
         public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
-        public ICommand ItemSelectedCommand => new Command<MenuItemModel>(SelectMenuItem);
+        public ICommand ItemSelectedCommand => new Command<MenuModel>(SelectMenuItem);
 
         public MenuViewModel(ISettingsService settingsService, IMenuService menuService)
         {
@@ -25,7 +25,7 @@ namespace SmartStore.App.ViewModels
             _menuService = menuService;
         }
 
-        public ObservableCollection<MenuItemModel> MenuItems
+        public ObservableCollection<MenuModel> MenuItems
         {
             get => _menuItems;
             set
@@ -41,7 +41,7 @@ namespace SmartStore.App.ViewModels
             MenuItems = list.ToObservableCollection();
         }
 
-        private async void SelectMenuItem(MenuItemModel item)
+        private async void SelectMenuItem(MenuModel item)
         {
             if (!item.IsEnabled) return;
             if (item.ViewModelType != null)

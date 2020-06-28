@@ -13,13 +13,13 @@ namespace SmartStore.App.ViewModels.Management
     public sealed class UnitViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<UnitItemModel> _units;
+        private ObservableCollection<UnitModel> _units;
         private string _filter;
         private readonly IUnitService _unitService;
         #endregion
 
         #region Properties
-        public ObservableCollection<UnitItemModel> Units
+        public ObservableCollection<UnitModel> Units
         {
             get => _units;
             set
@@ -39,7 +39,7 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<UnitItemModel>(OnSelectedAction);
+        public ICommand OnSelected => new Command<UnitModel>(OnSelectedAction);
         public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
         #endregion
 
@@ -63,7 +63,7 @@ namespace SmartStore.App.ViewModels.Management
         #region Actions
         private void OnSelectedAction(object obj)
         {
-            if (obj is UnitItemModel item)
+            if (obj is UnitModel item)
             {
 
             }

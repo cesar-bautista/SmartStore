@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -20,14 +19,14 @@ namespace SmartStore.App.ViewModels.Terminal
     {
         #region Attributes
         private readonly IProductService _productService;
-        private ObservableCollection<ProductItemModel> _products;
-        private ObservableCollection<CheckoutItemModel> _shoppingCart;
+        private ObservableCollection<ProductModel> _products;
+        private ObservableCollection<CheckoutModel> _shoppingCart;
         private string _filter;
         private string _commandText;
         #endregion
 
         #region Properties
-        public ObservableCollection<ProductItemModel> Products
+        public ObservableCollection<ProductModel> Products
         {
             get => _products;
             set
@@ -37,7 +36,7 @@ namespace SmartStore.App.ViewModels.Terminal
             }
         }
 
-        public ObservableCollection<CheckoutItemModel> ShoppingCart
+        public ObservableCollection<CheckoutModel> ShoppingCart
         {
             get => _shoppingCart;
             set
@@ -85,7 +84,7 @@ namespace SmartStore.App.ViewModels.Terminal
         public TerminalViewModel(IProductService productService)
         {
             _productService = productService;
-            OnSelected = new Command<ProductItemModel>(OnSelectedAction);
+            OnSelected = new Command<ProductModel>(OnSelectedAction);
             OnSearch = new Command(async () => { await OnSearchAction(); });
             OnBarcode = new Command(OnBarcodeAction);
             OnDiscard = new Command(OnDiscardAction, CanExcecuteAction);
@@ -98,7 +97,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
             var list = await _productService.GetListAsync();
             Products = list.ToObservableCollection();
-            ShoppingCart = new ObservableCollection<CheckoutItemModel>();
+            ShoppingCart = new ObservableCollection<CheckoutModel>();
             CheckoutText = string.Empty;
 
             IsBusy = false;
@@ -115,7 +114,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         private void OnSelectedAction(object obj)
         {
-            if (obj is ProductItemModel item)
+            if (obj is ProductModel item)
             {
                 var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
                 if (element != null)
@@ -198,9 +197,9 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Methods
-        public static CheckoutItemModel ToModelMap(ProductItemModel item)
+        public static CheckoutModel ToModelMap(ProductModel item)
         {
-            return new CheckoutItemModel
+            return new CheckoutModel
             {
                 Id = item.Id,
                 Code = item.Code,

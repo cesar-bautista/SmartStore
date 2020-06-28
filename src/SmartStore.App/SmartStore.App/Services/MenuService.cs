@@ -13,61 +13,61 @@ namespace SmartStore.App.Services
 {
     public class MenuService : IMenuService
     {
-        public async Task<IEnumerable<MenuItemModel>> GetListAsync()
+        public async Task<IEnumerable<MenuModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            return new List<MenuItemModel>
+            return new List<MenuModel>
             {
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Terminal",
                     ImageUrl = "https://img.icons8.com/office/80/000000/pos-terminal.png",
                     ViewModelType = typeof(TerminalViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Orders",
                     ImageUrl = "https://img.icons8.com/color/96/000000/purchase-order.png",
                     ViewModelType = typeof(OrderViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Inventory",
                     ImageUrl = "https://img.icons8.com/color/96/000000/product.png",
                     ViewModelType = typeof(InventoryViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Managements",
                     ImageUrl = "https://img.icons8.com/color/96/000000/product-documents.png",
                     ViewModelType = typeof(ManagementViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Reports",
                     ImageUrl = "https://img.icons8.com/color/96/000000/business-report.png",
                     ViewModelType = typeof(ReportViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Settings",
                     ImageUrl = "https://img.icons8.com/color/96/000000/automatic.png",
                     ViewModelType = typeof(SettingViewModel),
                     IsEnabled = true
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Help",
                     ImageUrl = "https://img.icons8.com/color/96/000000/questions.png",
                     IsEnabled = false
                 },
-                new MenuItemModel
+                new MenuModel
                 {
                     Title = "Logout",
                     ImageUrl = "https://img.icons8.com/office/80/000000/export.png",

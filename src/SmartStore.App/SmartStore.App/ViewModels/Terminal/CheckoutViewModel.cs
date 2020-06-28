@@ -15,8 +15,8 @@ namespace SmartStore.App.ViewModels.Terminal
     public sealed class CheckoutViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<CheckoutItemModel> _shoppingCart;
-        private ObservableCollection<CustomerItemModel> _customer;
+        private ObservableCollection<CheckoutModel> _shoppingCart;
+        private ObservableCollection<CustomerModel> _customer;
         private readonly ICustomerService _customerService;
         private double _total;
         private double _paidAmount;
@@ -24,7 +24,7 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Properties
-        public ObservableCollection<CheckoutItemModel> ShoppingCart
+        public ObservableCollection<CheckoutModel> ShoppingCart
         {
             get => _shoppingCart;
             set
@@ -34,7 +34,7 @@ namespace SmartStore.App.ViewModels.Terminal
             }
         }
 
-        public ObservableCollection<CustomerItemModel> Customers
+        public ObservableCollection<CustomerModel> Customers
         {
             get => _customer;
             set
@@ -93,7 +93,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         public override async Task InitializeAsync(object navigationData)
         {
-            if (navigationData is ObservableCollection<CheckoutItemModel> items)
+            if (navigationData is ObservableCollection<CheckoutModel> items)
             {
                 IsBusy = true;
 

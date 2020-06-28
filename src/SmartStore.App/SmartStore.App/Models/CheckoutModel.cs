@@ -1,6 +1,6 @@
 ﻿namespace SmartStore.App.Models
 {
-    public class CheckoutItemModel
+    public class CheckoutModel
     {
         public int Id { get; set; }
         public string Code { get; set; }

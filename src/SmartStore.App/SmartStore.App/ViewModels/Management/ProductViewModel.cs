@@ -14,13 +14,13 @@ namespace SmartStore.App.ViewModels.Management
     public sealed class ProductViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<ProductItemModel> _products;
+        private ObservableCollection<ProductModel> _products;
         private string _filter;
         private readonly IProductService _productService;
         #endregion
 
         #region Properties
-        public ObservableCollection<ProductItemModel> Products
+        public ObservableCollection<ProductModel> Products
         {
             get => _products;
             set
@@ -41,8 +41,8 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<ProductItemModel>(OnSelectedAction);
-        public ICommand OnFavorited => new Command<ProductItemModel>(OnFavoritedAction);
+        public ICommand OnSelected => new Command<ProductModel>(OnSelectedAction);
+        public ICommand OnFavorited => new Command<ProductModel>(OnFavoritedAction);
         public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
         #endregion
 
@@ -66,7 +66,7 @@ namespace SmartStore.App.ViewModels.Management
         #region Actions
         private void OnSelectedAction(object obj)
         {
-            if (obj is ProductItemModel item)
+            if (obj is ProductModel item)
             {
 
             }
@@ -74,7 +74,7 @@ namespace SmartStore.App.ViewModels.Management
 
         private void OnFavoritedAction(object obj)
         {
-            if (obj is ProductItemModel item)
+            if (obj is ProductModel item)
             {
 
             }

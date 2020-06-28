@@ -7,14 +7,14 @@ namespace SmartStore.App.Services
 {
     public class CategoryService : ICategoryService
     {
-        public async Task<IEnumerable<CategoryItemModel>> GetListAsync()
+        public async Task<IEnumerable<CategoryModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            var list = new List<CategoryItemModel>();
+            var list = new List<CategoryModel>();
             for (var i = 1; i < 11; i++)
             {
-                list.Add(new CategoryItemModel
+                list.Add(new CategoryModel
                 {
                     Id = i,
                     Name = $"Category {i}",

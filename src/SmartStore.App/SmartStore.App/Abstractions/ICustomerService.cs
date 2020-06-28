@@ -6,6 +6,6 @@ namespace SmartStore.App.Abstractions
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerItemModel>> GetListAsync();
+        Task<IEnumerable<CustomerModel>> GetListAsync();
     }
 }

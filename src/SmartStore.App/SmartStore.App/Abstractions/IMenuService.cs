@@ -6,6 +6,6 @@ namespace SmartStore.App.Abstractions
 {
     public interface IMenuService
     {
-        Task<IEnumerable<MenuItemModel>> GetListAsync();
+        Task<IEnumerable<MenuModel>> GetListAsync();
     }
 }

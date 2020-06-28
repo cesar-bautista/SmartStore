@@ -13,13 +13,13 @@ namespace SmartStore.App.ViewModels.Management
     public sealed class CustomerViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<CustomerItemModel> _customer;
+        private ObservableCollection<CustomerModel> _customer;
         private string _filter;
         private readonly ICustomerService _customerService;
         #endregion
 
         #region Properties
-        public ObservableCollection<CustomerItemModel> Customers
+        public ObservableCollection<CustomerModel> Customers
         {
             get => _customer;
             set
@@ -39,7 +39,7 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<CategoryItemModel>(OnSelectedAction);
+        public ICommand OnSelected => new Command<CategoryModel>(OnSelectedAction);
         public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
         #endregion
 
@@ -63,7 +63,7 @@ namespace SmartStore.App.ViewModels.Management
         #region Actions
         private void OnSelectedAction(object obj)
         {
-            if (obj is CategoryItemModel item)
+            if (obj is CategoryModel item)
             {
 
             }

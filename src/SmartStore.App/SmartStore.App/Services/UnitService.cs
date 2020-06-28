@@ -7,14 +7,14 @@ namespace SmartStore.App.Services
 {
     public class UnitService : IUnitService
     {
-        public async Task<IEnumerable<UnitItemModel>> GetListAsync()
+        public async Task<IEnumerable<UnitModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            var list = new List<UnitItemModel>();
+            var list = new List<UnitModel>();
             for (var i = 1; i < 11; i++)
             {
-                list.Add(new UnitItemModel
+                list.Add(new UnitModel
                 {
                     Id = i,
                     Name = $"Unit {i}",

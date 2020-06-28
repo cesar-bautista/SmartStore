@@ -1,6 +1,6 @@
 ﻿namespace SmartStore.App.Models
 {
-    public class ManagementItemModel
+    public class ManagementModel
     {
         public string Id { get; set; }
         public string ImageUrl { get; set; }

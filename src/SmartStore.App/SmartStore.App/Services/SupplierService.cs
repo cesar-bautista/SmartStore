@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
 using SmartStore.App.Models;
@@ -8,14 +7,14 @@ namespace SmartStore.App.Services
 {
     public class SupplierService : ISupplierService
     {
-        public async Task<IEnumerable<SupplierItemModel>> GetListAsync()
+        public async Task<IEnumerable<SupplierModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            var list = new List<SupplierItemModel>();
+            var list = new List<SupplierModel>();
             for (var i = 1; i < 11; i++)
             {
-                list.Add(new SupplierItemModel
+                list.Add(new SupplierModel
                 {
                     Id = i,
                     Code = $"00{i}",

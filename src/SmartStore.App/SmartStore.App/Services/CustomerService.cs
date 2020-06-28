@@ -8,14 +8,14 @@ namespace SmartStore.App.Services
 {
     public class CustomerService : ICustomerService
     {
-        public async Task<IEnumerable<CustomerItemModel>> GetListAsync()
+        public async Task<IEnumerable<CustomerModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            var list = new List<CustomerItemModel>();
+            var list = new List<CustomerModel>();
             for (var i = 1; i < 11; i++)
             {
-                list.Add(new CustomerItemModel
+                list.Add(new CustomerModel
                 {
                     Id = i,
                     Code = $"00{i}",

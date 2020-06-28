@@ -2,7 +2,7 @@
 
 namespace SmartStore.App.Models
 {
-    public class MenuItemModel
+    public class MenuModel
     {
         public string Title { get; set; }
 

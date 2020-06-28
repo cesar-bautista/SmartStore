@@ -12,12 +12,12 @@ namespace SmartStore.App.ViewModels.Management
     public sealed class ManagementViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<ManagementItemModel> _managements;
+        private ObservableCollection<ManagementModel> _managements;
         private readonly IManagementService _managementService;
         #endregion
 
         #region Properties
-        public ObservableCollection<ManagementItemModel> Managements
+        public ObservableCollection<ManagementModel> Managements
         {
             get => _managements;
             set
@@ -27,7 +27,7 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<ManagementItemModel>(OnSelectedAction);
+        public ICommand OnSelected => new Command<ManagementModel>(OnSelectedAction);
         #endregion
 
         #region Constructors
@@ -50,7 +50,7 @@ namespace SmartStore.App.ViewModels.Management
         #region Actions
         private async void OnSelectedAction(object obj)
         {
-            if (!(obj is ManagementItemModel item)) return;
+            if (!(obj is ManagementModel item)) return;
             switch (item.Id)
             {
                 case "PROD":

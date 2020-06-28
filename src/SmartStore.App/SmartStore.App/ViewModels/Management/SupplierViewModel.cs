@@ -13,13 +13,13 @@ namespace SmartStore.App.ViewModels.Management
     public sealed class SupplierViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<SupplierItemModel> _suppliers;
+        private ObservableCollection<SupplierModel> _suppliers;
         private string _filter;
         private readonly ISupplierService _supplierService;
         #endregion
 
         #region Properties
-        public ObservableCollection<SupplierItemModel> Suppliers
+        public ObservableCollection<SupplierModel> Suppliers
         {
             get => _suppliers;
             set
@@ -39,7 +39,7 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<SupplierItemModel>(OnSelectedAction);
+        public ICommand OnSelected => new Command<SupplierModel>(OnSelectedAction);
         public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
         #endregion
 
@@ -63,7 +63,7 @@ namespace SmartStore.App.ViewModels.Management
         #region Actions
         private void OnSelectedAction(object obj)
         {
-            if (obj is SupplierItemModel item)
+            if (obj is SupplierModel item)
             {
 
             }

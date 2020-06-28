@@ -7,20 +7,20 @@ namespace SmartStore.App.Services
 {
     public class ManagementService : IManagementService
     {
-        public async Task<IEnumerable<ManagementItemModel>> GetListAsync()
+        public async Task<IEnumerable<ManagementModel>> GetListAsync()
         {
             await Task.Delay(1000);
 
-            return new List<ManagementItemModel>
+            return new List<ManagementModel>
             {
-                new ManagementItemModel
+                new ManagementModel
                 {
                     Id = "PROD",
                     ImageUrl = "https://img.icons8.com/color/48/000000/product.png",
                     Title = "Products",
                     Description = "View list, edit, create and delete"
                 },
-                new ManagementItemModel
+                new ManagementModel
                 {
                     Id = "CATE",
                     ImageUrl = "https://img.icons8.com/color/48/000000/opened-folder.png",
@@ -28,21 +28,21 @@ namespace SmartStore.App.Services
                     Description = "View list, edit, create and delete"
                 }
                 ,
-                new ManagementItemModel
+                new ManagementModel
                 {
                     Id = "UNIT",
                     ImageUrl = "https://img.icons8.com/color/48/000000/puzzle.png",
                     Title = "Units",
                     Description = "View list, edit, create and delete"
                 },
-                new ManagementItemModel
+                new ManagementModel
                 {
                     Id = "CUST",
                     ImageUrl = "https://img.icons8.com/color/48/000000/group.png",
                     Title = "Customers",
                     Description = "View list, edit, create and delete"
                 },
-                new ManagementItemModel
+                new ManagementModel
                 {
                     Id = "SUPP",
                     ImageUrl = "https://img.icons8.com/color/48/000000/supplier.png",

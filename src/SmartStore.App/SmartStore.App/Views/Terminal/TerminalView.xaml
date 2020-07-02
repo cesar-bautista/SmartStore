@@ -10,7 +10,6 @@
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
              xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             BackgroundColor="{StaticResource BackgroundColor}"
              Title="Terminal">
 
     <ContentPage.Resources>
@@ -32,28 +31,24 @@
     </ContentPage.Triggers>
 
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-
+        <Grid RowDefinitions="Auto, *, 50">
             <Grid Grid.Row="0"
-                  ColumnSpacing="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="100" />
-                </Grid.ColumnDefinitions>
-                <SearchBar Grid.Column="0"
-                           Placeholder="Search..."
-                           Margin="0"
-                           Text="{Binding Filter, Mode=TwoWay}"
-                           SearchCommand="{Binding OnSearch}" />
+                  ColumnDefinitions ="*, 110"
+                  ColumnSpacing="5"
+                  Padding="5, 3, 5, 0">
+                <Frame Grid.Column="0"
+                       Margin="0"
+                       Padding="0"
+                       CornerRadius="0">
+                    <SearchBar Text="{Binding Filter, Mode=TwoWay}"
+                               SearchCommand="{Binding OnSearch}"
+                               Margin="0"
+                               Placeholder="Search..." />
+                </Frame>
                 <Button Grid.Column="1"
                         Text="Barcode"
                         Margin="0"
-                        Padding="7"
+                        Padding="2, 0"
                         Command="{ Binding OnBarcode }" />
             </Grid>
 
@@ -72,38 +67,26 @@
                             BindableLayout.ItemsSource="{Binding Products}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Padding="1"
-                                         Margin="2"
+                            <StackLayout Padding="0"
+                                         Margin="5"
                                          HorizontalOptions="Center"
                                          Orientation="Horizontal"
                                          VerticalOptions="Center">
-                                <pancakeView:PancakeView BorderColor="{StaticResource WhiteColor}"
-                                                         BorderThickness="1"
-                                                         CornerRadius="15, 0, 0, 15"
-                                                         Elevation="5"
-                                                         HasShadow="True"
-                                                         Padding="0">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="100" />
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
+                                <pancakeView:PancakeView>
+                                    <Grid RowDefinitions="120"  ColumnDefinitions="120">
                                         <ff:CachedImage Aspect="AspectFit"
                                                     Grid.Row="0"
                                                     HorizontalOptions="FillAndExpand"
                                                     Source="{Binding ImageUrl}"
-                                                    Margin="1, 5"
                                                     VerticalOptions="Center" />
 
-                                        <StackLayout Grid.Row="1"
+                                        <StackLayout Grid.Row="0"
                                                      HorizontalOptions="FillAndExpand"
-                                                     VerticalOptions="FillAndExpand"
+                                                     VerticalOptions="EndAndExpand"
                                                      BackgroundColor="{StaticResource BlackColor}"
                                                      Opacity=".7"
                                                      Padding="1">
                                             <Label Text="{Binding Name}"
-                                                   TextColor="#14B7F8" 
                                                    HorizontalTextAlignment="Center" 
                                                    VerticalOptions="CenterAndExpand"/>
                                             <Label Text="{Binding Price, StringFormat='${0:N}'}" 
@@ -140,32 +123,30 @@
             </ScrollView>
 
             <pancakeView:PancakeView CornerRadius="20,20,0,0"
-                                     BackgroundColor="{StaticResource ToolbarColor}"
+                                     BackgroundColor="{StaticResource DarkBackgroundColor}"
+                                     BorderColor="Transparent"
                                      Grid.Row="2"
-                                     Elevation="3"
-                                     HasShadow="True"
-                                     Padding="5,0,5,0"
+                                     Padding="5,5,5,0"
                                      x:Name="StoryBoardBox">
                 <Grid HorizontalOptions="FillAndExpand"
-                      VerticalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                      VerticalOptions="CenterAndExpand"
+                      ColumnDefinitions ="Auto, *">
                     <Button BackgroundColor="{StaticResource DangerColor}"
                             Command="{ Binding OnDiscard }"
                             Grid.Column="0"
+                            Margin="5, 0"
                             Text="Discard" />
                     <Button BackgroundColor="{StaticResource SuccessColor}"
                             Command="{ Binding OnCheckout }"
                             Grid.Column="1"
+                            Margin="5, 0"
                             Text="{Binding CheckoutText}" />
                 </Grid>
             </pancakeView:PancakeView>
 
             <controls:CustomActivityIndicator Grid.Row="0"
-                                            Grid.RowSpan="3"
-                                            IsRunning="{ Binding IsBusy }" />
+                                              Grid.RowSpan="3"
+                                              IsRunning="{ Binding IsBusy }" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

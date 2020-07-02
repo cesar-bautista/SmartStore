@@ -7,7 +7,6 @@
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.LoginView"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             BackgroundColor="{StaticResource BackgroundColor}"
              Title="Login">
 
     <ContentPage.Content>
@@ -15,8 +14,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="4*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <BoxView Grid.Row="0"
@@ -36,48 +37,29 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center" />
 
-            <StackLayout Grid.Row="2"
-                         VerticalOptions="Fill"
-                         HorizontalOptions="Center"
-                         Spacing="15">
+            <Entry Grid.Row="2"
+                   Grid.Column="0"
+                   Keyboard="Email"
+                   Placeholder="Email"
+                   Text="{ Binding Email }" />
 
-                <StackLayout HorizontalOptions="Center" Spacing="5">
-                    <controls:CustomEntry Text="{ Binding Email }"
-                                          Title="Email"
-                                          Keyboard="Email"
-                                          VerticalOptions="FillAndExpand"
-                                          WidthRequest="300" />
-                    <!--<Label Text="Email:" />
-                    <Entry Text="{ Binding Email }"
-                           Keyboard="Email"
-                           WidthRequest="300" />-->
-                </StackLayout>
+            <Entry Grid.Row="3"
+                   Grid.Column="0"
+                   Keyboard="Default"
+                   Placeholder="Password"
+                   IsPassword="True"
+                   Text="{ Binding Password }" />
 
-                <StackLayout HorizontalOptions="Center" Spacing="5">
-                    <controls:CustomEntry Text="{ Binding Password }"
-                                          Title="Password"
-                                          Keyboard="Default"
-                                          IsPassword="True"
-                                          VerticalOptions="FillAndExpand"
-                                          WidthRequest="300" />
-                    <!--<Label Text="Password:" />
-                    <Entry Text="{ Binding Password }"
-                           WidthRequest="300"
-                           IsPassword="True" />-->
-                </StackLayout>
+            <Button Grid.Row="4"
+                    Grid.Column="0"
+                    Text="Login"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="15,10"
+                    WidthRequest="150"
+                    Command="{ Binding OnLoginCommand }" />
 
-                <StackLayout HorizontalOptions="Center" Spacing="5">
-                    <Button Text="Login"
-                        HorizontalOptions="CenterAndExpand"
-                        VerticalOptions="CenterAndExpand"
-                        Margin="15,10"
-                        WidthRequest="150"
-                        Command="{ Binding OnLoginCommand }" />
-                </StackLayout>
-
-            </StackLayout>
-
-            <StackLayout Grid.Row="3"
+            <StackLayout Grid.Row="5"
                          VerticalOptions="CenterAndExpand"
                          Margin="10,0,0,15"
                          Spacing="15">
@@ -97,7 +79,7 @@
             </StackLayout>
 
             <controls:CustomActivityIndicator Grid.Row="0"
-                                            Grid.RowSpan="4"
+                                            Grid.RowSpan="6"
                                             IsRunning="{ Binding IsBusy }" />
         </Grid>
     </ContentPage.Content>

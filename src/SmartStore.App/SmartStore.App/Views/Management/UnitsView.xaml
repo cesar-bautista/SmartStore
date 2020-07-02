@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="SmartStore.App.Views.Management.UnitsView"
+             Title="Units">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, *">
+            <Frame Margin="10,10,10,0"
+                   Padding="0"
+                   CornerRadius="0">
+                <SearchBar Text="{Binding Filter, Mode=TwoWay}"
+                           SearchCommand="{Binding OnSearch}"
+                           Placeholder="Search..." />
+            </Frame>
+
+            <CollectionView x:Name="CollectionView1"
+                            Grid.Row="1"
+                            ItemsSource="{Binding Units}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Margin="10, 3">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No items match your filter."
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" Margin="5, 10">
+                            <pancakeView:PancakeView>
+                                <Grid Padding="5"
+                                      Margin="2"
+                                      RowDefinitions="Auto, Auto">
+                                    <Label Grid.Row="0"
+                                           Text="{Binding Name}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalOptions="CenterAndExpand"
+                                           FontAttributes="Bold" />
+                                    <Label Grid.Row="1"
+                                           Text="{Binding Description}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalOptions="CenterAndExpand" />
+                                </Grid>
+                            </pancakeView:PancakeView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <pancakeView:PancakeView Grid.RowSpan="2"
+                                     Margin="8"
+                                     Padding="0"
+                                     CornerRadius="28"
+                                     HeightRequest="56"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="End"
+                                     WidthRequest="56">
+                <Label Text="Add"
+                       HorizontalOptions="CenterAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding OnAdd }" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </pancakeView:PancakeView>
+
+            <controls:CustomActivityIndicator Grid.Row="0"
+                                              Grid.RowSpan="2"
+                                              IsRunning="{ Binding IsBusy }" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

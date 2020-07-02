@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using SmartStore.App.Abstractions;
+using SmartStore.App.Abstractions.Ui;
 using SmartStore.App.ViewModels.Base;
 using Xamarin.Forms;
 

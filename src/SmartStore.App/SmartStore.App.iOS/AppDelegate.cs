@@ -21,6 +21,7 @@ namespace SmartStore.App.iOS
             global::Xamarin.Forms.Forms.Init();
             Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Xamarin.Forms.FormsMaterial.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
 

@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SmartStore.App.Abstractions;
+using SmartStore.App.Abstractions.Business;
+using SmartStore.App.Abstractions.Core;
 using SmartStore.App.Extensions;
 using SmartStore.App.Models;
 using SmartStore.App.ViewModels.Base;
@@ -37,7 +38,7 @@ namespace SmartStore.App.ViewModels
 
         public override async Task InitializeAsync(object navigationData)
         {
-            var list = await _menuService.GetListAsync();
+            var list = await _menuService.GetMenuListAsync();
             MenuItems = list.ToObservableCollection();
         }
 
@@ -46,7 +47,7 @@ namespace SmartStore.App.ViewModels
             if (!item.IsEnabled) return;
             if (item.ViewModelType != null)
             {
-                await NavigationService.NavigateToAsync(item.ViewModelType, null);
+                await NavigationService.NavigateToAsync(item.ViewModelType);
             }
             else
             {

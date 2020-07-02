@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions;
+using SmartStore.App.Abstractions.Business;
 using SmartStore.App.Extensions;
 using SmartStore.App.Models;
 using SmartStore.App.ViewModels.Base;

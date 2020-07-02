@@ -5,12 +5,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="SmartStore.App.App"
-             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
     <Application.Resources>
         <!-- GENERAL COLORS -->
         <Color x:Key="WhiteColor">#FFFFFF</Color>
         <Color x:Key="BlackColor">#000000</Color>
-        <Color x:Key="PlaceholderColor">#5D98B8</Color>
+        <Color x:Key="PlaceholderColor">#44545C</Color>
 
         <!-- THEME COLORS -->
         <Color x:Key="AccentColor">#F5C210</Color>
@@ -22,39 +23,33 @@
         <Color x:Key="MenuBackgroundColor">#44545C</Color>
         <Color x:Key="SplashBackgroundColor">#151C25</Color>
 
+        <Style ApplyToDerivedTypes="True" TargetType="Page">
+            <Setter Property="Visual" Value="Material"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}"/>
+        </Style>
+
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
             <Setter Property="Margin" Value="12, 0" />
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
         <Style TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}" />
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor">
-                <Setter.Value>
-                    <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS, Android" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource BlackColor}"/>
-                    </OnPlatform>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
             <Setter Property="Margin" Value="5, 5" />
-            <Setter Property="VerticalOptions" Value="Center" /> 
+            <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="VerticalOptions" Value="Center" />
         </Style>
 
         <Style TargetType="SearchBar">
+            <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}" />
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor">
-                <Setter.Value>
-                    <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS, Android" Value="{StaticResource WhiteColor}"/>
-                        <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource BlackColor}"/>
-                    </OnPlatform>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
             <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
+            <Setter Property="CancelButtonColor" Value="{StaticResource PlaceholderColor}" />
             <Setter Property="Margin" Value="5, 5" />
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
@@ -69,7 +64,6 @@
         </Style>
 
         <Style TargetType="Grid">
-            <!--<Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />-->
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="ColumnSpacing" Value="0" />
@@ -87,8 +81,13 @@
             <Setter Property="CornerRadius" Value="5" />
         </Style>
 
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
+
         <Style TargetType="ff:CachedImage">
-            <!--<Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />-->
             <Setter Property="CacheDuration" Value="30" />
             <Setter Property="DownsampleToViewSize" Value="True" />
             <Setter Property="ErrorPlaceholder" Value="Error" />
@@ -96,6 +95,14 @@
             <Setter Property="Margin" Value="0" />
             <Setter Property="RetryDelay" Value="450" />
             <Setter Property="RetryCount" Value="5" />
+        </Style>
+
+        <Style TargetType="pancakeView:PancakeView">
+            <Setter Property="BorderColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10, 0, 0, 10"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
         </Style>
     </Application.Resources>
 </Application>

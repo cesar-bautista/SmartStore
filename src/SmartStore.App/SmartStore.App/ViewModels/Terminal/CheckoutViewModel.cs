@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SmartStore.App.Abstractions;
 using SmartStore.App.Abstractions.Business;
 using SmartStore.App.Extensions;
 using SmartStore.App.Models;
@@ -99,7 +98,7 @@ namespace SmartStore.App.ViewModels.Terminal
                 IsBusy = true;
 
                 ShoppingCart = items;
-                PaidAmount = Total = items.Sum(s => s.Price * s.Quantity);
+                PaidAmount = Total = items.Sum(s => s.Total);
 
                 var list = await _customerService.GetListAsync();
                 Customers = list.ToObservableCollection();

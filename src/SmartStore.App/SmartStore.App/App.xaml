@@ -63,6 +63,14 @@
             <Setter Property="TitleColor" Value="{StaticResource WhiteColor}" />
         </Style>
 
+        <Style TargetType="DatePicker">
+            <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="5, 5" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+        </Style>
+
         <Style TargetType="Grid">
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />

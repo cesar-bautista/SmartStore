@@ -18,7 +18,7 @@ namespace SmartStore.App.Services.Business
                 {
                     Id = i,
                     Name = $"Unit {i}",
-                    Description = $"Unit {i}"
+                    Description = $"Description {i}"
                 });
             }
 

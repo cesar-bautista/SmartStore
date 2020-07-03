@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SmartStore.App.Abstractions;
 using SmartStore.App.Abstractions.Business;
 using SmartStore.App.Extensions;
 using SmartStore.App.Models;
@@ -73,7 +72,7 @@ namespace SmartStore.App.ViewModels.Terminal
             get => _commandText;
             set
             {
-                _commandText = $"{ShoppingCart.Sum(s => s.Quantity)} Items = ${ShoppingCart.Sum(s => s.Price):0.##}";
+                _commandText = $"{ShoppingCart.Sum(s => s.Quantity)} Items = ${ShoppingCart.Sum(s => s.Total):0.##}";
                 OnPropertyChanged();
                 ((Command)OnDiscard).ChangeCanExecute();
                 ((Command)OnCheckout).ChangeCanExecute();
@@ -113,24 +112,20 @@ namespace SmartStore.App.ViewModels.Terminal
                    !IsBusy;
         }
 
-        private void OnSelectedAction(object obj)
+        private void OnSelectedAction(ProductModel item)
         {
-            if (obj is ProductModel item)
+            var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
+            if (element != null)
             {
-                var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
-                if (element != null)
-                {
-                    element.Quantity++;
-                    element.Price = item.Price * element.Quantity;
-                }
-                else
-                {
-                    element = ToModelMap(item);
-                    ShoppingCart.Add(element);
-                }
-
-                CheckoutText = string.Empty;
+                element.Quantity++;
             }
+            else
+            {
+                element = ToModelMap(item);
+                ShoppingCart.Add(element);
+            }
+
+            CheckoutText = string.Empty;
         }
 
         private void OnDiscardAction()

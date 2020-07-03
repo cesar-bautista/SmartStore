@@ -30,15 +30,15 @@ namespace SmartStore.App.Services.Business
                     ImageUrl = images[random.Next(0, images.Length)],
                     Price = random.NextDouble() * (100 - i) + i,
                     Name = $"Product {i}",
-                    Description = $"Product {i}",
+                    Description = $"Description {i}",
                     Code = "00" + i,
                     Cost = random.NextDouble() * (100 - i) + i,
-                    MinStock = 5,
-                    Stock = random.Next() * (100 - i) + i,
-                    SupplierId = 1,
-                    CategoryId = 1,
-                    UnitId = 1,
-                    IsFavorite = random.Next(i, 100) < 10
+                    MinStock = random.Next(1, 100 - i),
+                    Stock = random.Next(1, 100 - i),
+                    SupplierId = random.Next(1, 10),
+                    CategoryId = random.Next(1, 10),
+                    UnitId = random.Next(1, 10),
+                    IsFavorite = random.Next(i, 20) < 10
                 });
             }
 

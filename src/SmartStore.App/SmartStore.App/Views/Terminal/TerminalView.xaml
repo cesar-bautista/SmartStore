@@ -68,17 +68,17 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="0"
-                                         Margin="5"
+                                         Margin="3"
                                          HorizontalOptions="Center"
                                          Orientation="Horizontal"
                                          VerticalOptions="Center">
                                 <pancakeView:PancakeView>
-                                    <Grid RowDefinitions="120"  ColumnDefinitions="120">
+                                    <Grid RowDefinitions="110" ColumnDefinitions="110">
                                         <ff:CachedImage Aspect="AspectFit"
                                                     Grid.Row="0"
-                                                    HorizontalOptions="FillAndExpand"
+                                                    HorizontalOptions="CenterAndExpand"
                                                     Source="{Binding ImageUrl}"
-                                                    VerticalOptions="Center" />
+                                                    VerticalOptions="FillAndExpand" />
 
                                         <StackLayout Grid.Row="0"
                                                      HorizontalOptions="FillAndExpand"

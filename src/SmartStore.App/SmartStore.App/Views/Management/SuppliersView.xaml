@@ -65,12 +65,17 @@
                                            VerticalOptions="CenterAndExpand"/>
                                 </Grid>
                             </pancakeView:PancakeView>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1"
+                                                      CommandParameter="{Binding}"/>
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <pancakeView:PancakeView Grid.RowSpan="2"
+                                     BackgroundColor="{StaticResource BlackColor}"
                                      Margin="8"
                                      Padding="0"
                                      CornerRadius="28"
@@ -78,12 +83,10 @@
                                      HorizontalOptions="End"
                                      VerticalOptions="End"
                                      WidthRequest="56">
-                <Label Text="Add"
-                       HorizontalOptions="CenterAndExpand">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding OnAdd }" />
-                    </Label.GestureRecognizers>
-                </Label>
+                <Label Text="Add" HorizontalOptions="CenterAndExpand" />
+                <pancakeView:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding OnAdd }" />
+                </pancakeView:PancakeView.GestureRecognizers>
             </pancakeView:PancakeView>
 
             <controls:CustomActivityIndicator Grid.Row="0"

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
@@ -39,42 +38,50 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" Margin="5, 10">
+                        <StackLayout Padding="5" Margin="5">
                             <pancakeView:PancakeView>
-                                <Grid Padding="5"
-                                      Margin="2"
-                                      RowDefinitions="Auto, 130, Auto, Auto">
+                                <Grid RowDefinitions="130">
                                     <ff:CachedImage Aspect="AspectFit"
                                                     Grid.Row="0"
-                                                    HorizontalOptions="End"
-                                                    Source = "https://img.icons8.com/office/30/000000/hearts.png"
-                                                    VerticalOptions="Center"
-                                                    WidthRequest="50" >
-                                    </ff:CachedImage>
-
-                                    <ff:CachedImage Aspect="AspectFit"
-                                                    Grid.Row="1"
-                                                    HeightRequest="200"
-                                                    HorizontalOptions="Center"
+                                                    HorizontalOptions="CenterAndExpand"
                                                     Source = "{Binding ImageUrl}"
-                                                    VerticalOptions="Center" />
-                                    <Label Grid.Row="2"
-                                           Text="{Binding Name}"
-                                           HorizontalTextAlignment="Center"
-                                           VerticalOptions="CenterAndExpand"/>
-                                    <Label Grid.Row="3"
-                                           Text="{Binding Price, StringFormat='${0:N}'}"
-                                           HorizontalTextAlignment="Center"
-                                           VerticalOptions="CenterAndExpand"
-                                           FontAttributes="Bold"/>
+                                                    VerticalOptions="FillAndExpand" />
+                                    <ff:CachedImage Aspect="AspectFill"
+                                                    Grid.Row="0"
+                                                    HorizontalOptions="End"
+                                                    Source="https://img.icons8.com/office/30/000000/hearts.png"
+                                                    VerticalOptions="Start"
+                                                    IsVisible="{Binding IsFavorite}"
+                                                    HeightRequest="30"
+                                                    WidthRequest="30" >
+                                    </ff:CachedImage>
+                                    <StackLayout Grid.Row="0"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="EndAndExpand"
+                                                 BackgroundColor="{StaticResource BlackColor}"
+                                                 Opacity=".7"
+                                                 Padding="1">
+                                        <Label Text="{Binding Name}"
+                                               HorizontalTextAlignment="Center" 
+                                               VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Price, StringFormat='${0:N}'}" 
+                                               HorizontalTextAlignment="Center" 
+                                               VerticalOptions="CenterAndExpand" 
+                                               FontAttributes="Bold"/>
+                                    </StackLayout>
                                 </Grid>
                             </pancakeView:PancakeView>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}" NumberOfTapsRequired="1"
+                                                      CommandParameter="{Binding}"/>
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <pancakeView:PancakeView Grid.RowSpan="2"
+                                     BackgroundColor="{StaticResource BlackColor}"
                                      Margin="8"
                                      Padding="0"
                                      CornerRadius="28"
@@ -82,12 +89,10 @@
                                      HorizontalOptions="End"
                                      VerticalOptions="End"
                                      WidthRequest="56">
-                <Label Text="Add"
-                       HorizontalOptions="CenterAndExpand">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding OnAdd }" />
-                    </Label.GestureRecognizers>
-                </Label>
+                <Label Text="Add" HorizontalOptions="CenterAndExpand" />
+                <pancakeView:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{ Binding OnAdd }" />
+                </pancakeView:PancakeView.GestureRecognizers>
             </pancakeView:PancakeView>
 
             <controls:CustomActivityIndicator Grid.Row="0"

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
+             mc:Ignorable="d"
+             x:Class="SmartStore.App.Views.Management.CustomerView"
+             Title="Customer">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding OnCancel}" Text="Cancel" />
+        <ToolbarItem Command="{Binding OnSave}" Text="Save" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="12"
+                  RowDefinitions="Auto, Auto, Auto">
+
+                <Grid Grid.Row="0"
+                      ColumnDefinitions="Auto, *"
+                      RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+                    <Label Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Text="Customer" />
+
+                    <Image Grid.Row="1"
+                           HeightRequest="36"
+                           VerticalOptions="Center"
+                           WidthRequest="36" />
+
+                    <Entry Grid.Row="1"
+                           Grid.Column="1"
+                           Keyboard="Numeric"
+                           Placeholder="Code"
+                           IsReadOnly="True"
+                           Text="{Binding Customer.Code}" />
+                    <Entry Grid.Row="2"
+                           Grid.Column="1"
+                           Keyboard="Text"
+                           Placeholder="Name"
+                           Text="{Binding Customer.Name}" />
+                    <Entry Grid.Row="3"
+                           Grid.Column="1"
+                           Keyboard="Text"
+                           Placeholder="Description"
+                           Text="{Binding Customer.Description}" />
+                    <DatePicker Grid.Row="4"
+                           Grid.Column="1"
+                           Date="{Binding Customer.BirthDate}" />
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      ColumnDefinitions="Auto, *"
+                      RowDefinitions="Auto, Auto, Auto, Auto">
+                    <Label Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Text="Contact" />
+
+                    <Image Grid.Row="1"
+                           HeightRequest="36"
+                           VerticalOptions="Center"
+                           WidthRequest="36" />
+
+                    <Entry Grid.Row="1"
+                           Grid.Column="1"
+                           Keyboard="Numeric"
+                           Placeholder="Phone Number"
+                           Text="{Binding Customer.PhoneNumber}" />
+                    <Entry Grid.Row="2"
+                           Grid.Column="1"
+                           Keyboard="Email"
+                           Placeholder="Email"
+                           Text="{Binding Customer.Email}" />
+                    <Entry Grid.Row="3"
+                           Grid.Column="1"
+                           Keyboard="Text"
+                           Placeholder="Address"
+                           Text="{Binding Customer.Address}" />
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      ColumnDefinitions="Auto, *"
+                      RowDefinitions="Auto, Auto">
+                    <Label Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Text="Others" />
+
+                    <Image Grid.Row="1"
+                           HeightRequest="36"
+                           VerticalOptions="Center"
+                           WidthRequest="36" />
+
+                    <Entry Grid.Row="1"
+                           Grid.Column="1"
+                           Keyboard="Numeric"
+                           Placeholder="Discount Rate"
+                           Text="{Binding Customer.DiscountRate}" />
+                </Grid>
+                <controls:CustomActivityIndicator Grid.Row="0"
+                                                  Grid.RowSpan="3"
+                                                  IsRunning="{ Binding IsBusy }" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

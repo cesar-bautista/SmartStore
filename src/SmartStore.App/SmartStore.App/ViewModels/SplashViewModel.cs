@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using SmartStore.App.Abstractions;
 using SmartStore.App.Abstractions.Core;
 using SmartStore.App.ViewModels.Base;
 

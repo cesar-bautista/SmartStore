@@ -41,15 +41,18 @@ namespace SmartStore.App.ViewModels.Management
             }
         }
 
-        public ICommand OnSelected => new Command<ProductModel>(OnSelectedAction);
-        public ICommand OnFavorited => new Command<ProductModel>(OnFavoritedAction);
-        public ICommand OnSearch => new Command(async () => { await OnSearchAction(); });
+        public ICommand OnSearch { get; }
+        public ICommand OnSelected { get; }
+        public ICommand OnAdd { get; }
         #endregion
 
         #region Constructors
         public ProductsViewModel(IProductService productService)
         {
             _productService = productService;
+            OnSearch = new Command(async () => { await OnSearchAction(); });
+            OnSelected = new Command<ProductModel>(async item => await OnSelectedAction(item));
+            OnAdd = new Command(async () => await OnAddAction());
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -64,20 +67,18 @@ namespace SmartStore.App.ViewModels.Management
         #endregion
 
         #region Actions
-        private void OnSelectedAction(object obj)
+        private async Task OnSelectedAction(ProductModel item)
         {
-            if (obj is ProductModel item)
-            {
-
-            }
+            IsBusy = true;
+            await NavigationService.NavigateToAsync<ProductViewModel>(item);
+            IsBusy = false;
         }
 
-        private void OnFavoritedAction(object obj)
+        private async Task OnAddAction()
         {
-            if (obj is ProductModel item)
-            {
-
-            }
+            IsBusy = true;
+            await NavigationService.NavigateToAsync<ProductViewModel>();
+            IsBusy = false;
         }
 
         private async Task OnSearchAction()

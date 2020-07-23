@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SmartStore.App.Abstractions.Core;
+using SmartStore.App.Abstractions.Device;
 using Xamarin.Forms;
 
-namespace SmartStore.App.Services.Core
+namespace SmartStore.App.Services.Device
 {
     public class SettingsService : ISettingsService
     {

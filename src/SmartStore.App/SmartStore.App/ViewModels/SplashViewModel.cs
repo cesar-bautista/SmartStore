@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using SmartStore.App.Abstractions.Core;
+using SmartStore.App.Abstractions.Device;
 using SmartStore.App.ViewModels.Base;
 
 namespace SmartStore.App.ViewModels

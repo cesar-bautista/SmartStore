@@ -1,28 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using SmartStore.App.Abstractions.Business;
+using SmartStore.App.Abstractions.Data;
 using SmartStore.App.Models;
+using SmartStore.App.Services.Data.Entities;
 
 namespace SmartStore.App.Services.Business
 {
     public class UnitService : IUnitService
     {
+        private readonly IMapper _mapper;
+        private readonly IUnitRepository _unitRepository;
+
+        public UnitService(IMapper mapper, IUnitRepository unitRepository)
+        {
+            _mapper = mapper;
+            _unitRepository = unitRepository;
+        }
+
         public async Task<IEnumerable<UnitModel>> GetListAsync()
         {
-            await Task.Delay(1000);
+            var list = await _unitRepository.Get();
+            return _mapper.Map<IEnumerable<UnitEntity>, IEnumerable<UnitModel>>(list);
+        }
 
-            var list = new List<UnitModel>();
-            for (var i = 1; i < 11; i++)
-            {
-                list.Add(new UnitModel
-                {
-                    Id = i,
-                    Name = $"Unit {i}",
-                    Description = $"Description {i}"
-                });
-            }
+        public async Task<UnitModel> SaveAsync(UnitModel model)
+        {
+            var entity = _mapper.Map<UnitModel, UnitEntity>(model);
+            var result = await _unitRepository.Upsert(entity);
+            return result > 0 ? model : null;
+        }
 
-            return list;
+        public async Task<bool> DeleteAsync(UnitModel model)
+        {
+            var entity = _mapper.Map<UnitModel, UnitEntity>(model);
+            var result = await _unitRepository.Delete(entity);
+            return result > 0;
         }
     }
 }

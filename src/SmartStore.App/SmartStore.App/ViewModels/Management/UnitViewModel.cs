@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions.Business;
 using SmartStore.App.Models;
@@ -41,9 +42,9 @@ namespace SmartStore.App.ViewModels.Management
             IsBusy = true;
 
             if (navigationData is UnitModel item)
-            {
                 Unit = item;
-            }
+            else
+                Unit = new UnitModel();
 
             IsBusy = false;
         }
@@ -53,7 +54,8 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSaveAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Saving...");
+            await _unitService.SaveAsync(Unit);
+            await DialogService.ShowAlertAsync("Saved...");
             await NavigationService.NavigateBackAsync();
             IsBusy = false;
         }

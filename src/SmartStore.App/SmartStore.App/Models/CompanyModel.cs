@@ -1,8 +1,10 @@
-﻿namespace SmartStore.App.Models
+﻿using System;
+
+namespace SmartStore.App.Models
 {
     public class CompanyModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Rfc { get; set; }
         public string CompanyName { get; set; }
         public string TradeName { get; set; }

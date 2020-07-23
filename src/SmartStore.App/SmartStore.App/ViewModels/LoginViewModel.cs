@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using SmartStore.App.Abstractions.Device;
 using Xamarin.Forms;
-using SmartStore.App.Abstractions.Core;
 using SmartStore.App.ViewModels.Base;
 
 namespace SmartStore.App.ViewModels
@@ -68,7 +68,8 @@ namespace SmartStore.App.ViewModels
             //Simulate an API call to show busy / progress indicator
             await Task.Delay(1000).ContinueWith((t) => IsBusy = false);
 
-            _settingsService.AuthAccessToken = "TOKEN";
+            _settingsService.AuthAccessToken = Password;
+            _settingsService.AuthIdToken = Email;
             await NavigationService.NavigateToAsync<MainViewModel>();
         }
 

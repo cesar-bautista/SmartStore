@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SmartStore.App.Abstractions.Core
+namespace SmartStore.App.Abstractions.Device
 {
     public interface ISettingsService
     {

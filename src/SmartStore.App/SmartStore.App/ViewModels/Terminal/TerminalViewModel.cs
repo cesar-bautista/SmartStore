@@ -95,7 +95,7 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             IsBusy = true;
 
-            var list = await _productService.GetListAsync();
+            var list = await _productService.GetFavoritesAsync();
             Products = list.ToObservableCollection();
             ShoppingCart = new ObservableCollection<CheckoutModel>();
             CheckoutText = string.Empty;
@@ -130,13 +130,17 @@ namespace SmartStore.App.ViewModels.Terminal
 
         private void OnDiscardAction()
         {
+            IsBusy = true;
             ShoppingCart.Clear();
             CheckoutText = string.Empty;
+            IsBusy = false;
         }
 
         private async Task OnCheckoutAction()
         {
+            IsBusy = true;
             await NavigationService.NavigateToAsync<CheckoutViewModel>(ShoppingCart);
+            IsBusy = false;
         }
 
         private async Task OnSearchAction()
@@ -159,6 +163,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         private void OnBarcodeAction()
         {
+            IsBusy = true;
             var options = new MobileBarcodeScanningOptions
             {
                 PossibleFormats = new List<BarcodeFormat>
@@ -189,6 +194,7 @@ namespace SmartStore.App.ViewModels.Terminal
                 });
             };
             Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.FromRgb(30, 38, 52) }, true);
+            IsBusy = false;
         }
         #endregion
 

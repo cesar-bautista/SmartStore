@@ -127,6 +127,8 @@ namespace SmartStore.App.ViewModels.Management
                 SelectedUnit = Units.FirstOrDefault(c => c.Id == item.UnitId);
                 SelectedSupplier = Suppliers.FirstOrDefault(c => c.Id == item.SupplierId);
             }
+            else
+                Product = new ProductModel();
 
             IsBusy = false;
         }
@@ -136,7 +138,8 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSaveAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Saving...");
+            await _productService.SaveAsync(Product);
+            await DialogService.ShowAlertAsync("Saved...");
             await NavigationService.NavigateBackAsync();
             IsBusy = false;
         }

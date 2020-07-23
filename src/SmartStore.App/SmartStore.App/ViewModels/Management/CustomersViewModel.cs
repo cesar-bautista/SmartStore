@@ -68,6 +68,7 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSelectedAction(CustomerModel item)
         {
             IsBusy = true;
+            item.IsReadOnly = true;
             await NavigationService.NavigateToAsync<CustomerViewModel>(item);
             IsBusy = false;
         }

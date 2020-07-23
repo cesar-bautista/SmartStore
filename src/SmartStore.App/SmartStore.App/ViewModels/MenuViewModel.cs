@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions.Business;
-using SmartStore.App.Abstractions.Core;
+using SmartStore.App.Abstractions.Device;
 using SmartStore.App.Extensions;
 using SmartStore.App.Models;
 using SmartStore.App.ViewModels.Base;

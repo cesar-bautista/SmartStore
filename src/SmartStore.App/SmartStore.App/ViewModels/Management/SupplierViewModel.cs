@@ -41,9 +41,9 @@ namespace SmartStore.App.ViewModels.Management
             IsBusy = true;
 
             if (navigationData is SupplierModel item)
-            {
                 Supplier = item;
-            }
+            else
+                Supplier = new SupplierModel();
 
             IsBusy = false;
         }
@@ -53,7 +53,8 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSaveAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Saving...");
+            await _supplierService.SaveAsync(Supplier);
+            await DialogService.ShowAlertAsync("Saved...");
             await NavigationService.NavigateBackAsync();
             IsBusy = false;
         }

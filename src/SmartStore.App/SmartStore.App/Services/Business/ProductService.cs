@@ -1,48 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using SmartStore.App.Abstractions.Business;
+using SmartStore.App.Abstractions.Data;
 using SmartStore.App.Models;
+using SmartStore.App.Services.Data.Entities;
 
 namespace SmartStore.App.Services.Business
 {
     public class ProductService : IProductService
     {
+        private readonly IMapper _mapper;
+        private readonly IProductRepository _productRepository;
+
+        public ProductService(IMapper mapper, IProductRepository productRepository)
+        {
+            _mapper = mapper;
+            _productRepository = productRepository;
+        }
+
         public async Task<IEnumerable<ProductModel>> GetListAsync()
         {
-            await Task.Delay(1000);
+            var list = await _productRepository.Get();
+            return _mapper.Map<IEnumerable<ProductEntity>, IEnumerable<ProductModel>>(list);
+        }
 
-            var images = new []
-            {
-                "https://cdn.pixabay.com/photo/2019/06/12/07/12/popcorn-4268489_960_720.jpg",
-                "https://cdn.pixabay.com/photo/2014/09/12/18/20/coca-cola-443123_960_720.png",
-                "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg",
-                "https://media.istockphoto.com/photos/doritos-on-white-picture-id458670023"
-            };
+        public async Task<IEnumerable<ProductModel>> GetFavoritesAsync()
+        {
+            var list = await _productRepository.Get(entity => entity.IsFavorite, entity => entity.UpdateAt);
+            return _mapper.Map<IEnumerable<ProductEntity>, IEnumerable<ProductModel>>(list);
+        }
 
-            var list = new List<ProductModel>();
-            var random = new Random();
-            for (var i = 1; i < 13; i++)
-            {
-                list.Add(new ProductModel
-                {
-                    Id = i,
-                    ImageUrl = images[random.Next(0, images.Length)],
-                    Price = random.NextDouble() * (100 - i) + i,
-                    Name = $"Product {i}",
-                    Description = $"Description {i}",
-                    Code = "00" + i,
-                    Cost = random.NextDouble() * (100 - i) + i,
-                    MinStock = random.Next(1, 100 - i),
-                    Stock = random.Next(1, 100 - i),
-                    SupplierId = random.Next(1, 10),
-                    CategoryId = random.Next(1, 10),
-                    UnitId = random.Next(1, 10),
-                    IsFavorite = random.Next(i, 20) < 10
-                });
-            }
+        public async Task<ProductModel> SaveAsync(ProductModel model)
+        {
+            var entity = _mapper.Map<ProductModel, ProductEntity>(model);
+            var result = await _productRepository.Upsert(entity);
+            return result > 0 ? model : null;
+        }
 
-            return list;
+        public async Task<bool> DeleteAsync(ProductModel model)
+        {
+            var entity = _mapper.Map<ProductModel, ProductEntity>(model);
+            var result = await _productRepository.Delete(entity);
+            return result > 0;
         }
     }
 }

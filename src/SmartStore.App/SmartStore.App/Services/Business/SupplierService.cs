@@ -1,32 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using SmartStore.App.Abstractions.Business;
+using SmartStore.App.Abstractions.Data;
 using SmartStore.App.Models;
+using SmartStore.App.Services.Data.Entities;
 
 namespace SmartStore.App.Services.Business
 {
     public class SupplierService : ISupplierService
     {
+        private readonly IMapper _mapper;
+        private readonly ISupplierRepository _supplierRepository;
+
+        public SupplierService(IMapper mapper, ISupplierRepository supplierRepository)
+        {
+            _mapper = mapper;
+            _supplierRepository = supplierRepository;
+        }
+
         public async Task<IEnumerable<SupplierModel>> GetListAsync()
         {
-            await Task.Delay(1000);
+            var list = await _supplierRepository.Get();
+            return _mapper.Map<IEnumerable<SupplierEntity>, IEnumerable<SupplierModel>>(list);
+        }
 
-            var list = new List<SupplierModel>();
-            for (var i = 1; i < 11; i++)
-            {
-                list.Add(new SupplierModel
-                {
-                    Id = i,
-                    Code = $"00{i}",
-                    Name = $"Supplier {i}",
-                    Description = $"Supplier {i}",
-                    Address = $"Address supplier {i}",
-                    PhoneNumber = "0123456789",
-                    Email = $"supplier{i}@server.com"
-                });
-            }
+        public async Task<SupplierModel> SaveAsync(SupplierModel model)
+        {
+            var entity = _mapper.Map<SupplierModel, SupplierEntity>(model);
+            var result = await _supplierRepository.Upsert(entity);
+            return result > 0 ? model : null;
+        }
 
-            return list;
+        public async Task<bool> DeleteAsync(SupplierModel model)
+        {
+            var entity = _mapper.Map<SupplierModel, SupplierEntity>(model);
+            var result = await _supplierRepository.Delete(entity);
+            return result > 0;
         }
     }
 }

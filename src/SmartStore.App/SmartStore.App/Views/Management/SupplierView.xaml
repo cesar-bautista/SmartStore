@@ -34,7 +34,7 @@
                            Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Code"
-                           IsReadOnly="True"
+                           IsReadOnly="{Binding Supplier.IsReadOnly}"
                            Text="{Binding Supplier.Code}" />
                     <Entry Grid.Row="2"
                            Grid.Column="1"

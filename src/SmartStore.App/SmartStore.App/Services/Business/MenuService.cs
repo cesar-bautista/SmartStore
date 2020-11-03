@@ -15,9 +15,7 @@ namespace SmartStore.App.Services.Business
     {
         public async Task<IEnumerable<MenuModel>> GetMenuListAsync()
         {
-            await Task.Delay(1000);
-
-            return new List<MenuModel>
+            return await Task.Run(() => new List<MenuModel>
             {
                 new MenuModel
                 {
@@ -73,14 +71,12 @@ namespace SmartStore.App.Services.Business
                     ImageUrl = "https://img.icons8.com/office/80/000000/export.png",
                     IsEnabled = true
                 }
-            };
+            });
         }
 
         public async Task<IEnumerable<MenuModel>> GetManagementListAsync()
         {
-            await Task.Delay(1000);
-
-            return new List<MenuModel>
+            return await Task.Run(() => new List<MenuModel>
             {
                 new MenuModel
                 {
@@ -95,8 +91,7 @@ namespace SmartStore.App.Services.Business
                     ImageUrl = "https://img.icons8.com/color/48/000000/opened-folder.png",
                     ViewModelType = typeof(CategoriesViewModel),
                     IsEnabled = true
-                }
-                ,
+                },
                 new MenuModel
                 {
                     Title = "Units",
@@ -118,7 +113,56 @@ namespace SmartStore.App.Services.Business
                     ViewModelType = typeof(SuppliersViewModel),
                     IsEnabled = true
                 }
-            };
+            });
+        }
+
+        public async Task<IEnumerable<MenuModel>> GetSettingListAsync()
+        {
+            return await Task.Run(() => new List<MenuModel>
+            {
+                new MenuModel
+                {
+                    Title = "Store",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/product.png",
+                    ViewModelType = typeof(ProductsViewModel),
+                    IsEnabled = true
+                },
+                new MenuModel
+                {
+                    Title = "Application",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/opened-folder.png",
+                    ViewModelType = typeof(CategoriesViewModel),
+                    IsEnabled = true
+                },
+                new MenuModel
+                {
+                    Title = "Printer",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/puzzle.png",
+                    ViewModelType = typeof(UnitsViewModel),
+                    IsEnabled = true
+                },
+                new MenuModel
+                {
+                    Title = "Ticket",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/group.png",
+                    ViewModelType = typeof(CustomersViewModel),
+                    IsEnabled = true
+                },
+                new MenuModel
+                {
+                    Title = "Database management",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/supplier.png",
+                    ViewModelType = typeof(SuppliersViewModel),
+                    IsEnabled = true
+                },
+                new MenuModel
+                {
+                    Title = "Feedback",
+                    ImageUrl = "https://img.icons8.com/color/48/000000/supplier.png",
+                    ViewModelType = typeof(SuppliersViewModel),
+                    IsEnabled = true
+                }
+            });
         }
     }
 }

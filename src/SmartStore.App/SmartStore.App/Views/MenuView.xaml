@@ -8,19 +8,11 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:behaviors="clr-namespace:SmartStore.App.Behaviors;assembly=SmartStore.App"
+             xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
              Title=" ">
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="120" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" BackgroundColor="{StaticResource BackgroundColor}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+        <Grid RowDefinitions="120, *, Auto">
+            <Grid ColumnDefinitions="Auto, *"  Grid.Row="0" BackgroundColor="{StaticResource BackgroundColor}">
                 <ff:CachedImage Aspect="AspectFit"
                                 Grid.Column="0" 
                                 Source = "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png"
@@ -77,6 +69,9 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
+            <controls:CustomActivityIndicator Grid.Row="0"
+                                              Grid.RowSpan="3"
+                                              IsRunning="{ Binding IsBusy }" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

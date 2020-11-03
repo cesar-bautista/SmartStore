@@ -9,5 +9,7 @@ namespace SmartStore.App.Abstractions.Business
         Task<IEnumerable<MenuModel>> GetMenuListAsync();
 
         Task<IEnumerable<MenuModel>> GetManagementListAsync();
+
+        Task<IEnumerable<MenuModel>> GetSettingListAsync();
     }
 }

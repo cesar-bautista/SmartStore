@@ -47,7 +47,9 @@ namespace SmartStore.App.ViewModels
             if (!item.IsEnabled) return;
             if (item.ViewModelType != null)
             {
+                IsBusy = true;
                 await NavigationService.NavigateToAsync(item.ViewModelType);
+                IsBusy = false;
             }
             else
             {

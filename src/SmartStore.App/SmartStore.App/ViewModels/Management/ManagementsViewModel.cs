@@ -51,7 +51,9 @@ namespace SmartStore.App.ViewModels.Management
         private async void OnSelectedAction(MenuModel item)
         {
             if (!item.IsEnabled) return;
+            IsBusy = true;
             await NavigationService.NavigateToAsync(item.ViewModelType);
+            IsBusy = false;
         } 
         #endregion
     }

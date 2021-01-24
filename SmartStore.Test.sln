@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartStore.Api", "src\SmartStore.Api\SmartStore.Api\SmartStore.Api.csproj", "{6E9ED54C-9A33-4D86-A5FB-F746E5BA9557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartStore.Test", "src\SmartStore.Test\SmartStore.Test.csproj", "{8A8E1482-403A-4E2A-8B3E-234EF5BDEFB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6E9ED54C-9A33-4D86-A5FB-F746E5BA9557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E9ED54C-9A33-4D86-A5FB-F746E5BA9557}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E9ED54C-9A33-4D86-A5FB-F746E5BA9557}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E9ED54C-9A33-4D86-A5FB-F746E5BA9557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8E1482-403A-4E2A-8B3E-234EF5BDEFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8E1482-403A-4E2A-8B3E-234EF5BDEFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8E1482-403A-4E2A-8B3E-234EF5BDEFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8E1482-403A-4E2A-8B3E-234EF5BDEFB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {85257090-1EBF-4209-8C6F-AB9B61B85784}
+		SolutionGuid = {F131FBFE-CC67-4036-84B1-AB33F59F41D3}
 	EndGlobalSection
 EndGlobal

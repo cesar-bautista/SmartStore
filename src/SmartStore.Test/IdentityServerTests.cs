@@ -1,15 +1,16 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
 using IdentityModel.Client;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace SmartStore.Console
+namespace SmartStore.Test
 {
-    class Program
+    [TestClass]
+    public class IdentityServerTests
     {
-        static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
-
-        private static async Task MainAsync()
+        [TestMethod]
+        public async Task Login_testAsync()
         {
             var identityServer = await DiscoveryClient.GetAsync("https://localhost:44372"); //discover the IdentityServer
             if (identityServer.IsError)

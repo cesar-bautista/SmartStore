@@ -6,6 +6,7 @@ namespace SmartStore.App.Abstractions.Data
     {
         IRestRepository SetBaseAddress(string baseAddress);
         IRestRepository SetTimeout(int timeOut);
+        IRestRepository SetHeader(string name, string value);
 
         Task<TResult> GetAsync<TResult>(string path, object content = null);
         Task<string> GetAsync(string path, string content = null);

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using SmartStore.App.Abstractions.Ui;
 using Xamarin.Forms;
 
@@ -25,6 +26,14 @@ namespace SmartStore.App.ViewModels.Base
         {
             DialogService = LocatorViewModel.Instance.Resolve<IDialogService>();
             NavigationService = LocatorViewModel.Instance.Resolve<INavigationService>();
+        }
+
+        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (object.Equals(storage, value)) return false;
+            storage = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
 
         public virtual Task InitializeAsync(object navigationData)

@@ -14,6 +14,14 @@ namespace SmartStore.App.Services.Data
     {
         #region Properties
         private HttpClient HttpClient { get; }
+
+        public HttpRequestHeaders Headers => HttpClient.DefaultRequestHeaders;
+        
+        public string Authorization
+        {
+            get => Headers.Authorization?.Parameter;
+            set => Headers.Authorization = new AuthenticationHeaderValue("Bearer", value);
+        }
         #endregion
 
         #region Constructors
@@ -69,6 +77,14 @@ namespace SmartStore.App.Services.Data
         public IRestRepository SetTimeout(int timeOut)
         {
             HttpClient.Timeout = TimeSpan.FromMinutes(timeOut);
+            return this;
+        }
+
+        public IRestRepository SetHeader(string name, string value)
+        {
+            if (Headers.Contains(name))
+                Headers.Remove(name);
+            Headers.Add(name, value);
             return this;
         }
 

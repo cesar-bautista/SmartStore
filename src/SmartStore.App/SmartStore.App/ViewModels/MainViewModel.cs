@@ -18,16 +18,8 @@ namespace SmartStore.App.ViewModels
 
         public MenuViewModel MenuViewModel
         {
-            get
-            {
-                return _menuViewModel;
-            }
-
-            set
-            {
-                _menuViewModel = value;
-                OnPropertyChanged();
-            }
+            get => _menuViewModel;
+            set => SetProperty(ref _menuViewModel, value);
         }
 
         public override Task InitializeAsync(object navigationData)

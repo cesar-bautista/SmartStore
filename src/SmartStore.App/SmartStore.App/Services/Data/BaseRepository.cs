@@ -34,7 +34,7 @@ namespace SmartStore.App.Services.Data
 
             foreach (var row in await restRepository.GetAsync<IEnumerable<T>>("/pull", lastSync))
             {
-                if (await Get(row.Id) != null)
+                if (await Get(row.Id) == null)
                     await Insert(row);
                 else if (row.Deleted)
                     await Delete(row);

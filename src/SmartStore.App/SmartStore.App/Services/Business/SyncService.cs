@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SmartStore.App.Abstractions.Business;
 using SmartStore.App.Abstractions.Data;
@@ -10,18 +11,18 @@ namespace SmartStore.App.Services.Business
     {
         private readonly ILastSyncRepository _lastSyncRepository;
         private readonly IUnitRepository _unitRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly ISupplierRepository _supplierRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICustomerRepository _customerRepository;
-        private readonly ICategoryRepository _categoryRepository;
 
         public SyncService(
             ILastSyncRepository lastSyncRepository,
             IUnitRepository unitRepository,
+            ICategoryRepository categoryRepository,
             ISupplierRepository supplierRepository,
             IProductRepository productRepository,
-            ICustomerRepository customerRepository,
-            ICategoryRepository categoryRepository
+            ICustomerRepository customerRepository
             )
         {
             _lastSyncRepository = lastSyncRepository;
@@ -32,16 +33,41 @@ namespace SmartStore.App.Services.Business
             _categoryRepository = categoryRepository;
         }
 
-        public Task Initialize()
+        public Task CreateObjects()
         {
             return Task.WhenAll
             (
                 _lastSyncRepository.CreateTable(),
                 _unitRepository.CreateTable(),
+                _categoryRepository.CreateTable(),
                 _supplierRepository.CreateTable(),
                 _productRepository.CreateTable(),
-                _customerRepository.CreateTable(),
-                _categoryRepository.CreateTable()
+                _customerRepository.CreateTable()
+            );
+        }
+
+        public Task DropObjects()
+        {
+            return Task.WhenAll
+            (
+                _lastSyncRepository.DropTable(),
+                _unitRepository.DropTable(),
+                _categoryRepository.DropTable(),
+                _supplierRepository.DropTable(),
+                _productRepository.DropTable(),
+                _customerRepository.DropTable()
+            );
+        }
+
+        public Task Initialize()
+        {
+            return Task.WhenAll
+            (
+                _unitRepository.Insert(Units()),
+                _categoryRepository.Insert(Categories()),
+                _supplierRepository.Insert(Suppliers()),
+                _productRepository.Insert(Products()),
+                _customerRepository.Insert(Customers())
             );
         }
 
@@ -67,6 +93,238 @@ namespace SmartStore.App.Services.Business
             // Valor de retorno
             //return upsert > 0;
             return true;
+        }
+
+        private List<UnitEntity> Units()
+        {
+            return new List<UnitEntity>
+            {
+                new UnitEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "H87",
+                    Name =  "Pieza",
+                    Description = "Unidad de conteo que define el número de piezas (pieza: un solo artículo, artículo o ejemplar)."
+                },
+                new UnitEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "KGM",
+                    Name =  "Kilogramo",
+                    Description = "Una unidad de masa igual a mil gramos."
+                },
+                new UnitEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "LTR",
+                    Name =  "Litro",
+                    Description = "Es una unidad de volumen equivalente a un decímetro cúbico (1 dm³). Su uso es aceptado en el Sistema Internacional de Unidades (SI), aunque ya no pertenece estrictamente a él."
+                },
+                new UnitEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "XBX",
+                    Name =  "Caja",
+                    Description = "Recipiente de diferentes materiales, tamaños y formas, generalmente con tapa, que sirve para guardar o transportar cosas."
+                },
+                new UnitEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "XPK",
+                    Name =  "Paquete",
+                    Description = "Unidad de empaque estándar."
+                }
+            };
+        }
+
+        private List<CategoryEntity> Categories()
+        {
+            return new List<CategoryEntity>
+            {
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "001",
+                    Name = "ABARROTES",
+                    Description = "ABARROTES"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "002",
+                    Name = "ENLATADOS",
+                    Description = "ENLATADOS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "003",
+                    Name = "LÁCTEOS",
+                    Description = "LÁCTEOS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "004",
+                    Name = "BOTANAS",
+                    Description = "BOTANAS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "005",
+                    Name = "CONFITERÍA",
+                    Description = "CONFITERÍA"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "006",
+                    Name = "HARINAS",
+                    Description = "HARINAS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "007",
+                    Name = "BEBIDAS",
+                    Description = "BEBIDAS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "008",
+                    Name = "BEBIDAS ALCOHÓLICAS",
+                    Description = "BEBIDAS ALCOHÓLICAS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "009",
+                    Name = "ALIMENTOS PREPARADOS",
+                    Description = "ALIMENTOS PREPARADOS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "010",
+                    Name = "Carnes y Embudos",
+                    Description = "Carnes y Embudos"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "011",
+                    Name = "AUTOMEDICACIÓN",
+                    Description = "AUTOMEDICACIÓN"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "012",
+                    Name = "HIGIENE PERSONAL",
+                    Description = "HIGIENE PERSONAL"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "013",
+                    Name = "USO DOMESTICO",
+                    Description = "USO DOMESTICO"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "014",
+                    Name = "HELADOS",
+                    Description = "HELADOS"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "015",
+                    Name = "JARCERIA / PRODUCTOS DE LIMPIEZA",
+                    Description = "JARCERIA / PRODUCTOS DE LIMPIEZA"
+                },
+                new CategoryEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code =  "016",
+                    Name = "OTROS",
+                    Description = "OTROS"
+                }
+            };
+        }
+
+        private List<SupplierEntity> Suppliers()
+        {
+            return new List<SupplierEntity>
+            {
+                new SupplierEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "001",
+                    Name =  "Supplier 001",
+                    Description = "Supplier 001",
+                    Email = "supplier001@email.com",
+                    PhoneNumber = "0123456789",
+                    Address = "Address 001"
+                }
+            };
+        }
+
+        private List<ProductEntity> Products()
+        {
+            var images = new[]
+             {
+                "https://cdn.pixabay.com/photo/2019/06/12/07/12/popcorn-4268489_960_720.jpg",
+                "https://cdn.pixabay.com/photo/2015/01/08/04/16/box-592366_960_720.jpg",
+                "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg",
+                "https://media.istockphoto.com/photos/doritos-on-white-picture-id458670023"
+            };
+
+            var list = new List<ProductEntity>();
+            var random = new Random();
+            for (var i = 1; i < 20; i++)
+            {
+                list.Add(new ProductEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ImageUrl = images[random.Next(0, images.Length)],
+                    Price = random.NextDouble() * (100 - i) + i,
+                    Name = $"Product {i}",
+                    Description = $"Description {i}",
+                    Code = $"00000{i}",
+                    Cost = random.NextDouble() * (100 - i) + i,
+                    MinStock = random.Next(1, 100 - i),
+                    Stock = random.Next(1, 100 - i),
+                    //SupplierId = random.Next(1, 10),
+                    //CategoryId = random.Next(1, 10),
+                    //UnitId = random.Next(1, 10),
+                    IsFavorite = random.Next(i, 20) < 10
+                });
+            }
+
+            return list;
+        }
+
+        private List<CustomerEntity> Customers()
+        {
+            return new List<CustomerEntity>
+            {
+                new CustomerEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Code = "001",
+                    Name =  "Customer 001",
+                    Description = "Customer 001",
+                    Email = "customer001@email.com",
+                    PhoneNumber = "0123456789",
+                    BirthDate = DateTime.Now,
+                    DiscountRate = 100,
+                    Address = "Address 001",
+                }
+            };
         }
     }
 }

@@ -15,63 +15,38 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <Grid Padding="12"
-                  RowDefinitions="Auto, Auto">
+            <Grid Padding="12" RowDefinitions="Auto, Auto">
 
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Supplier" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Code"
                            IsReadOnly="{Binding Supplier.IsReadOnly}"
                            Text="{Binding Supplier.Code}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Name"
                            Text="{Binding Supplier.Name}" />
                     <Entry Grid.Row="3"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Description"
                            Text="{Binding Supplier.Description}" />
                 </Grid>
 
-                <Grid Grid.Row="1"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Contact" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Phone Number"
                            Text="{Binding Supplier.PhoneNumber}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Email"
                            Placeholder="Email"
                            Text="{Binding Supplier.Email}" />
                     <Entry Grid.Row="3"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Address"
                            Text="{Binding Supplier.Address}" />

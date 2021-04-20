@@ -15,85 +15,52 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <Grid Padding="12"
-                  RowDefinitions="Auto, Auto, Auto">
-
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+            <Grid Padding="12" RowDefinitions="Auto, Auto, Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Customer" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
+                           Grid.Column="0"
                            Keyboard="Numeric"
                            Placeholder="Code"
                            IsReadOnly="{Binding Customer.IsReadOnly}"
                            Text="{Binding Customer.Code}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
+                           Grid.Column="0"
                            Keyboard="Text"
                            Placeholder="Name"
                            Text="{Binding Customer.Name}" />
                     <Entry Grid.Row="3"
-                           Grid.Column="1"
+                           Grid.Column="0"
                            Keyboard="Text"
                            Placeholder="Description"
                            Text="{Binding Customer.Description}" />
                     <DatePicker Grid.Row="4"
-                           Grid.Column="1"
+                           Grid.Column="0"
                            Date="{Binding Customer.BirthDate}" />
                 </Grid>
 
-                <Grid Grid.Row="1"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Contact" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Phone Number"
                            Text="{Binding Customer.PhoneNumber}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Email"
                            Placeholder="Email"
                            Text="{Binding Customer.Email}" />
                     <Entry Grid.Row="3"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Address"
                            Text="{Binding Customer.Address}" />
                 </Grid>
 
-                <Grid Grid.Row="2"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto">
+                <Grid Grid.Row="2" ColumnDefinitions="*" RowDefinitions="Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Others" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Discount Rate"
                            Text="{Binding Customer.DiscountRate}" />

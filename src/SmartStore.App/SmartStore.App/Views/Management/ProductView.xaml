@@ -4,6 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:SmartStore.App.Controls;assembly=SmartStore.App"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Management.ProductView"
              Title="Product">
@@ -15,130 +17,107 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <Grid Padding="12"
-                  RowDefinitions="Auto, Auto, Auto, Auto">
+            <Grid Padding="12" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="0" RowDefinitions="120">
+                    <ff:CachedImage Aspect="AspectFill"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="{Binding Product.ImageUrl}"
+                                    VerticalOptions="FillAndExpand" />
+                    <Image VerticalOptions="Start"
+                                    HorizontalOptions="End"
+                                    HeightRequest="40"
+                                    WidthRequest="40">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OnFavorite}" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{Binding Product.IsFavorite}" Value="True">
+                                <Setter Property="Source" Value="https://img.icons8.com/offices/2x/like.png" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Image" Binding="{Binding Product.IsFavorite}" Value="False">
+                                <Setter Property="Source" Value="https://img.icons8.com/ultraviolet/2x/like.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <ff:CachedImage Aspect="AspectFill"
+                                    HorizontalOptions="End"
+                                    Source="https://img.icons8.com/ultraviolet/2x/old-time-camera.png"
+                                    VerticalOptions="End"
+                                    HeightRequest="40"
+                                    WidthRequest="40" />
+                </Grid>
 
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Product" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Code"
                            IsReadOnly="{Binding Product.IsReadOnly}"
                            Text="{Binding Product.Code}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Name"
                            Text="{Binding Product.Name}" />
                     <Entry Grid.Row="3"
-                           Grid.Column="1"
                            Keyboard="Text"
                            Placeholder="Description"
                            Text="{Binding Product.Description}" />
                 </Grid>
 
-                <Grid Grid.Row="1"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="2" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Data" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Picker Grid.Row="1"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding Units}"
                             ItemDisplayBinding="{Binding Name}"
                             SelectedItem="{Binding SelectedUnit}"
                             Title="Unit" />
                     <Picker Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
                             ItemsSource="{Binding Categories}"
                             ItemDisplayBinding="{Binding Name}"
                             SelectedItem="{Binding SelectedCategory}"
                             Title="Category" />
                     <Picker Grid.Row="3"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
                             ItemsSource="{Binding Suppliers}"
                             ItemDisplayBinding="{Binding Name}"
                             SelectedItem="{Binding SelectedSupplier}"
                             Title="Supplier" />
                 </Grid>
 
-                <Grid Grid.Row="2"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto">
+                <Grid Grid.Row="3" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Price" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Cost"
                            Text="{Binding Product.Cost}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Price"
                            Text="{Binding Product.Price}" />
                 </Grid>
 
-                <Grid Grid.Row="3"
-                      ColumnDefinitions="Auto, *"
-                      RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="4" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Grid.ColumnSpan="2"
                            Text="Others" />
-
-                    <Image Grid.Row="1"
-                           HeightRequest="36"
-                           VerticalOptions="Center"
-                           WidthRequest="36" />
-
                     <Entry Grid.Row="1"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Stock"
                            Text="{Binding Product.Stock}" />
                     <Entry Grid.Row="2"
-                           Grid.Column="1"
                            Keyboard="Numeric"
                            Placeholder="Min Stock"
                            Text="{Binding Product.MinStock}" />
                     <Label Grid.Row="3"
-                           Grid.Column="1"
                            Text="Is favorite?" />
                     <Switch Grid.Row="3"
-                           Grid.Column="1"
                            IsToggled="{Binding Product.IsFavorite}" />
                 </Grid>
+                
                 <controls:CustomActivityIndicator Grid.Row="0"
-                                                  Grid.RowSpan="4"
+                                                  Grid.RowSpan="5"
                                                   IsRunning="{ Binding IsBusy }" />
             </Grid>
         </ScrollView>

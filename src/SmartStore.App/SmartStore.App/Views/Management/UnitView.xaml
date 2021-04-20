@@ -15,31 +15,23 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <Grid ColumnDefinitions="Auto, *"
-                  RowDefinitions="Auto, Auto, Auto"
-                  Padding="12">
+            <Grid ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto" Padding="12">
                 <Label Grid.Row="0"
-                       Grid.ColumnSpan="2"
                        Text="Unit" />
-
-                <Image Grid.Row="1"
-                       HeightRequest="36"
-                       VerticalOptions="Center"
-                       WidthRequest="36" />
-
                 <Entry Grid.Row="1"
-                       Grid.Column="1"
+                       Placeholder="Code"
+                       IsReadOnly="{Binding Unit.IsReadOnly}"
+                       Text="{Binding Unit.Code}" />
+                <Entry Grid.Row="2"
                        Keyboard="Text"
                        Placeholder="Name"
                        Text="{Binding Unit.Name}" />
-                <Entry Grid.Row="2"
-                       Grid.Column="1"
+                <Entry Grid.Row="3"
                        Keyboard="Text"
                        Placeholder="Description"
                        Text="{Binding Unit.Description}" />
 
                 <controls:CustomActivityIndicator Grid.RowSpan="3"
-                                                  Grid.ColumnSpan="2"
                                                   IsRunning="{ Binding IsBusy }" />
             </Grid>
         </ScrollView>

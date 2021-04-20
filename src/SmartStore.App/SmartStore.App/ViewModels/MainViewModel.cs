@@ -26,6 +26,10 @@ namespace SmartStore.App.ViewModels
         {
             return Task.WhenAll
             (
+                //HACK: Remove lines - Only Test
+                _syncService.DropObjects(),
+                _syncService.CreateObjects(),
+
                 _syncService.Initialize(),
                 _menuViewModel.InitializeAsync(navigationData),
                 NavigationService.NavigateToAsync<TerminalViewModel>()

@@ -15,6 +15,7 @@ namespace SmartStore.App.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            Xamarin.Forms.Forms.SetFlags("SwipeView_Experimental");
             Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();

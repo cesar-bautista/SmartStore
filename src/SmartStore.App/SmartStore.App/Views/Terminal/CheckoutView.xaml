@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="SmartStore.App.Views.Terminal.CheckoutView"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:converters="clr-namespace:SmartStore.App.Converters;assembly=SmartStore.App"
              Title="Checkout">
@@ -16,21 +17,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="80" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="80" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
+        <Grid Margin="10" ColumnDefinitions="*,*" RowDefinitions="Auto,80,100,80,Auto,Auto,*">
             <Picker  Grid.Row="0"
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
@@ -169,9 +156,13 @@
                             <ff:CachedImage Grid.RowSpan="2"
                                             Source="{Binding ImageUrl}"
                                             HeightRequest="60"
-                                            Aspect="AspectFit" />
+                                            Aspect="AspectFill">
+                                <ff:CachedImage.Transformations>
+                                    <fftrans:RoundedTransformation Radius="30"/>
+                                </ff:CachedImage.Transformations>
+                            </ff:CachedImage>
 
-                            <Label Grid.Row="0"
+                                <Label Grid.Row="0"
                                    Grid.Column="1"
                                    Text="{Binding Name}"
                                    FontAttributes="Bold"/>

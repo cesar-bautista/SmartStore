@@ -15,7 +15,7 @@
     <ContentPage.Resources>
         <xamanimation:HeartAnimation x:Key="StoryBoard"
                                      Target="{x:Reference StoryBoardBox}"
-                                     Duration="1000" />
+                                     Duration="1200" />
 
         <xamanimation:StoryBoard x:Key="FloatingButtonsEnter"
                                  Target="{x:Reference StoryBoardBox}">
@@ -74,17 +74,17 @@
                                          VerticalOptions="Center">
                                 <pancakeView:PancakeView>
                                     <Grid RowDefinitions="110" ColumnDefinitions="110">
-                                        <ff:CachedImage Aspect="AspectFit"
-                                                    Grid.Row="0"
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    Source="{Binding ImageUrl}"
-                                                    VerticalOptions="FillAndExpand" />
-
+                                        <ff:CachedImage Aspect="AspectFill"
+                                                        Grid.Row="0"
+                                                        HorizontalOptions="CenterAndExpand"
+                                                        Source="{Binding ImageUrl}"
+                                                        WidthRequest="110"
+                                                        VerticalOptions="FillAndExpand" />
                                         <StackLayout Grid.Row="0"
                                                      HorizontalOptions="FillAndExpand"
                                                      VerticalOptions="EndAndExpand"
                                                      BackgroundColor="{StaticResource BlackColor}"
-                                                     Opacity=".7"
+                                                     Opacity="0.7"
                                                      Padding="1">
                                             <Label Text="{Binding Name}"
                                                    HorizontalTextAlignment="Center" 

@@ -25,6 +25,12 @@ namespace SmartStore.App.Services.Data
             return result == CreateTableResult.Created || result == CreateTableResult.Migrated;
         }
 
+        public async Task<bool> DropTable()
+        {
+            var result = await this._db.DropTableAsync<T>();
+            return result > 0;
+        }
+
         public async Task<DateTimeOffset> Sync(DateTimeOffset lastSync)
         {
             var restRepository = LocatorViewModel.Instance.Resolve<IRestRepository>();
@@ -77,10 +83,22 @@ namespace SmartStore.App.Services.Data
             return await _db.InsertAsync(entity);
         }
 
+        public async Task<int> Insert(IEnumerable<T> entities)
+        {
+            entities.All(c => { c.Id = Guid.NewGuid(); c.UpdateAt = DateTimeOffset.Now; return true; });
+            return await _db.InsertAllAsync(entities);
+        }
+
         public async Task<int> Update(T entity)
         {
             entity.UpdateAt = DateTimeOffset.Now;
             return await _db.UpdateAsync(entity);
+        }
+
+        public async Task<int> Update(IEnumerable<T> entities)
+        {
+            entities.All(c => { c.UpdateAt = DateTimeOffset.Now; return true; });
+            return await _db.UpdateAllAsync(entities);
         }
 
         public async Task<int> Delete(T entity)

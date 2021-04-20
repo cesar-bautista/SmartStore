@@ -93,6 +93,7 @@ namespace SmartStore.App.ViewModels.Management
         }
         public ICommand OnSave { get; }
         public ICommand OnCancel { get; }
+        public ICommand OnFavorite { get; }
         #endregion
 
         #region Constructors
@@ -104,6 +105,7 @@ namespace SmartStore.App.ViewModels.Management
             _supplierService = supplierService;
             OnSave = new Command(async () => { await OnSaveAction(); });
             OnCancel = new Command(async () => { await OnCancelAction(); });
+            OnFavorite = new Command<bool>(OnFavoriteAction);
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -149,6 +151,11 @@ namespace SmartStore.App.ViewModels.Management
             IsBusy = true;
             await NavigationService.NavigateBackAsync();
             IsBusy = false;
+        }
+
+        private void OnFavoriteAction(bool isFavorite)
+        {
+            Product.IsFavorite = isFavorite;
         }
         #endregion
     }

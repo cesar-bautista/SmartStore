@@ -9,6 +9,7 @@ namespace SmartStore.App.Abstractions.Data
     public interface IBaseRepository<T> where T : class, new()
     {
         Task<bool> CreateTable();
+        Task<bool> DropTable();
         Task<DateTimeOffset> Sync(DateTimeOffset lastSync);
         Task<List<T>> Get();
         Task<T> Get(Guid id);
@@ -16,7 +17,9 @@ namespace SmartStore.App.Abstractions.Data
         Task<List<T>> Get<TValue>(Expression<Func<T, bool>> predicate = null, Expression<Func<T, TValue>> orderBy = null);
         AsyncTableQuery<T> AsQueryable();
         Task<int> Insert(T entity);
+        Task<int> Insert(IEnumerable<T> entities);
         Task<int> Update(T entity);
+        Task<int> Update(IEnumerable<T> entities);
         Task<int> Delete(T entity);
         Task<int> Upsert(T entity);
     }

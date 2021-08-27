@@ -98,16 +98,16 @@
         <Style TargetType="ff:CachedImage">
             <Setter Property="CacheDuration" Value="30" />
             <Setter Property="DownsampleToViewSize" Value="True" />
-            <Setter Property="ErrorPlaceholder" Value="Error" />
-            <Setter Property="LoadingPlaceholder" Value="Loading" />
+            <Setter Property="ErrorPlaceholder" Value="https://img.icons8.com/material-outlined/48/000000/error-cloud.png" />
+            <Setter Property="LoadingPlaceholder" Value="https://img.icons8.com/fluent/48/000000/loading.png" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="RetryDelay" Value="450" />
             <Setter Property="RetryCount" Value="5" />
         </Style>
 
         <Style TargetType="pancakeView:PancakeView">
-            <Setter Property="BorderColor" Value="{StaticResource WhiteColor}" />
-            <Setter Property="BorderThickness" Value="1"/>
+            <!--<Setter Property="BorderColor" Value="{StaticResource WhiteColor}" />
+            <Setter Property="BorderThickness" Value="1"/>-->
             <Setter Property="CornerRadius" Value="10, 0, 0, 10"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="0"/>

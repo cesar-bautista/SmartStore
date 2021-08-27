@@ -124,10 +124,12 @@
 
             <pancakeView:PancakeView CornerRadius="20,20,0,0"
                                      BackgroundColor="{StaticResource DarkBackgroundColor}"
-                                     BorderColor="Transparent"
                                      Grid.Row="2"
                                      Padding="5,5,5,0"
                                      x:Name="StoryBoardBox">
+                <pancakeView:PancakeView.Border>
+                    <pancakeView:Border Color="Transparent" />
+                </pancakeView:PancakeView.Border>
                 <Grid HorizontalOptions="FillAndExpand"
                       VerticalOptions="CenterAndExpand"
                       ColumnDefinitions ="Auto, *">

@@ -22,18 +22,11 @@ namespace SmartStore.App.ViewModels
             set => SetProperty(ref _menuViewModel, value);
         }
 
-        public override Task InitializeAsync(object navigationData)
+        public override async Task InitializeAsync(object navigationData)
         {
-            return Task.WhenAll
-            (
-                //HACK: Remove lines - Only Test
-                _syncService.DropObjects(),
-                _syncService.CreateObjects(),
-
-                _syncService.Initialize(),
-                _menuViewModel.InitializeAsync(navigationData),
-                NavigationService.NavigateToAsync<TerminalViewModel>()
-            );
+            await _syncService.Sync();
+            await _menuViewModel.InitializeAsync(navigationData);
+            await NavigationService.NavigateToAsync<TerminalViewModel>();
         }
     }
 }

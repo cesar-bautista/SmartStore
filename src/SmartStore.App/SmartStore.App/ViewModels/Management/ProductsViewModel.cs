@@ -44,6 +44,7 @@ namespace SmartStore.App.ViewModels.Management
         public ICommand OnSearch { get; }
         public ICommand OnSelected { get; }
         public ICommand OnAdd { get; }
+        public ICommand OnDelete { get; }
         #endregion
 
         #region Constructors
@@ -53,6 +54,7 @@ namespace SmartStore.App.ViewModels.Management
             OnSearch = new Command(async () => { await OnSearchAction(); });
             OnSelected = new Command<ProductModel>(async item => await OnSelectedAction(item));
             OnAdd = new Command(async () => await OnAddAction());
+            OnDelete = new Command<ProductModel>(async item => await OnDeleteAction(item));
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -79,6 +81,14 @@ namespace SmartStore.App.ViewModels.Management
         {
             IsBusy = true;
             await NavigationService.NavigateToAsync<ProductViewModel>();
+            IsBusy = false;
+        }
+
+        private async Task OnDeleteAction(ProductModel item)
+        {
+            IsBusy = true;
+            await _productService.DeleteAsync(item);
+            await DialogService.ShowAlertAsync("Deleted...");
             IsBusy = false;
         }
 

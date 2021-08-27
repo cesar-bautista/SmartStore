@@ -28,7 +28,7 @@
                                     HeightRequest="40"
                                     WidthRequest="40">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OnFavorite}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding OnFavorite}" />
                         </Image.GestureRecognizers>
                         <Image.Triggers>
                             <DataTrigger TargetType="Image" Binding="{Binding Product.IsFavorite}" Value="True">

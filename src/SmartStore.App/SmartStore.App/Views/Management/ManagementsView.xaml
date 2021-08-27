@@ -29,10 +29,11 @@
                                      HorizontalOptions="Center"
                                      Orientation="Horizontal"
                                      VerticalOptions="Center">
-                            <pancakeView:PancakeView BorderColor="{StaticResource WhiteColor}"
-                                                     BorderThickness="1"
-                                                     CornerRadius="10, 0, 0, 10"
+                            <pancakeView:PancakeView CornerRadius="10, 0, 0, 10"
                                                      Padding="0">
+                                <pancakeView:PancakeView.Border>
+                                    <pancakeView:Border Thickness="1" />
+                                </pancakeView:PancakeView.Border>
                                 <Grid RowDefinitions="120" ColumnDefinitions="120">
                                     <ff:CachedImage Aspect="AspectFit"
                                                     Grid.Row="0"

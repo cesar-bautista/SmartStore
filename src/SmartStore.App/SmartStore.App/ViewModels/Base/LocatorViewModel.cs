@@ -79,7 +79,7 @@ namespace SmartStore.App.ViewModels.Base
             get
             {
                 const string fileNameDb = "SmartStore.db3";
-                var libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                var libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 var path = Path.Combine(libraryPath, fileNameDb);
                 return path;
             }

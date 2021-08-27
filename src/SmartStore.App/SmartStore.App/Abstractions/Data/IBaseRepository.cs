@@ -8,7 +8,7 @@ namespace SmartStore.App.Abstractions.Data
 {
     public interface IBaseRepository<T> where T : class, new()
     {
-        Task<bool> CreateTable();
+        Task<bool> CreateTable(bool alwaysCreate = false);
         Task<bool> DropTable();
         Task<DateTimeOffset> Sync(DateTimeOffset lastSync);
         Task<List<T>> Get();

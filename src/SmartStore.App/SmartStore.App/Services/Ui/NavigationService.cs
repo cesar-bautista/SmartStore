@@ -40,12 +40,22 @@ namespace SmartStore.App.Services.Ui
             return InternalNavigateToAsync(viewModelType, parameter);
         }
 
-        public async Task NavigateBackAsync()
+        public async Task NavigateBackAsync(bool isRefresh = false)
         {
             if (CurrentApplication.MainPage is MainView)
             {
                 var mainPage = CurrentApplication.MainPage as MainView;
-                await mainPage.Detail.Navigation.PopAsync();
+                if (isRefresh)
+                {
+                    mainPage.Detail.Navigation.RemovePage(mainPage.Detail.Navigation.NavigationStack.LastOrDefault());
+                    var page = mainPage.Detail.Navigation.NavigationStack.LastOrDefault();
+                    mainPage.Detail.Navigation.RemovePage(page);
+                    await NavigateToAsync(page.BindingContext.GetType());
+                }
+                else
+                {
+                    await mainPage.Detail.Navigation.PopAsync();
+                }
             }
             else if (CurrentApplication.MainPage != null)
             {

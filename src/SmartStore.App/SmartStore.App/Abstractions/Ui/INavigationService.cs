@@ -12,7 +12,7 @@ namespace SmartStore.App.Abstractions.Ui
 
         Task NavigateToAsync(Type viewModelType, object parameter = null);
 
-        Task NavigateBackAsync();
+        Task NavigateBackAsync(bool isRefresh = false);
 
         Task RemoveLastFromBackStackAsync();
     }

@@ -20,9 +20,13 @@ namespace SmartStore.App.Services.Business
             _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<ProductModel>> GetListAsync()
+        public async Task<IEnumerable<ProductModel>> GetListAsync(string filter = null)
         {
-            var list = await _productRepository.Get();
+            var list = string.IsNullOrWhiteSpace(filter) ?
+                await _productRepository.Get() :
+                await _productRepository.Get(entity => entity.Name.ToLower().Contains(filter.ToLower())
+                    || entity.Description.ToLower().Contains(filter.ToLower())
+                    || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Name);
             return _mapper.Map<IEnumerable<ProductEntity>, IEnumerable<ProductModel>>(list);
         }
 

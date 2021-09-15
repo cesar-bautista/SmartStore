@@ -22,11 +22,7 @@ namespace SmartStore.App.ViewModels.Management
         public ObservableCollection<SupplierModel> Suppliers
         {
             get => _suppliers;
-            set
-            {
-                _suppliers = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _suppliers, value);
         }
 
         public string Filter
@@ -34,8 +30,8 @@ namespace SmartStore.App.ViewModels.Management
             get => _filter;
             set
             {
-                _filter = value;
-                OnPropertyChanged();
+                SetProperty(ref _filter, value);
+                Task.Run(() => OnSearchAction());
             }
         }
 
@@ -93,17 +89,7 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSearchAction()
         {
             IsBusy = true;
-            var list = await _supplierService.GetListAsync();
-            if (string.IsNullOrEmpty(this.Filter))
-            {
-                Suppliers = list.ToObservableCollection();
-            }
-            else
-            {
-                var products = list.Where(p =>
-                        p.Name.ToLowerInvariant().Contains(Filter.ToLowerInvariant()));
-                Suppliers = products.ToObservableCollection();
-            }
+            Suppliers = (await _supplierService.GetListAsync(Filter)).ToObservableCollection();
             IsBusy = false;
         }
         #endregion

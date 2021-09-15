@@ -10,11 +10,11 @@
              Title="Customers">
     <ContentPage.Content>
         <Grid RowDefinitions="Auto, *">
-            <Frame Margin="10,10,10,0"
-                   Padding="0"
-                   CornerRadius="0">
-                <SearchBar Text="{Binding Filter, Mode=TwoWay}"
+            <Frame Margin="10,10,10,3"
+                   Padding="0">
+                <SearchBar Text="{Binding Filter}"
                            SearchCommand="{Binding OnSearch}"
+                           Margin="0"
                            Placeholder="Search..." />
             </Frame>
 
@@ -73,7 +73,7 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Grid HeightRequest="60" VerticalOptions="CenterAndExpand" ColumnDefinitions="*,*,*,*" RowDefinitions="*,1">
-                                <Label Text="{Binding Code}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Text="{Binding Code}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding Name}" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding PhoneNumber}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding DiscountRate}" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />

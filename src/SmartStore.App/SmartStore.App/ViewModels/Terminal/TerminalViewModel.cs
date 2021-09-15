@@ -51,9 +51,8 @@ namespace SmartStore.App.ViewModels.Terminal
             get => _filter;
             set
             {
-                _filter = value;
-                OnPropertyChanged();
-                //SearchAsync().GetAwaiter().GetResult();
+                SetProperty(ref _filter, value);
+                Task.Run(() => OnSearchAction());
             }
         }
 
@@ -95,8 +94,7 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             IsBusy = true;
 
-            var list = await _productService.GetFavoritesAsync();
-            Products = list.ToObservableCollection();
+            Products = (await _productService.GetFavoritesAsync()).ToObservableCollection();
             ShoppingCart = new ObservableCollection<CheckoutModel>();
             CheckoutText = string.Empty;
 
@@ -146,18 +144,9 @@ namespace SmartStore.App.ViewModels.Terminal
         private async Task OnSearchAction()
         {
             IsBusy = true;
-            var list = await _productService.GetListAsync();
-            if (string.IsNullOrEmpty(this.Filter))
-            {
-                Products = list.ToObservableCollection();
-            }
-            else
-            {
-                var products = list.Where(p =>
-                        p.Name.ToLowerInvariant().Contains(Filter.ToLowerInvariant()) ||
-                        p.Price.ToString(CultureInfo.InvariantCulture).ToLowerInvariant().Contains(Filter.ToLowerInvariant()));
-                Products = products.ToObservableCollection();
-            }
+            Products = string.IsNullOrWhiteSpace(Filter) ?
+                (await _productService.GetFavoritesAsync()).ToObservableCollection() :
+                (await _productService.GetListAsync(Filter)).ToObservableCollection();
             IsBusy = false;
         }
 

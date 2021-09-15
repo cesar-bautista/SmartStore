@@ -38,9 +38,8 @@
                   Padding="5, 3, 5, 0">
                 <Frame Grid.Column="0"
                        Margin="0"
-                       Padding="0"
-                       CornerRadius="0">
-                    <SearchBar Text="{Binding Filter, Mode=TwoWay}"
+                       Padding="0">
+                    <SearchBar Text="{Binding Filter}"
                                SearchCommand="{Binding OnSearch}"
                                Margin="0"
                                Placeholder="Search..." />
@@ -49,6 +48,7 @@
                         Text="Barcode"
                         Margin="0"
                         Padding="2, 0"
+                        VerticalOptions="FillAndExpand"
                         Command="{ Binding OnBarcode }" />
             </Grid>
 

@@ -19,9 +19,13 @@ namespace SmartStore.App.Services.Business
             _unitRepository = unitRepository;
         }
 
-        public async Task<IEnumerable<UnitModel>> GetListAsync()
+        public async Task<IEnumerable<UnitModel>> GetListAsync(string filter = null)
         {
-            var list = await _unitRepository.Get();
+            var list = string.IsNullOrWhiteSpace(filter) ?
+                await _unitRepository.Get() :
+                await _unitRepository.Get(entity => entity.Name.ToLower().Contains(filter.ToLower())
+                    || entity.Description.ToLower().Contains(filter.ToLower())
+                    || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Name);
             return _mapper.Map<IEnumerable<UnitEntity>, IEnumerable<UnitModel>>(list);
         }
 

@@ -22,11 +22,7 @@ namespace SmartStore.App.ViewModels.Management
         public ObservableCollection<UnitModel> Units
         {
             get => _units;
-            set
-            {
-                _units = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _units, value);
         }
 
         public string Filter
@@ -34,8 +30,8 @@ namespace SmartStore.App.ViewModels.Management
             get => _filter;
             set
             {
-                _filter = value;
-                OnPropertyChanged();
+                SetProperty(ref _filter, value);
+                Task.Run(() => OnSearchAction());
             }
         }
 
@@ -93,17 +89,7 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSearchAction()
         {
             IsBusy = true;
-            var list = await _unitService.GetListAsync();
-            if (string.IsNullOrEmpty(this.Filter))
-            {
-                Units = list.ToObservableCollection();
-            }
-            else
-            {
-                var products = list.Where(p =>
-                        p.Name.ToLowerInvariant().Contains(Filter.ToLowerInvariant()));
-                Units = products.ToObservableCollection();
-            }
+            Units = (await _unitService.GetListAsync(Filter)).ToObservableCollection();
             IsBusy = false;
         }
         #endregion

@@ -20,9 +20,13 @@ namespace SmartStore.App.Services.Business
             _customerRepository = customerRepository;
         }
 
-        public async Task<IEnumerable<CustomerModel>> GetListAsync()
+        public async Task<IEnumerable<CustomerModel>> GetListAsync(string filter = null)
         {
-            var list = await _customerRepository.Get();
+            var list = string.IsNullOrWhiteSpace(filter) ?
+                await _customerRepository.Get() :
+                await _customerRepository.Get(entity => entity.Name.ToLower().Contains(filter.ToLower())
+                    || entity.Description.ToLower().Contains(filter.ToLower())
+                    || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Name);
             return _mapper.Map<IEnumerable<CustomerEntity>, IEnumerable<CustomerModel>>(list);
         }
 

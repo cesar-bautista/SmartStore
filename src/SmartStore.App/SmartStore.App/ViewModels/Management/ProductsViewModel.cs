@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions.Business;
@@ -23,11 +21,7 @@ namespace SmartStore.App.ViewModels.Management
         public ObservableCollection<ProductModel> Products
         {
             get => _products;
-            set
-            {
-                _products = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _products, value);
         }
 
         public string Filter
@@ -35,9 +29,8 @@ namespace SmartStore.App.ViewModels.Management
             get => _filter;
             set
             {
-                _filter = value;
-                OnPropertyChanged();
-                //SearchAsync().GetAwaiter().GetResult();
+                SetProperty(ref _filter, value);
+                Task.Run(() => OnSearchAction());
             }
         }
 
@@ -60,10 +53,7 @@ namespace SmartStore.App.ViewModels.Management
         public override async Task InitializeAsync(object navigationData)
         {
             IsBusy = true;
-
-            var list = await _productService.GetListAsync();
-            Products = list.ToObservableCollection();
-
+            Products = (await _productService.GetListAsync()).ToObservableCollection();
             IsBusy = false;
         }
         #endregion
@@ -95,18 +85,7 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSearchAction()
         {
             IsBusy = true;
-            var list = await _productService.GetListAsync();
-            if (string.IsNullOrEmpty(this.Filter))
-            {
-                Products = list.ToObservableCollection();
-            }
-            else
-            {
-                var products = list.Where(p =>
-                        p.Name.ToLowerInvariant().Contains(Filter.ToLowerInvariant()) ||
-                        p.Price.ToString(CultureInfo.InvariantCulture).ToLowerInvariant().Contains(Filter.ToLowerInvariant()));
-                Products = products.ToObservableCollection();
-            }
+            Products = (await _productService.GetListAsync(Filter)).ToObservableCollection();
             IsBusy = false;
         } 
         #endregion

@@ -18,80 +18,82 @@
                            Placeholder="Search..." />
             </Frame>
 
-            <CollectionView x:Name="CollectionView1"
-                            Grid.Row="1"
-                            ItemsSource="{Binding Suppliers}"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            Margin="10, 3">
-                <CollectionView.Header>
-                    <Grid BackgroundColor="{StaticResource BlackColor}"
-                          HeightRequest="40" ColumnDefinitions="*,*,*,*">
-                        <Label Grid.Column="0"
-                               Text="Code"
-                               TextColor="{StaticResource WhiteColor}"
-                               HorizontalTextAlignment="Center" 
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                        <Label Grid.Column="1"
-                               TextColor="{StaticResource WhiteColor}"
-                               Text="Name"
-                               HorizontalTextAlignment="Center" 
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                        <Label Grid.Column="2"
-                               TextColor="{StaticResource WhiteColor}"
-                               Text="Phone Number"
-                               HorizontalTextAlignment="Center" 
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                        <Label Grid.Column="3"
-                               TextColor="{StaticResource WhiteColor}"
-                               Text="Email"
-                               HorizontalTextAlignment="Center" 
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
+            <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         Command="{Binding OnSearch}" Grid.Row="1">
+                <CollectionView x:Name="CollectionView1"
+                                ItemsSource="{Binding Suppliers}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Margin="10, 3">
+                    <CollectionView.Header>
+                        <Grid BackgroundColor="{StaticResource BlackColor}"
+                              HeightRequest="40" ColumnDefinitions="*,*,*,*">
+                            <Label Grid.Column="0"
+                                   Text="Code"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   HorizontalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   Text="Name"
+                                   HorizontalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   Text="Phone Number"
+                                   HorizontalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="3"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   Text="Email"
+                                   HorizontalTextAlignment="Center" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
 
-                    </Grid>
-                </CollectionView.Header>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <SwipeView BackgroundColor="Transparent">
-                            <SwipeView.LeftItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Delete"
-                                               Command="{Binding BindingContext.OnDelete, Source={x:Reference CollectionView1}}"
-                                               CommandParameter="{Binding .}"
-                                               BackgroundColor="{StaticResource DangerColor}" />
-                                </SwipeItems>
-                            </SwipeView.LeftItems>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Edit"
-                                               Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}"
-                                               CommandParameter="{Binding .}"
-                                               BackgroundColor="{StaticResource SuccessColor}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Grid HeightRequest="60" VerticalOptions="CenterAndExpand" ColumnDefinitions="*,*,*,*" RowDefinitions="*,1">
-                                <Label Text="{Binding Code}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding Name}" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding PhoneNumber}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding Email}" Grid.Column="3" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
-                                <BoxView Grid.Row="1" HeightRequest="1" Grid.ColumnSpan="4" BackgroundColor="{StaticResource BlackColor}" />
-                            </Grid>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.EmptyView>
-                    <Label Text="No items match your filter."
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center" />
-                </CollectionView.EmptyView>
-            </CollectionView>
-
+                        </Grid>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView BackgroundColor="Transparent">
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   Command="{Binding BindingContext.OnDelete, Source={x:Reference CollectionView1}}"
+                                                   CommandParameter="{Binding .}"
+                                                   BackgroundColor="{StaticResource DangerColor}" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Edit"
+                                                   Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}"
+                                                   CommandParameter="{Binding .}"
+                                                   BackgroundColor="{StaticResource SuccessColor}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid HeightRequest="60" VerticalOptions="CenterAndExpand" ColumnDefinitions="*,*,*,*" RowDefinitions="*,1">
+                                    <Label Text="{Binding Code}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding Name}" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding PhoneNumber}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding Email}" Grid.Column="3" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+                                    <BoxView Grid.Row="1" HeightRequest="1" Grid.ColumnSpan="4" BackgroundColor="{StaticResource BlackColor}" />
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="No items match your filter."
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </RefreshView>
+        
             <pancakeView:PancakeView Grid.RowSpan="2"
                                      BackgroundColor="{StaticResource BlackColor}"
                                      Margin="8"

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartStore.App.Controls.NumericUpDown">
+    <ContentView.Content>
+        <StackLayout
+            HorizontalOptions="StartAndExpand"
+            Orientation="Horizontal"
+            Spacing="5">
+
+            <Label
+                x:Name="MinusButton"
+                HorizontalOptions="EndAndExpand"
+                Margin="0,0,0,0"
+                FontSize="25"
+                Text="-"
+                TextColor="{DynamicResource DangerColor}"
+                FontAttributes="Bold"
+                Padding="0"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MinusTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                x:Name="ValueText"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
+                WidthRequest="20" />
+
+            <Label
+                x:Name="PlusButton"
+                Margin="0,0,0,0"
+                HorizontalOptions="EndAndExpand"
+                FontSize="25"
+                FontAttributes="Bold"
+                Padding="0"
+                Text="+"
+                TextColor="{DynamicResource SuccessColor}"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PlusTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -55,7 +55,7 @@ namespace SmartStore.App.ViewModels.Management
             IsBusy = true;
             await _customerService.SaveAsync(Customer);
             await DialogService.ShowAlertAsync("Saved...");
-            await NavigationService.NavigateBackAsync(true);
+            await NavigationService.NavigateBackAsync();
             IsBusy = false;
         }
 

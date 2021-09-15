@@ -110,10 +110,6 @@
                            Keyboard="Numeric"
                            Placeholder="Min Stock"
                            Text="{Binding Product.MinStock}" />
-                    <Label Grid.Row="3"
-                           Text="Is favorite?" />
-                    <Switch Grid.Row="3"
-                           IsToggled="{Binding Product.IsFavorite}" />
                 </Grid>
                 
                 <controls:CustomActivityIndicator Grid.Row="0"

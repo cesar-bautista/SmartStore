@@ -23,7 +23,7 @@
             <xamanimation:TranslateToAnimation Duration="800" Easing="SpringIn" />
         </xamanimation:StoryBoard>
     </ContentPage.Resources>
-    
+
     <ContentPage.Triggers>
         <EventTrigger Event="Appearing">
             <xamanimation:BeginAnimation Animation="{StaticResource FloatingButtonsEnter}" />
@@ -52,75 +52,80 @@
                         Command="{ Binding OnBarcode }" />
             </Grid>
 
-            <ScrollView Grid.Row="1"
-                        Margin="1, 10"
-                        Padding="0">
-                <FlexLayout Wrap="Wrap"
-                            Direction="Row"
-                            JustifyContent="Center"
-                            AlignItems="Center"
-                            AlignContent="Center"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            Margin="0"
-                            Padding="0"
-                            BindableLayout.ItemsSource="{Binding Products}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Padding="0"
-                                         Margin="3"
-                                         HorizontalOptions="Center"
-                                         Orientation="Horizontal"
-                                         VerticalOptions="Center">
-                                <pancakeView:PancakeView>
-                                    <Grid RowDefinitions="110" ColumnDefinitions="110">
-                                        <ff:CachedImage Aspect="AspectFill"
-                                                        Grid.Row="0"
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        Source="{Binding ImageUrl}"
-                                                        WidthRequest="110"
-                                                        VerticalOptions="FillAndExpand" />
-                                        <StackLayout Grid.Row="0"
-                                                     HorizontalOptions="FillAndExpand"
-                                                     VerticalOptions="EndAndExpand"
-                                                     BackgroundColor="{StaticResource BlackColor}"
-                                                     Opacity="0.7"
-                                                     Padding="1">
-                                            <Label Text="{Binding Name}"
-                                                   HorizontalTextAlignment="Center" 
-                                                   VerticalOptions="CenterAndExpand"/>
-                                            <Label Text="{Binding Price, StringFormat='${0:N}'}" 
-                                                   HorizontalTextAlignment="Center" 
-                                                   VerticalOptions="CenterAndExpand" 
-                                                   FontAttributes="Bold"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </pancakeView:PancakeView>
-                                <!--<Button Text="Animation">
-                                    <Button.Triggers>
-                                        <EventTrigger Event="Clicked">
-                                            <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
-                                        </EventTrigger>
-                                    </Button.Triggers>
-                                </Button>-->
-                                <StackLayout.Triggers>
-                                    <EventTrigger Event="Focused">
-                                        <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
-                                    </EventTrigger>
-                                </StackLayout.Triggers>
-                            </StackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                    <FlexLayout.Behaviors>
-                        <behaviors:ItemTappedBehaviorFlexLayout Command="{Binding OnSelected}" />
-                    </FlexLayout.Behaviors>
-                </FlexLayout>
-                <!--<ScrollView.Triggers>
-                    <EventTrigger Event="Scrolled">
-                        <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
-                    </EventTrigger>
-                </ScrollView.Triggers>-->
-            </ScrollView>
+            <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         Command="{Binding OnSearch}" Grid.Row="1">
+                <ScrollView Margin="1, 10"
+                            Padding="0">
+                    <FlexLayout Wrap="Wrap"
+                                Direction="Row"
+                                JustifyContent="Center"
+                                AlignItems="Center"
+                                AlignContent="Center"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Margin="0"
+                                Padding="0"
+                                BindableLayout.ItemsSource="{Binding Products}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Padding="0"
+                                             Margin="3"
+                                             HorizontalOptions="Center"
+                                             Orientation="Horizontal"
+                                             VerticalOptions="Center">
+                                        <pancakeView:PancakeView>
+                                            <Grid RowDefinitions="110" ColumnDefinitions="110">
+                                                <ff:CachedImage Aspect="AspectFill"
+                                                            Grid.Row="0"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            Source="{Binding ImageUrl}"
+                                                            WidthRequest="110"
+                                                            VerticalOptions="FillAndExpand" />
+                                                <StackLayout Grid.Row="0"
+                                                         HorizontalOptions="FillAndExpand"
+                                                         VerticalOptions="EndAndExpand"
+                                                         BackgroundColor="{StaticResource BlackColor}"
+                                                         Opacity="0.7"
+                                                         Padding="0"
+                                                         Margin="0">
+                                                    <Label Text="{Binding Name}"
+                                                       HorizontalTextAlignment="Center" 
+                                                       Margin="0"
+                                                       VerticalOptions="CenterAndExpand"/>
+                                                    <Label Text="{Binding Price, StringFormat='${0:N}'}" 
+                                                       HorizontalTextAlignment="Center" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       Margin="0"
+                                                       FontAttributes="Bold"/>
+                                                </StackLayout>
+                                            </Grid>
+                                        </pancakeView:PancakeView>
+                                        <!--<Button Text="Animation">
+                                        <Button.Triggers>
+                                            <EventTrigger Event="Clicked">
+                                                <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                                            </EventTrigger>
+                                        </Button.Triggers>
+                                    </Button>-->
+                                        <StackLayout.Triggers>
+                                            <EventTrigger Event="Focused">
+                                                <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                                            </EventTrigger>
+                                        </StackLayout.Triggers>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            <FlexLayout.Behaviors>
+                                <behaviors:ItemTappedBehaviorFlexLayout Command="{Binding OnSelected}" />
+                            </FlexLayout.Behaviors>
+                        </FlexLayout>
+                    <!--<ScrollView.Triggers>
+                        <EventTrigger Event="Scrolled">
+                            <xamanimation:BeginAnimation Animation="{StaticResource StoryBoard}" />
+                        </EventTrigger>
+                    </ScrollView.Triggers>-->
+                </ScrollView>
+            </RefreshView>
 
             <pancakeView:PancakeView CornerRadius="20,20,0,0"
                                      BackgroundColor="{StaticResource DarkBackgroundColor}"

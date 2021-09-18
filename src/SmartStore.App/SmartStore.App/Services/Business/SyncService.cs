@@ -50,41 +50,40 @@ namespace SmartStore.App.Services.Business
         {
             // Obtener registro de última actualización
             var lastSync = await _lastSyncRepository.Get(Guid.Empty) ?? new LastSyncEntity();
-            
-            // HACK: Código solo de prueba,
-            if (lastSync.LastSync == DateTimeOffset.MinValue)
+
+            try
             {
-                //await Task.WhenAll
-                //    (
-                await _unitRepository.Insert(Units());
-                await _categoryRepository.Insert(Categories());
-                await _supplierRepository.Insert(Suppliers());
-                await _productRepository.Insert(Products());
-                await _customerRepository.Insert(Customers());
-                    //);
+                // Sincronizar la lista de repositorios
+                await Task.WhenAll
+                    (
+                        _unitRepository.Sync(lastSync.LastSync),
+                        _supplierRepository.Sync(lastSync.LastSync),
+                        _productRepository.Sync(lastSync.LastSync),
+                        _customerRepository.Sync(lastSync.LastSync),
+                        _categoryRepository.Sync(lastSync.LastSync)
+                    );
             }
-
-            // Sincronizar la lista de repositorios
-            //await Task.WhenAll
-            //(
-            //    _unitRepository.Sync(lastSync.LastSync),
-            //    _supplierRepository.Sync(lastSync.LastSync),
-            //    _productRepository.Sync(lastSync.LastSync),
-            //    _customerRepository.Sync(lastSync.LastSync),
-            //    _categoryRepository.Sync(lastSync.LastSync)
-            //);
-
+            catch
+            {
+                // HACK: Modo Mock
+                if (lastSync.LastSync == DateTimeOffset.MinValue)
+                {
+                    await _unitRepository.Insert(Units);
+                    await _categoryRepository.Insert(Categories);
+                    await _supplierRepository.Insert(Suppliers);
+                    await _productRepository.Insert(Products);
+                    await _customerRepository.Insert(Customers);
+                }
+            }
             // Actualizar registro de última actualización
             lastSync.LastSync = DateTimeOffset.Now;
             var upsert = await _lastSyncRepository.Upsert(lastSync);
 
-            // Valor de retorno
             return upsert > 0;
         }
 
-        private List<UnitEntity> Units()
-        {
-            return new List<UnitEntity>
+        private List<UnitEntity> Units =>
+             new List<UnitEntity>
             {
                 new UnitEntity
                 {
@@ -122,11 +121,9 @@ namespace SmartStore.App.Services.Business
                     Description = "Unidad de empaque estándar."
                 }
             };
-        }
 
-        private List<CategoryEntity> Categories()
-        {
-            return new List<CategoryEntity>
+        private List<CategoryEntity> Categories =>
+            new List<CategoryEntity>
             {
                 new CategoryEntity
                 {
@@ -241,11 +238,9 @@ namespace SmartStore.App.Services.Business
                     Description = "OTROS"
                 }
             };
-        }
 
-        private List<SupplierEntity> Suppliers()
-        {
-            return new List<SupplierEntity>
+        private List<SupplierEntity> Suppliers =>
+            new List<SupplierEntity>
             {
                 new SupplierEntity
                 {
@@ -258,48 +253,49 @@ namespace SmartStore.App.Services.Business
                     Address = "Address 001"
                 }
             };
-        }
 
-        private List<ProductEntity> Products()
+        private List<ProductEntity> Products
         {
-            var images = new[]
-             {
-                "https://cdn.pixabay.com/photo/2019/06/12/07/12/popcorn-4268489_960_720.jpg",
-                "https://cdn.pixabay.com/photo/2015/01/08/04/16/box-592366_960_720.jpg",
-                "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg",
-                "https://media.istockphoto.com/photos/doritos-on-white-picture-id458670023",
-                "https://cdn.pixabay.com/photo/2018/02/26/16/30/eggs-3183410_960_720.jpg",
-                "https://cdn.pixabay.com/photo/2016/06/10/15/15/tomatoes-1448262_960_720.jpg"
-            };
-
-            var list = new List<ProductEntity>();
-            var random = new Random();
-            for (var i = 1; i <= 20; i++)
+            get
             {
-                list.Add(new ProductEntity
+                var images = new[]
                 {
-                    Id = Guid.NewGuid(),
-                    ImageUrl = images[random.Next(0, images.Length)],
-                    Price = random.NextDouble() * (100 - i) + i,
-                    Name = $"Product {i}",
-                    Description = $"Description {i}",
-                    Code = $"{i}".PadLeft(5, '0'),
-                    Cost = random.NextDouble() * (100 - i) + i,
-                    MinStock = random.Next(1, 100 - i),
-                    Stock = random.Next(1, 100 - i),
-                    //SupplierId = random.Next(1, 10),
-                    //CategoryId = random.Next(1, 10),
-                    //UnitId = random.Next(1, 10),
-                    IsFavorite = random.Next(i, 20) < 10
-                });
-            }
+                    "https://cdn.pixabay.com/photo/2019/06/12/07/12/popcorn-4268489_960_720.jpg",
+                    "https://cdn.pixabay.com/photo/2015/01/08/04/16/box-592366_960_720.jpg",
+                    "https://cdn.pixabay.com/photo/2020/05/10/05/14/pepsi-5152332_960_720.jpg",
+                    "https://media.istockphoto.com/photos/doritos-on-white-picture-id458670023",
+                    "https://cdn.pixabay.com/photo/2018/02/26/16/30/eggs-3183410_960_720.jpg",
+                    "https://cdn.pixabay.com/photo/2016/06/10/15/15/tomatoes-1448262_960_720.jpg"
+                };
 
-            return list;
+                var list = new List<ProductEntity>();
+                var random = new Random();
+                for (var i = 1; i <= 20; i++)
+                {
+                    list.Add(new ProductEntity
+                    {
+                        Id = Guid.NewGuid(),
+                        ImageUrl = images[random.Next(0, images.Length)],
+                        Price = random.NextDouble() * (100 - i) + i,
+                        Name = $"Product {i}",
+                        Description = $"Description {i}",
+                        Code = $"{i}".PadLeft(5, '0'),
+                        Cost = random.NextDouble() * (100 - i) + i,
+                        MinStock = random.Next(1, 100 - i),
+                        Stock = random.Next(1, 100 - i),
+                        //SupplierId = random.Next(1, 10),
+                        //CategoryId = random.Next(1, 10),
+                        //UnitId = random.Next(1, 10),
+                        IsFavorite = random.Next(i, 20) < 10
+                    });
+                }
+
+                return list;
+            }
         }
 
-        private List<CustomerEntity> Customers()
-        {
-            return new List<CustomerEntity>
+        private List<CustomerEntity> Customers =>
+            new List<CustomerEntity>
             {
                 new CustomerEntity
                 {
@@ -314,6 +310,5 @@ namespace SmartStore.App.Services.Business
                     Address = "Address 001",
                 }
             };
-        }
     }
 }

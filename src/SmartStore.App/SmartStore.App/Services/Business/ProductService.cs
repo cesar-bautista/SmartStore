@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using SmartStore.App.Abstractions.Business;
@@ -46,7 +45,8 @@ namespace SmartStore.App.Services.Business
         public async Task<bool> DeleteAsync(ProductModel model)
         {
             var entity = _mapper.Map<ProductModel, ProductEntity>(model);
-            var result = await _productRepository.Delete(entity);
+            entity.IsDeleted = true;
+            var result = await _productRepository.Update(entity);
             return result > 0;
         }
     }

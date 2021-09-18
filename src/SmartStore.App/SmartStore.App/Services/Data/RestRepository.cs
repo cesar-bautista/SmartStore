@@ -28,7 +28,6 @@ namespace SmartStore.App.Services.Data
 
         public RestRepository(string baseAddress = null, int timeOut = 0)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             ServicePointManager.Expect100Continue = false;
 

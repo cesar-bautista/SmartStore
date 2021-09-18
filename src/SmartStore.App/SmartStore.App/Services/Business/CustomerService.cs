@@ -40,7 +40,8 @@ namespace SmartStore.App.Services.Business
         public async Task<bool> DeleteAsync(CustomerModel model)
         {
             var entity = _mapper.Map<CustomerModel, CustomerEntity>(model);
-            var result = await _customerRepository.Delete(entity);
+            entity.IsDeleted = true;
+            var result = await _customerRepository.Update(entity);
             return result > 0;
         }
     }

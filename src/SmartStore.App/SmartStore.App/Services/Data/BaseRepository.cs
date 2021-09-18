@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using SmartStore.App.Abstractions.Data;
 using SmartStore.App.Services.Data.Entities;
 using SmartStore.App.ViewModels.Base;
+using SQLiteNetExtensionsAsync.Extensions;
 using SQLite;
+using System.Threading;
 
 namespace SmartStore.App.Services.Data
 {
@@ -50,7 +52,7 @@ namespace SmartStore.App.Services.Data
         public virtual async Task<DateTimeOffset> Sync(DateTimeOffset lastSync)
         {
             var restRepository = LocatorViewModel.Instance.Resolve<IRestRepository>();
-            var changed = await Get(entity => entity.UpdateAt >= lastSync || entity.Deleted, entity => entity.UpdateAt);
+            var changed = await Get(entity => entity.UpdateAt >= lastSync || entity.IsDeleted, entity => entity.UpdateAt);
             if (changed.Any())
                 await restRepository.PostAsync<IEnumerable<T>>("/push", changed);
 
@@ -58,7 +60,7 @@ namespace SmartStore.App.Services.Data
             {
                 if (await Get(row.Id) == null)
                     await Insert(row);
-                else if (row.Deleted)
+                else if (row.IsDeleted)
                     await Delete(row);
                 else
                     await Update(row);
@@ -92,19 +94,34 @@ namespace SmartStore.App.Services.Data
         public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) =>
             await _db.FindAsync<T>(predicate);
 
+        public virtual async Task<IEnumerable<T>> Get(int skip, int take) =>
+            await _db.Table<T>().Skip(skip).Take(take).ToListAsync();
+
+        public virtual async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> predicate, int skip, int take) =>
+            await _db.Table<T>().Where(predicate).Skip(skip).Take(take).ToListAsync();
+
+        public virtual async Task<List<T>> GetWithChildren(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default) =>
+            await _db.GetAllWithChildrenAsync<T>(expression, true, cancellationToken);
+
         public virtual async Task<int> Insert(T entity)
         {
             entity.Id = Guid.NewGuid();
-            entity.UpdateAt = DateTimeOffset.Now;
+            entity.CreatedAt = DateTimeOffset.Now;
             return await _db.InsertAsync(entity);
         }
 
         public virtual async Task<int> Insert(IEnumerable<T> entities)
         {
-            entities.All(c => { c.Id = Guid.NewGuid(); c.UpdateAt = DateTimeOffset.Now; return true; });
+            entities.All(c => { c.Id = Guid.NewGuid(); c.CreatedAt = DateTimeOffset.Now; return true; });
             return await _db.InsertAllAsync(entities);
         }
 
+        public virtual async Task InsertWithChildren(T entity)
+        {
+            entity.Id = Guid.NewGuid();
+            entity.CreatedAt = DateTimeOffset.Now;
+            await _db.InsertWithChildrenAsync(entity, recursive: true);
+        }
         public virtual async Task<int> Update(T entity)
         {
             entity.UpdateAt = DateTimeOffset.Now;
@@ -117,18 +134,27 @@ namespace SmartStore.App.Services.Data
             return await _db.UpdateAllAsync(entities);
         }
 
-        public virtual async Task<int> Delete(T entity)
+        public virtual async Task UpdateWithChildren(T entity)
         {
             entity.UpdateAt = DateTimeOffset.Now;
-            entity.Deleted = true;
+            await _db.UpdateWithChildrenAsync(entity);
+        }
+
+        public virtual async Task<int> Delete(T entity)
+        {
             return await _db.DeleteAsync(entity);
         }
 
         public virtual async Task<int> Upsert(T entity)
         {
             if (entity.Id == Guid.Empty)
+            {
                 entity.Id = Guid.NewGuid();
-            entity.UpdateAt = DateTimeOffset.Now;
+                entity.CreatedAt = DateTimeOffset.Now;
+            }
+            else
+                entity.UpdateAt = DateTimeOffset.Now;
+
             return await _db.InsertOrReplaceAsync(entity);
         }
     }

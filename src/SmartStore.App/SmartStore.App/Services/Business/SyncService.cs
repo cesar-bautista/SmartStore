@@ -15,6 +15,7 @@ namespace SmartStore.App.Services.Business
         private readonly ISupplierRepository _supplierRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IOrderRepository _orderRepository;
 
         public SyncService(
             ILastSyncRepository lastSyncRepository,
@@ -22,7 +23,8 @@ namespace SmartStore.App.Services.Business
             ICategoryRepository categoryRepository,
             ISupplierRepository supplierRepository,
             IProductRepository productRepository,
-            ICustomerRepository customerRepository
+            ICustomerRepository customerRepository,
+            IOrderRepository orderRepository
             )
         {
             _lastSyncRepository = lastSyncRepository;
@@ -31,6 +33,7 @@ namespace SmartStore.App.Services.Business
             _productRepository = productRepository;
             _customerRepository = customerRepository;
             _categoryRepository = categoryRepository;
+            _orderRepository = orderRepository;
         }
 
         public Task Initialize()
@@ -42,7 +45,8 @@ namespace SmartStore.App.Services.Business
                 _categoryRepository.CreateTable(),
                 _supplierRepository.CreateTable(),
                 _productRepository.CreateTable(),
-                _customerRepository.CreateTable()
+                _customerRepository.CreateTable(),
+                _orderRepository.CreateTable()
                );
         }
 

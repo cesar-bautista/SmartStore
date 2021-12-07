@@ -20,7 +20,7 @@ namespace SmartStore.App.ViewModels.Terminal
         #region Attributes
         private readonly IProductService _productService;
         private ObservableCollection<ProductModel> _products;
-        private ObservableCollection<CheckoutModel> _shoppingCart;
+        private ObservableCollection<OrderModel> _shoppingCart;
         private string _filter;
         private string _commandText;
         #endregion
@@ -36,7 +36,7 @@ namespace SmartStore.App.ViewModels.Terminal
             }
         }
 
-        public ObservableCollection<CheckoutModel> ShoppingCart
+        public ObservableCollection<OrderModel> ShoppingCart
         {
             get => _shoppingCart;
             set
@@ -95,7 +95,7 @@ namespace SmartStore.App.ViewModels.Terminal
             IsBusy = true;
 
             Products = (await _productService.GetFavoritesAsync()).ToObservableCollection();
-            ShoppingCart = new ObservableCollection<CheckoutModel>();
+            ShoppingCart = new ObservableCollection<OrderModel>();
             CheckoutText = string.Empty;
 
             IsBusy = false;
@@ -188,9 +188,10 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Methods
-        public static CheckoutModel ToModelMap(ProductModel item)
+        //TODO: Enviarlo a AutoMapper
+        public static OrderModel ToModelMap(ProductModel item)
         {
-            return new CheckoutModel
+            return new OrderModel
             {
                 Id = item.Id,
                 Code = item.Code,

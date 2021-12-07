@@ -122,6 +122,7 @@ namespace SmartStore.App.Services.Data
             entity.CreatedAt = DateTimeOffset.Now;
             await _db.InsertWithChildrenAsync(entity, recursive: true);
         }
+        
         public virtual async Task<int> Update(T entity)
         {
             entity.UpdateAt = DateTimeOffset.Now;

@@ -2,7 +2,7 @@
 
 namespace SmartStore.App.Models
 {
-    public class CheckoutModel
+    public class OrderModel
     {
         public Guid Id { get; set; }
         public string Code { get; set; }

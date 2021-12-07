@@ -15,16 +15,17 @@ namespace SmartStore.App.ViewModels.Terminal
     public sealed class CheckoutViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<CheckoutModel> _shoppingCart;
+        private ObservableCollection<OrderModel> _shoppingCart;
         private ObservableCollection<CustomerModel> _customer;
         private readonly ICustomerService _customerService;
+        private readonly IOrderService _orderService;
         private double _total;
         private double _paidAmount;
         private double _dueAmount;
         #endregion
 
         #region Properties
-        public ObservableCollection<CheckoutModel> ShoppingCart
+        public ObservableCollection<OrderModel> ShoppingCart
         {
             get => _shoppingCart;
             set
@@ -82,9 +83,10 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Constructors
-        public CheckoutViewModel(ICustomerService customerService)
+        public CheckoutViewModel(ICustomerService customerService, IOrderService orderService)
         {
             _customerService = customerService;
+            _orderService = orderService;
 
             OnCancel = new Command(async () => { await OnCancelAction(); });
             OnSave = new Command(async () => { await OnSaveAction(); });
@@ -93,7 +95,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         public override async Task InitializeAsync(object navigationData)
         {
-            if (navigationData is ObservableCollection<CheckoutModel> items)
+            if (navigationData is ObservableCollection<OrderModel> items)
             {
                 IsBusy = true;
 
@@ -118,6 +120,7 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             IsBusy = true;
             await DialogService.ShowAlertAsync("Saved");
+            await _orderService.SaveAsync(ShoppingCart);
             await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
             IsBusy = false;
         }

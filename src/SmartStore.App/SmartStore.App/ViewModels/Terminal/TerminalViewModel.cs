@@ -192,7 +192,8 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             return new OrderDetailModel
             {
-                Id = item.Id,
+                Id = System.Guid.NewGuid(),
+                ProductId = item.Id,
                 Code = item.Code,
                 Name = item.Name,
                 Description = item.Description,

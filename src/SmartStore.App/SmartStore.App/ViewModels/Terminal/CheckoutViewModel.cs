@@ -92,7 +92,7 @@ namespace SmartStore.App.ViewModels.Terminal
                 IsBusy = true;
 
                 ShoppingCart = item;
-                PaidAmount = Total = item.OrderDetails.Sum(s => s.Total);
+                ShoppingCart.TotalPrice = PaidAmount = Total = item.OrderDetails.Sum(s => s.Total);
 
                 var list = await _customerService.GetListAsync();
                 Customers = list.ToObservableCollection();

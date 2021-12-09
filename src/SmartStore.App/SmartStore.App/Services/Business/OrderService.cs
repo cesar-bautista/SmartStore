@@ -47,13 +47,13 @@ namespace SmartStore.App.Services.Business
                     TotalPrice = model.OrderDetails.Sum(m => m.Price * m.Quantity),
                     OrderDetails = _mapper.Map<IEnumerable<OrderDetailModel>, IEnumerable<OrderDetailEntity>>(model.OrderDetails).ToList()
                 };
-                await _orderRepository.InsertWithChildren(entity);
             }
             else
             {
                 entity = _mapper.Map<OrderModel, OrderEntity>(model);
-                await _orderRepository.UpsertWithChildren(entity);
             }
+            entity.OrderDetails.All(c => { c.OrderId = entity.Id; return true; });
+            await _orderRepository.UpsertWithChildren(entity);
         }
 
         public async Task<bool> DeleteAsync(OrderModel model)

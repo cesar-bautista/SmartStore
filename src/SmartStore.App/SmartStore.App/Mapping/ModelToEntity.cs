@@ -14,9 +14,7 @@ namespace SmartStore.App.Mapping
             CreateMap<SupplierModel, SupplierEntity>();
             CreateMap<UnitModel, UnitEntity>();
             CreateMap<OrderModel, OrderEntity>();
-            CreateMap<OrderDetailModel, OrderDetailEntity>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<OrderDetailModel, OrderDetailEntity>();
         }
     }
 }

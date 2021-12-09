@@ -19,8 +19,9 @@ namespace SmartStore.App.ViewModels.Terminal
     {
         #region Attributes
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         private ObservableCollection<ProductModel> _products;
-        private ObservableCollection<OrderModel> _shoppingCart;
+        private OrderModel _shoppingCart;
         private string _filter;
         private string _commandText;
         #endregion
@@ -29,21 +30,13 @@ namespace SmartStore.App.ViewModels.Terminal
         public ObservableCollection<ProductModel> Products
         {
             get => _products;
-            set
-            {
-                _products = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _products, value);
         }
 
-        public ObservableCollection<OrderModel> ShoppingCart
+        public OrderModel ShoppingCart
         {
             get => _shoppingCart;
-            set
-            {
-                _shoppingCart = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _shoppingCart, value);
         }
 
         public string Filter
@@ -71,7 +64,7 @@ namespace SmartStore.App.ViewModels.Terminal
             get => _commandText;
             set
             {
-                _commandText = $"{ShoppingCart.Sum(s => s.Quantity)} Items = ${ShoppingCart.Sum(s => s.Total):0.##}";
+                _commandText = $"{ShoppingCart.OrderDetails.Sum(s => s.Quantity)} Items = ${ShoppingCart.OrderDetails.Sum(s => s.Total):0.##}";
                 OnPropertyChanged();
                 ((Command)OnDiscard).ChangeCanExecute();
                 ((Command)OnCheckout).ChangeCanExecute();
@@ -80,9 +73,10 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Constructors
-        public TerminalViewModel(IProductService productService)
+        public TerminalViewModel(IProductService productService, IOrderService orderService)
         {
             _productService = productService;
+            _orderService = orderService;
             OnSelected = new Command<ProductModel>(OnSelectedAction);
             OnSearch = new Command(async () => { await OnSearchAction(); });
             OnBarcode = new Command(OnBarcodeAction);
@@ -95,7 +89,12 @@ namespace SmartStore.App.ViewModels.Terminal
             IsBusy = true;
 
             Products = (await _productService.GetFavoritesAsync()).ToObservableCollection();
-            ShoppingCart = new ObservableCollection<OrderModel>();
+            
+            if (navigationData is System.Guid id)
+                ShoppingCart = await _orderService.GetListWithChildrenAsync(id);
+            else
+                ShoppingCart = new OrderModel() { OrderDetails = new List<OrderDetailModel>() };
+
             CheckoutText = string.Empty;
 
             IsBusy = false;
@@ -106,13 +105,13 @@ namespace SmartStore.App.ViewModels.Terminal
         private bool CanExcecuteAction()
         {
             return ShoppingCart != null &&
-                   ShoppingCart.Any() &&
+                   ShoppingCart.OrderDetails.Any() &&
                    !IsBusy;
         }
 
         private void OnSelectedAction(ProductModel item)
         {
-            var element = ShoppingCart.FirstOrDefault(e => e.Id == item.Id);
+            var element = ShoppingCart.OrderDetails.FirstOrDefault(e => e.Id == item.Id);
             if (element != null)
             {
                 element.Quantity++;
@@ -120,7 +119,7 @@ namespace SmartStore.App.ViewModels.Terminal
             else
             {
                 element = ToModelMap(item);
-                ShoppingCart.Add(element);
+                ShoppingCart.OrderDetails.Add(element);
             }
 
             CheckoutText = string.Empty;
@@ -129,7 +128,7 @@ namespace SmartStore.App.ViewModels.Terminal
         private void OnDiscardAction()
         {
             IsBusy = true;
-            ShoppingCart.Clear();
+            ShoppingCart.OrderDetails.Clear();
             CheckoutText = string.Empty;
             IsBusy = false;
         }
@@ -189,9 +188,9 @@ namespace SmartStore.App.ViewModels.Terminal
 
         #region Methods
         //TODO: Enviarlo a AutoMapper
-        public static OrderModel ToModelMap(ProductModel item)
+        public static OrderDetailModel ToModelMap(ProductModel item)
         {
-            return new OrderModel
+            return new OrderDetailModel
             {
                 Id = item.Id,
                 Code = item.Code,

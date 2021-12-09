@@ -136,7 +136,7 @@
             <CollectionView Grid.Row="6"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            ItemsSource="{Binding ShoppingCart}"
+                            ItemsSource="{Binding ShoppingCart.OrderDetails}"
                             x:Name="collectionView">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2"/>

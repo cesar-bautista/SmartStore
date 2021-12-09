@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SmartStore.App.Models;
 using SmartStore.App.Services.Data.Entities;
+using System.Linq;
 
 namespace SmartStore.App.Mapping
 {
@@ -13,7 +14,8 @@ namespace SmartStore.App.Mapping
             CreateMap<ProductEntity, ProductModel>();
             CreateMap<SupplierEntity, SupplierModel>();
             CreateMap<UnitEntity, UnitModel>();
-            CreateMap<OrderDetailEntity, OrderModel>()
+            CreateMap<OrderEntity, OrderModel>();
+            CreateMap<OrderDetailEntity, OrderDetailModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId));
         }
     }

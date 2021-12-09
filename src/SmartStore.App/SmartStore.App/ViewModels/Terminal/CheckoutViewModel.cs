@@ -15,7 +15,7 @@ namespace SmartStore.App.ViewModels.Terminal
     public sealed class CheckoutViewModel : BaseViewModel
     {
         #region Attributes
-        private ObservableCollection<OrderModel> _shoppingCart;
+        private OrderModel _shoppingCart;
         private ObservableCollection<CustomerModel> _customer;
         private readonly ICustomerService _customerService;
         private readonly IOrderService _orderService;
@@ -25,24 +25,16 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Properties
-        public ObservableCollection<OrderModel> ShoppingCart
+        public OrderModel ShoppingCart
         {
             get => _shoppingCart;
-            set
-            {
-                _shoppingCart = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _shoppingCart, value);
         }
 
         public ObservableCollection<CustomerModel> Customers
         {
             get => _customer;
-            set
-            {
-                _customer = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _customer, value);
         }
 
         public double Total
@@ -95,12 +87,12 @@ namespace SmartStore.App.ViewModels.Terminal
 
         public override async Task InitializeAsync(object navigationData)
         {
-            if (navigationData is ObservableCollection<OrderModel> items)
+            if (navigationData is OrderModel item)
             {
                 IsBusy = true;
 
-                ShoppingCart = items;
-                PaidAmount = Total = items.Sum(s => s.Total);
+                ShoppingCart = item;
+                PaidAmount = Total = item.OrderDetails.Sum(s => s.Total);
 
                 var list = await _customerService.GetListAsync();
                 Customers = list.ToObservableCollection();
@@ -119,8 +111,8 @@ namespace SmartStore.App.ViewModels.Terminal
         private async Task OnSaveAction()
         {
             IsBusy = true;
-            await DialogService.ShowAlertAsync("Saved");
             await _orderService.SaveAsync(ShoppingCart);
+            await DialogService.ShowAlertAsync("Saved");
             await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
             IsBusy = false;
         }

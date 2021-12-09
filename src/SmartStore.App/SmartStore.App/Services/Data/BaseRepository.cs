@@ -25,7 +25,7 @@ namespace SmartStore.App.Services.Data
         {
             if (alwaysCreate)
             {
-                var result = await this._db.CreateTableAsync<T>();
+                var result = await this._db.CreateTableAsync<T>(CreateFlags.None);
                 return result == CreateTableResult.Created || result == CreateTableResult.Migrated;
             }
             else
@@ -105,21 +105,16 @@ namespace SmartStore.App.Services.Data
 
         public virtual async Task<int> Insert(T entity)
         {
-            entity.Id = Guid.NewGuid();
-            entity.CreatedAt = DateTimeOffset.Now;
             return await _db.InsertAsync(entity);
         }
 
         public virtual async Task<int> Insert(IEnumerable<T> entities)
         {
-            entities.All(c => { c.Id = Guid.NewGuid(); c.CreatedAt = DateTimeOffset.Now; return true; });
             return await _db.InsertAllAsync(entities);
         }
 
         public virtual async Task InsertWithChildren(T entity)
         {
-            entity.Id = Guid.NewGuid();
-            entity.CreatedAt = DateTimeOffset.Now;
             await _db.InsertWithChildrenAsync(entity, recursive: true);
         }
         
@@ -148,15 +143,22 @@ namespace SmartStore.App.Services.Data
 
         public virtual async Task<int> Upsert(T entity)
         {
-            if (entity.Id == Guid.Empty)
-            {
-                entity.Id = Guid.NewGuid();
-                entity.CreatedAt = DateTimeOffset.Now;
-            }
-            else
+            if (entity.Id != Guid.Empty)
                 entity.UpdateAt = DateTimeOffset.Now;
 
             return await _db.InsertOrReplaceAsync(entity);
+        }
+
+        public virtual async Task UpsertWithChildren(T entity)
+        {
+            entity.UpdateAt = DateTimeOffset.Now;
+            await _db.InsertOrReplaceWithChildrenAsync(entity);
+        }
+
+        public virtual async Task UpsertWithChildren(IEnumerable<T> entities)
+        {
+            entities.All(c => { c.UpdateAt = DateTimeOffset.Now; return true; });
+            await _db.InsertOrReplaceAllWithChildrenAsync(entities, recursive: true);
         }
     }
 }

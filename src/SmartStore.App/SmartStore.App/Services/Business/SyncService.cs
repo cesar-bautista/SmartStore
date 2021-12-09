@@ -16,6 +16,7 @@ namespace SmartStore.App.Services.Business
         private readonly IProductRepository _productRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderDetailRepository _orderDetailRepository;
 
         public SyncService(
             ILastSyncRepository lastSyncRepository,
@@ -24,7 +25,8 @@ namespace SmartStore.App.Services.Business
             ISupplierRepository supplierRepository,
             IProductRepository productRepository,
             ICustomerRepository customerRepository,
-            IOrderRepository orderRepository
+            IOrderRepository orderRepository,
+            IOrderDetailRepository orderDetailRepository
             )
         {
             _lastSyncRepository = lastSyncRepository;
@@ -34,6 +36,7 @@ namespace SmartStore.App.Services.Business
             _customerRepository = customerRepository;
             _categoryRepository = categoryRepository;
             _orderRepository = orderRepository;
+            _orderDetailRepository = orderDetailRepository;
         }
 
         public Task Initialize()
@@ -46,7 +49,8 @@ namespace SmartStore.App.Services.Business
                 _supplierRepository.CreateTable(),
                 _productRepository.CreateTable(),
                 _customerRepository.CreateTable(),
-                _orderRepository.CreateTable()
+                _orderRepository.CreateTable(),
+                _orderDetailRepository.CreateTable()
                );
         }
 
@@ -80,7 +84,6 @@ namespace SmartStore.App.Services.Business
                 }
             }
             // Actualizar registro de última actualización
-            lastSync.LastSync = DateTimeOffset.Now;
             var upsert = await _lastSyncRepository.Upsert(lastSync);
 
             return upsert > 0;
@@ -91,35 +94,30 @@ namespace SmartStore.App.Services.Business
             {
                 new UnitEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "H87",
                     Name =  "Pieza",
                     Description = "Unidad de conteo que define el número de piezas (pieza: un solo artículo, artículo o ejemplar)."
                 },
                 new UnitEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "KGM",
                     Name =  "Kilogramo",
                     Description = "Una unidad de masa igual a mil gramos."
                 },
                 new UnitEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "LTR",
                     Name =  "Litro",
                     Description = "Es una unidad de volumen equivalente a un decímetro cúbico (1 dm³). Su uso es aceptado en el Sistema Internacional de Unidades (SI), aunque ya no pertenece estrictamente a él."
                 },
                 new UnitEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "XBX",
                     Name =  "Caja",
                     Description = "Recipiente de diferentes materiales, tamaños y formas, generalmente con tapa, que sirve para guardar o transportar cosas."
                 },
                 new UnitEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "XPK",
                     Name =  "Paquete",
                     Description = "Unidad de empaque estándar."
@@ -131,112 +129,96 @@ namespace SmartStore.App.Services.Business
             {
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "001",
                     Name = "ABARROTES",
                     Description = "ABARROTES"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "002",
                     Name = "ENLATADOS",
                     Description = "ENLATADOS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "003",
                     Name = "LÁCTEOS",
                     Description = "LÁCTEOS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "004",
                     Name = "BOTANAS",
                     Description = "BOTANAS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "005",
                     Name = "CONFITERÍA",
                     Description = "CONFITERÍA"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "006",
                     Name = "HARINAS",
                     Description = "HARINAS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "007",
                     Name = "BEBIDAS",
                     Description = "BEBIDAS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "008",
                     Name = "BEBIDAS ALCOHÓLICAS",
                     Description = "BEBIDAS ALCOHÓLICAS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "009",
                     Name = "ALIMENTOS PREPARADOS",
                     Description = "ALIMENTOS PREPARADOS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "010",
                     Name = "Carnes y Embudos",
                     Description = "Carnes y Embudos"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "011",
                     Name = "AUTOMEDICACIÓN",
                     Description = "AUTOMEDICACIÓN"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "012",
                     Name = "HIGIENE PERSONAL",
                     Description = "HIGIENE PERSONAL"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "013",
                     Name = "USO DOMESTICO",
                     Description = "USO DOMESTICO"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "014",
                     Name = "HELADOS",
                     Description = "HELADOS"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "015",
                     Name = "JARCERIA / PRODUCTOS DE LIMPIEZA",
                     Description = "JARCERIA / PRODUCTOS DE LIMPIEZA"
                 },
                 new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code =  "016",
                     Name = "OTROS",
                     Description = "OTROS"
@@ -248,7 +230,6 @@ namespace SmartStore.App.Services.Business
             {
                 new SupplierEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "001",
                     Name =  "Supplier 001",
                     Description = "Supplier 001",
@@ -278,7 +259,6 @@ namespace SmartStore.App.Services.Business
                 {
                     list.Add(new ProductEntity
                     {
-                        Id = Guid.NewGuid(),
                         ImageUrl = images[random.Next(0, images.Length)],
                         Price = random.NextDouble() * (100 - i) + i,
                         Name = $"Product {i}",
@@ -303,7 +283,6 @@ namespace SmartStore.App.Services.Business
             {
                 new CustomerEntity
                 {
-                    Id = Guid.NewGuid(),
                     Code = "001",
                     Name =  "Customer 001",
                     Description = "Customer 001",

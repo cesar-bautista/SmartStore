@@ -8,12 +8,86 @@
              x:Class="SmartStore.App.Views.Order.OrdersView"
              Title="Orders">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Orders"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <Grid RowDefinitions="Auto, *">
+            <Frame Margin="10,10,10,3"
+                   Padding="0">
+                <SearchBar Text="{Binding Filter}"
+                           SearchCommand="{Binding OnSearch}"
+                           Margin="0"
+                           Placeholder="Search..." />
+            </Frame>
 
-            <controls:CustomActivityIndicator IsRunning="{ Binding IsBusy }" />
-        </StackLayout>
+            <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         Command="{Binding OnSearch}" Grid.Row="1">
+                <CollectionView x:Name="CollectionView1"
+                                ItemsSource="{Binding Orders}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="CenterAndExpand"
+                                Margin="10, 3">
+                    <CollectionView.Header>
+                        <Grid BackgroundColor="{StaticResource BlackColor}"
+                              HeightRequest="40" ColumnDefinitions="*,*,*">
+                            <Label Grid.Column="0"
+                                   Text="Order"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"  />
+                            <Label Grid.Column="1"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   Text="Date"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"  />
+                            <Label Grid.Column="2"
+                                   TextColor="{StaticResource WhiteColor}"
+                                   Text="Total"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView BackgroundColor="Transparent">
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   Command="{Binding BindingContext.OnDelete, Source={x:Reference CollectionView1}}"
+                                                   CommandParameter="{Binding .}"
+                                                   BackgroundColor="{StaticResource DangerColor}" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Edit"
+                                                   Command="{Binding BindingContext.OnSelected, Source={x:Reference CollectionView1}}"
+                                                   CommandParameter="{Binding .}"
+                                                   BackgroundColor="{StaticResource SuccessColor}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid HeightRequest="60" VerticalOptions="CenterAndExpand" ColumnDefinitions="*,*,*" RowDefinitions="*,1">
+                                    <Label Text="{Binding OrderNumber}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding OrderDate}" Grid.Column="1" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding TotalPrice}" Grid.Column="2" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+                                    <BoxView Grid.Row="1" HeightRequest="1" Grid.ColumnSpan="3" BackgroundColor="{StaticResource BlackColor}" />
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="No items match your filter."
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </RefreshView>
+
+            <controls:CustomActivityIndicator Grid.Row="0"
+                                              Grid.RowSpan="2"
+                                              IsRunning="{ Binding IsBusy }" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -11,9 +11,6 @@ namespace SmartStore.App.Services.Data.Entities
         public string OrderNumber { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public double TotalPrice { get; set; }
-        //public Guid CustomerId { get; set; }
-        //[ManyToOne]
-        //public CustomerEntity Customer { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<OrderDetailEntity> OrderDetails { get; set; }
     }

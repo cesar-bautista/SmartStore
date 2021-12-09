@@ -28,5 +28,7 @@ namespace SmartStore.App.Abstractions.Data
         Task UpdateWithChildren(T entity);
         Task<int> Delete(T entity);
         Task<int> Upsert(T entity);
+        Task UpsertWithChildren(T entity);
+        Task UpsertWithChildren(IEnumerable<T> entities);
     }
 }

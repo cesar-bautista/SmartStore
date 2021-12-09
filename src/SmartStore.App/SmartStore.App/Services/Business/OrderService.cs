@@ -23,34 +23,45 @@ namespace SmartStore.App.Services.Business
 
         public async Task<IEnumerable<OrderModel>> GetListAsync(string filter = null)
         {
-            //var list = string.IsNullOrWhiteSpace(filter) ?
-            //    await _orderRepository.Get() :
-            //    await _orderRepository.Get(entity => entity.OrderNumber.Contains(filter.ToLower()), entity => entity.OrderNumber);
-            //return _mapper.Map<IEnumerable<OrderEntity>, IEnumerable<OrderModel>>(list);
-            return new List<OrderModel>();
+            var list = string.IsNullOrWhiteSpace(filter) ?
+                await _orderRepository.Get() :
+                await _orderRepository.Get(entity => entity.OrderNumber.Contains(filter.ToLower()), entity => entity.OrderNumber);
+            return _mapper.Map<IEnumerable<OrderEntity>, IEnumerable<OrderModel>>(list);
         }
 
-        public async Task<OrderModel> SaveAsync(IEnumerable<OrderModel> model)
+        public async Task<OrderModel> GetListWithChildrenAsync(Guid filter)
         {
-            var entity = new OrderEntity
+            var list = await _orderRepository.GetWithChildren(entity => entity.Id.Equals(filter));
+            return list.Any() ? _mapper.Map<OrderEntity, OrderModel>(list.FirstOrDefault()) : new OrderModel();
+        }
+
+        public async Task SaveAsync(OrderModel model)
+        {
+            OrderEntity entity;
+            if (string.IsNullOrWhiteSpace(model.OrderNumber))
             {
-                OrderDate = DateTimeOffset.Now,
-                OrderNumber = DateTimeOffset.Now.ToString("yyyyMMddHHmmss"),
-                TotalPrice = model.Sum(m => m.Price),
-                OrderDetails = _mapper.Map<IEnumerable<OrderModel>, IEnumerable<OrderDetailEntity>>(model).ToList()
-            };
-            await _orderRepository.InsertWithChildren(entity);
-            //return result > 0 ? model : null;
-            return new OrderModel();
+                entity = new OrderEntity
+                {
+                    OrderDate = DateTimeOffset.Now,
+                    OrderNumber = DateTimeOffset.Now.ToString("yyyyMMddHHmmss"),
+                    TotalPrice = model.OrderDetails.Sum(m => m.Price * m.Quantity),
+                    OrderDetails = _mapper.Map<IEnumerable<OrderDetailModel>, IEnumerable<OrderDetailEntity>>(model.OrderDetails).ToList()
+                };
+                await _orderRepository.InsertWithChildren(entity);
+            }
+            else
+            {
+                entity = _mapper.Map<OrderModel, OrderEntity>(model);
+                await _orderRepository.UpsertWithChildren(entity);
+            }
         }
 
         public async Task<bool> DeleteAsync(OrderModel model)
         {
-            //var entity = _mapper.Map<OrderModel, OrderEntity>(model);
-            //entity.IsDeleted = true;
-            //var result = await _orderRepository.Update(entity);
-            //return result > 0;
-            return true;
+            var entity = _mapper.Map<OrderModel, OrderEntity>(model);
+            entity.IsDeleted = true;
+            var result = await _orderRepository.Update(entity);
+            return result > 0;
         }
     }
 }

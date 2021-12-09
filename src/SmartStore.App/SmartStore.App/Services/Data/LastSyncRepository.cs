@@ -14,7 +14,9 @@ namespace SmartStore.App.Services.Data
 
         public override async Task<int> Upsert(LastSyncEntity entity)
         {
+            entity.Id = Guid.Empty;
             entity.UpdateAt = DateTimeOffset.Now;
+            entity.LastSync = DateTimeOffset.Now;
             return await _db.InsertOrReplaceAsync(entity);
         }
     }

@@ -17,8 +17,10 @@ namespace SmartStore.App.ViewModels.Terminal
         #region Attributes
         private OrderModel _shoppingCart;
         private ObservableCollection<CustomerModel> _customer;
+        private CustomerModel _selectedCustomer;
         private readonly ICustomerService _customerService;
         private readonly IOrderService _orderService;
+        private readonly ISaleService _saleService;
         private double _total;
         private double _paidAmount;
         private double _dueAmount;
@@ -35,6 +37,16 @@ namespace SmartStore.App.ViewModels.Terminal
         {
             get => _customer;
             set => SetProperty(ref _customer, value);
+        }
+        public CustomerModel SelectedCustomer
+        {
+            get => _selectedCustomer;
+            set
+            {
+                _selectedCustomer = value;
+                OnPropertyChanged();
+                ((Command)OnPay).ChangeCanExecute();
+            }
         }
 
         public double Total
@@ -75,14 +87,15 @@ namespace SmartStore.App.ViewModels.Terminal
         #endregion
 
         #region Constructors
-        public CheckoutViewModel(ICustomerService customerService, IOrderService orderService)
+        public CheckoutViewModel(ICustomerService customerService, IOrderService orderService, ISaleService saleService)
         {
             _customerService = customerService;
             _orderService = orderService;
+            _saleService = saleService;
 
             OnCancel = new Command(async () => { await OnCancelAction(); });
             OnSave = new Command(async () => { await OnSaveAction(); });
-            OnPay = new Command(async () => { await OnPayAction(); }/*, CanPayAction*/);
+            OnPay = new Command(async () => { await OnPayAction(); }, CanPayAction);
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -96,6 +109,9 @@ namespace SmartStore.App.ViewModels.Terminal
 
                 var list = await _customerService.GetListAsync();
                 Customers = list.ToObservableCollection();
+
+                if (ShoppingCart.CustomerId != System.Guid.Empty)
+                    SelectedCustomer = Customers.FirstOrDefault(c => c.Id == ShoppingCart.CustomerId);
 
                 IsBusy = false;
             }
@@ -111,6 +127,7 @@ namespace SmartStore.App.ViewModels.Terminal
         private async Task OnSaveAction()
         {
             IsBusy = true;
+            ShoppingCart.CustomerId = SelectedCustomer != null ? SelectedCustomer.Id : System.Guid.Empty;
             await _orderService.SaveAsync(ShoppingCart);
             await DialogService.ShowAlertAsync("Saved");
             await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
@@ -120,6 +137,11 @@ namespace SmartStore.App.ViewModels.Terminal
         private async Task OnPayAction()
         {
             IsBusy = true;
+            ShoppingCart.CustomerId = SelectedCustomer != null ? SelectedCustomer.Id : System.Guid.Empty;
+            await _saleService.SaveAsync(ShoppingCart);
+            if (!string.IsNullOrWhiteSpace(ShoppingCart.OrderNumber))
+                await _orderService.DeleteAsync(ShoppingCart);
+
             await DialogService.ShowAlertAsync("Pay");
             await NavigationService.NavigateToAsync<MainViewModel>(ShoppingCart);
             IsBusy = false;
@@ -127,10 +149,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         private bool CanPayAction()
         {
-            var amount = Regex.Replace(PaidAmount.ToString(CultureInfo.InvariantCulture), @"\D", "");
-            double.TryParse(amount, out var valueLong);
-            return valueLong >= Total &&
-                   !IsBusy;
+            return PaidAmount >= Total && SelectedCustomer != null;
         }
         #endregion
     }

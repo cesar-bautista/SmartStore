@@ -111,7 +111,7 @@ namespace SmartStore.App.ViewModels.Terminal
 
         private void OnSelectedAction(ProductModel item)
         {
-            var element = ShoppingCart.OrderDetails.FirstOrDefault(e => e.Id == item.Id);
+            var element = ShoppingCart.OrderDetails.FirstOrDefault(e => e.ProductId == item.Id);
             if (element != null)
             {
                 element.Quantity++;

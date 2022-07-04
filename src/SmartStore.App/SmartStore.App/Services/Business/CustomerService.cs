@@ -25,7 +25,7 @@ namespace SmartStore.App.Services.Business
             var list = string.IsNullOrWhiteSpace(filter) ?
                 await _customerRepository.Get() :
                 await _customerRepository.Get(entity => entity.Name.ToLower().Contains(filter.ToLower())
-                    || entity.Description.ToLower().Contains(filter.ToLower())
+                    || entity.Surname.ToLower().Contains(filter.ToLower())
                     || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Name);
             return _mapper.Map<IEnumerable<CustomerEntity>, IEnumerable<CustomerModel>>(list);
         }

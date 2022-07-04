@@ -31,11 +31,11 @@
                            Text="{Binding Supplier.Name}" />
                     <Entry Grid.Row="3"
                            Keyboard="Text"
-                           Placeholder="Description"
-                           Text="{Binding Supplier.Description}" />
+                           Placeholder="Surname"
+                           Text="{Binding Supplier.Surname}" />
                 </Grid>
 
-                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
                            Text="Contact" />
                     <Entry Grid.Row="1"
@@ -50,6 +50,10 @@
                            Keyboard="Text"
                            Placeholder="Address"
                            Text="{Binding Supplier.Address}" />
+                    <Entry Grid.Row="4"
+                           Keyboard="Text"
+                           Placeholder="Reference"
+                           Text="{Binding Supplier.Reference}" />
                 </Grid>
 
                 <controls:CustomActivityIndicator Grid.Row="0"

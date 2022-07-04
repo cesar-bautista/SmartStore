@@ -24,8 +24,8 @@ namespace SmartStore.App.Services.Business
         public async Task<IEnumerable<OrderModel>> GetListAsync(string filter = null)
         {
             var list = string.IsNullOrWhiteSpace(filter) ?
-                await _orderRepository.Get() :
-                await _orderRepository.Get(entity => entity.OrderNumber.Contains(filter.ToLower()), entity => entity.OrderNumber);
+                await _orderRepository.Get(entity => entity.IsDeleted == false, entity => entity.OrderNumber) :
+                await _orderRepository.Get(entity => entity.OrderNumber.Contains(filter.ToLower()) && entity.IsDeleted == false, entity => entity.OrderNumber);
             return _mapper.Map<IEnumerable<OrderEntity>, IEnumerable<OrderModel>>(list);
         }
 
@@ -42,6 +42,7 @@ namespace SmartStore.App.Services.Business
             {
                 entity = new OrderEntity
                 {
+                    CustomerId = model.CustomerId,
                     OrderDate = DateTimeOffset.Now,
                     OrderNumber = DateTimeOffset.Now.ToString("yyyyMMddHHmmss"),
                     TotalPrice = model.OrderDetails.Sum(m => m.Price * m.Quantity),

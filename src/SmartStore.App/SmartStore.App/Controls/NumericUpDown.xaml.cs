@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -66,6 +67,24 @@ namespace SmartStore.App.Controls
             set { SetValue(StepProperty, value); }
         }
 
+        public static readonly BindableProperty CommandProperty =
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(NumericUpDown), null);
+
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+
+        public static readonly BindableProperty CommandParameterProperty =
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(NumericUpDown), null);
+
+        public object CommandParameter
+        {
+            get { return (object)GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+
         // PROPERTIES:
         // - Minimum
         // - Maximum
@@ -98,6 +117,9 @@ namespace SmartStore.App.Controls
                 Value -= Step;
             else
                 Value = Minimum;
+
+            if (Command != null && Command.CanExecute(null))
+                Command.Execute(CommandParameter);
         }
 
         private async void PlusTapped(object sender, EventArgs e)
@@ -106,6 +128,9 @@ namespace SmartStore.App.Controls
 
             if (Value < Maximum)
                 Value += Step;
+
+            if (Command != null && Command.CanExecute(null))
+                Command.Execute(CommandParameter);
         }
 
         private async Task AnimateAsync(VisualElement element)

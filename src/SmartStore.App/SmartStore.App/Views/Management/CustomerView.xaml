@@ -33,14 +33,14 @@
                     <Entry Grid.Row="3"
                            Grid.Column="0"
                            Keyboard="Text"
-                           Placeholder="Description"
-                           Text="{Binding Customer.Description}" />
+                           Placeholder="Surname"
+                           Text="{Binding Customer.Surname}" />
                     <DatePicker Grid.Row="4"
                            Grid.Column="0"
                            Date="{Binding Customer.BirthDate}" />
                 </Grid>
 
-                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
                     <Label Grid.Row="0"
                            Text="Contact" />
                     <Entry Grid.Row="1"
@@ -55,15 +55,23 @@
                            Keyboard="Text"
                            Placeholder="Address"
                            Text="{Binding Customer.Address}" />
+                    <Entry Grid.Row="4"
+                           Keyboard="Text"
+                           Placeholder="Reference"
+                           Text="{Binding Customer.Reference}" />
                 </Grid>
 
-                <Grid Grid.Row="2" ColumnDefinitions="*" RowDefinitions="Auto, Auto">
+                <Grid Grid.Row="2" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto">
                     <Label Grid.Row="0"
-                           Text="Others" />
+                           Text="Rate" />
                     <Entry Grid.Row="1"
                            Keyboard="Numeric"
                            Placeholder="Discount Rate"
                            Text="{Binding Customer.DiscountRate}" />
+                    <Entry Grid.Row="2"
+                           Keyboard="Numeric"
+                           Placeholder="Credit Rate"
+                           Text="{Binding Customer.CreditRate}" />
                 </Grid>
                 <controls:CustomActivityIndicator Grid.Row="0"
                                                   Grid.RowSpan="3"

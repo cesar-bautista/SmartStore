@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SmartStore.App.Abstractions.Business;
@@ -36,9 +37,8 @@ namespace SmartStore.App.ViewModels.Inventory
         }
 
         public ICommand OnSearch { get; }
-        //public ICommand OnSelected { get; }
-        //public ICommand OnAdd { get; }
-        //public ICommand OnDelete { get; }
+        public ICommand OnSave { get; }
+        public ICommand OnFavorite { get; }
         #endregion
 
         #region Constructors
@@ -46,9 +46,8 @@ namespace SmartStore.App.ViewModels.Inventory
         {
             _productService = productService;
             OnSearch = new Command(async () => { await OnSearchAction(); });
-            //OnSelected = new Command<ProductModel>(async item => await OnSelectedAction(item));
-            //OnAdd = new Command(async () => await OnAddAction());
-            //OnDelete = new Command<ProductModel>(async item => await OnDeleteAction(item));
+            OnSave = new Command<ProductModel>(async item => await OnSaveAction(item));
+            OnFavorite = new Command<ProductModel>(async item => await OnFavoriteAction(item));
         }
 
         public override async Task InitializeAsync(object navigationData)
@@ -65,6 +64,20 @@ namespace SmartStore.App.ViewModels.Inventory
             IsBusy = true;
             Products = (await _productService.GetListAsync(Filter)).ToObservableCollection();
             IsBusy = false;
+        }
+
+        private async Task OnSaveAction(ProductModel item)
+        {
+            IsBusy = true;
+            await _productService.SaveAsync(item);
+            IsBusy = false;
+        }
+        private async Task OnFavoriteAction(ProductModel item)
+        {
+            IsBusy = true;
+            item.IsFavorite = !item.IsFavorite;
+            await _productService.SaveAsync(item);
+            IsBusy = true;
         }
         #endregion
     }

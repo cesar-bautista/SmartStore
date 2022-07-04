@@ -105,7 +105,20 @@
             <Setter Property="RetryCount" Value="5" />
         </Style>
 
-        <Style TargetType="pancakeView:PancakeView">
+        <Style TargetType="pancakeView:PancakeView" >
+            <!--<Setter Property="BackgroundGradientStops">
+                <Setter.Value>
+                    <pancakeView:GradientStopCollection>
+                        <pancakeView:GradientStop Offset="0.1" Color="{DynamicResource WhiteColor}"/>
+                        <pancakeView:GradientStop Offset="0.5" Color="{DynamicResource AccentColor}"/>
+                    </pancakeView:GradientStopCollection>
+                </Setter.Value>
+            </Setter>-->
+            <!--<Setter Property="Border">
+                <Setter.Value>
+                    <pancakeView:Border Color="{StaticResource WhiteColor}" Thickness="1" />
+                </Setter.Value>
+            </Setter>-->
             <!--<Setter Property="BorderColor" Value="{StaticResource WhiteColor}" />
             <Setter Property="BorderThickness" Value="1"/>-->
             <Setter Property="CornerRadius" Value="10, 0, 0, 10"/>

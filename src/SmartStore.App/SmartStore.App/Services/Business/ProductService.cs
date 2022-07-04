@@ -22,10 +22,10 @@ namespace SmartStore.App.Services.Business
         public async Task<IEnumerable<ProductModel>> GetListAsync(string filter = null)
         {
             var list = string.IsNullOrWhiteSpace(filter) ?
-                await _productRepository.Get() :
+                await _productRepository.Get(null, entity => entity.Code) :
                 await _productRepository.Get(entity => entity.Name.ToLower().Contains(filter.ToLower())
                     || entity.Description.ToLower().Contains(filter.ToLower())
-                    || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Name);
+                    || entity.Code.ToLower().Contains(filter.ToLower()), entity => entity.Code);
             return _mapper.Map<IEnumerable<ProductEntity>, IEnumerable<ProductModel>>(list);
         }
 

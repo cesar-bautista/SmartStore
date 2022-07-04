@@ -140,6 +140,9 @@ namespace SmartStore.App.ViewModels.Management
         private async Task OnSaveAction()
         {
             IsBusy = true;
+            Product.CategoryId = SelectedCategory != null ? SelectedCategory.Id : System.Guid.Empty;
+            Product.UnitId = SelectedUnit != null ? SelectedUnit.Id : System.Guid.Empty;
+            Product.SupplierId = SelectedSupplier != null ? SelectedSupplier.Id : System.Guid.Empty;
             await _productService.SaveAsync(Product);
             await DialogService.ShowAlertAsync("Saved...");
             await NavigationService.NavigateBackAsync();

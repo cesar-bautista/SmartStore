@@ -17,6 +17,8 @@ namespace SmartStore.App.Services.Business
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
+        private readonly ISaleRepository _saleRepository;
+        private readonly ISaleDetailRepository _saleDetailRepository;
 
         public SyncService(
             ILastSyncRepository lastSyncRepository,
@@ -26,7 +28,9 @@ namespace SmartStore.App.Services.Business
             IProductRepository productRepository,
             ICustomerRepository customerRepository,
             IOrderRepository orderRepository,
-            IOrderDetailRepository orderDetailRepository
+            IOrderDetailRepository orderDetailRepository,
+            ISaleRepository saleRepository,
+            ISaleDetailRepository saleDetailRepository
             )
         {
             _lastSyncRepository = lastSyncRepository;
@@ -37,6 +41,8 @@ namespace SmartStore.App.Services.Business
             _categoryRepository = categoryRepository;
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
+            _saleRepository = saleRepository;
+            _saleDetailRepository = saleDetailRepository;
         }
 
         public Task Initialize()
@@ -50,7 +56,9 @@ namespace SmartStore.App.Services.Business
                 _productRepository.CreateTable(),
                 _customerRepository.CreateTable(),
                 _orderRepository.CreateTable(),
-                _orderDetailRepository.CreateTable()
+                _orderDetailRepository.CreateTable(),
+                _saleRepository.CreateTable(),
+                _saleDetailRepository.CreateTable()
                );
         }
 
@@ -130,56 +138,56 @@ namespace SmartStore.App.Services.Business
                 new CategoryEntity
                 {
                     Code =  "001",
-                    Name = "ABARROTES",
-                    Description = "ABARROTES"
+                    Name = "Abarrotes",
+                    Description = "Abarrotes"
                 },
                 new CategoryEntity
                 {
                     Code =  "002",
-                    Name = "ENLATADOS",
-                    Description = "ENLATADOS"
+                    Name = "Enlatados",
+                    Description = "Enlatados"
                 },
                 new CategoryEntity
                 {
                     Code =  "003",
-                    Name = "LÁCTEOS",
-                    Description = "LÁCTEOS"
+                    Name = "Lácteos",
+                    Description = "Lácteos"
                 },
                 new CategoryEntity
                 {
                     Code =  "004",
-                    Name = "BOTANAS",
-                    Description = "BOTANAS"
+                    Name = "Botanas",
+                    Description = "Botanas"
                 },
                 new CategoryEntity
                 {
                     Code =  "005",
-                    Name = "CONFITERÍA",
-                    Description = "CONFITERÍA"
+                    Name = "Confitería",
+                    Description = "Confitería"
                 },
                 new CategoryEntity
                 {
                     Code =  "006",
-                    Name = "HARINAS",
-                    Description = "HARINAS"
+                    Name = "Harinas",
+                    Description = "Harinas"
                 },
                 new CategoryEntity
                 {
                     Code =  "007",
-                    Name = "BEBIDAS",
-                    Description = "BEBIDAS"
+                    Name = "Bebidas",
+                    Description = "Bebidas"
                 },
                 new CategoryEntity
                 {
                     Code =  "008",
-                    Name = "BEBIDAS ALCOHÓLICAS",
-                    Description = "BEBIDAS ALCOHÓLICAS"
+                    Name = "Bebidas Alcohólicas",
+                    Description = "Bebidas Alcohólicas"
                 },
                 new CategoryEntity
                 {
                     Code =  "009",
-                    Name = "ALIMENTOS PREPARADOS",
-                    Description = "ALIMENTOS PREPARADOS"
+                    Name = "Alimentos Preparados",
+                    Description = "Alimentos Preparados"
                 },
                 new CategoryEntity
                 {
@@ -190,38 +198,38 @@ namespace SmartStore.App.Services.Business
                 new CategoryEntity
                 {
                     Code =  "011",
-                    Name = "AUTOMEDICACIÓN",
-                    Description = "AUTOMEDICACIÓN"
+                    Name = "Automedicación",
+                    Description = "Automedicación"
                 },
                 new CategoryEntity
                 {
                     Code =  "012",
-                    Name = "HIGIENE PERSONAL",
-                    Description = "HIGIENE PERSONAL"
+                    Name = "Higiene Personal",
+                    Description = "Higiene Personal"
                 },
                 new CategoryEntity
                 {
                     Code =  "013",
-                    Name = "USO DOMESTICO",
-                    Description = "USO DOMESTICO"
+                    Name = "Uso Doméstico",
+                    Description = "Uso Doméstico"
                 },
                 new CategoryEntity
                 {
                     Code =  "014",
-                    Name = "HELADOS",
-                    Description = "HELADOS"
+                    Name = "Helados",
+                    Description = "Helados"
                 },
                 new CategoryEntity
                 {
                     Code =  "015",
-                    Name = "JARCERIA / PRODUCTOS DE LIMPIEZA",
-                    Description = "JARCERIA / PRODUCTOS DE LIMPIEZA"
+                    Name = "Jarcería / Productos de Limpieza",
+                    Description = "Jarcería / Productos de Limpieza"
                 },
                 new CategoryEntity
                 {
                     Code =  "016",
-                    Name = "OTROS",
-                    Description = "OTROS"
+                    Name = "Otros",
+                    Description = "Otros"
                 }
             };
 
@@ -232,10 +240,11 @@ namespace SmartStore.App.Services.Business
                 {
                     Code = "001",
                     Name =  "Supplier 001",
-                    Description = "Supplier 001",
+                    Surname = "Surname 001",
                     Email = "supplier001@email.com",
                     PhoneNumber = "0123456789",
-                    Address = "Address 001"
+                    Address = "Address 001",
+                    Reference = "Reference 001"
                 }
             };
 
@@ -259,18 +268,18 @@ namespace SmartStore.App.Services.Business
                 {
                     list.Add(new ProductEntity
                     {
-                        ImageUrl = images[random.Next(0, images.Length)],
-                        Price = random.NextDouble() * (100 - i) + i,
+                        Code = $"{i}".PadLeft(5, '0'),
                         Name = $"Product {i}",
                         Description = $"Description {i}",
-                        Code = $"{i}".PadLeft(5, '0'),
-                        Cost = random.NextDouble() * (100 - i) + i,
+                        Cost = Math.Round(random.NextDouble() * (100 - i) + i, 2),
+                        Price = Math.Round(random.NextDouble() * (100 - i) + i, 2),
                         MinStock = random.Next(1, 100 - i),
                         Stock = random.Next(1, 100 - i),
+                        ImageUrl = images[random.Next(0, images.Length)],
+                        IsFavorite = random.Next(i, 20) < 10
                         //SupplierId = random.Next(1, 10),
                         //CategoryId = random.Next(1, 10),
                         //UnitId = random.Next(1, 10),
-                        IsFavorite = random.Next(i, 20) < 10
                     });
                 }
 
@@ -285,12 +294,14 @@ namespace SmartStore.App.Services.Business
                 {
                     Code = "001",
                     Name =  "Customer 001",
-                    Description = "Customer 001",
+                    Surname = "Surname 001",
                     Email = "customer001@email.com",
                     PhoneNumber = "0123456789",
                     BirthDate = DateTime.Now,
                     DiscountRate = 100,
+                    CreditRate = 100,
                     Address = "Address 001",
+                    Reference = "Rerefence 001"
                 }
             };
     }

@@ -49,6 +49,7 @@ namespace SmartStore.App.ViewModels
             {
                 IsBusy = true;
                 await NavigationService.NavigateToAsync(item.ViewModelType);
+                await NavigationService.RemoveLastFromBackStackAsync();
                 IsBusy = false;
             }
             else
